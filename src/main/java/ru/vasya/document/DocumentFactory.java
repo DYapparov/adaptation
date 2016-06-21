@@ -6,50 +6,51 @@ import java.util.Random;
 import java.util.Set;
 
 public class DocumentFactory {
+    //Set to 100 to speed up DocumentExistsException throwing
+    private static int MAX_REGISTRATION_NUMBER = 100;
+
     private String[] persons = {"First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"};
     private Random rand = new Random();
     private int counter = 0;
-    private static DocumentFactory df;
-
-    private Set<Integer> registeredDocNumbers = new HashSet<Integer>();
+    private static DocumentFactory instance;
 
     private DocumentFactory(){}
 
-    public static DocumentFactory getDocumentFactory(){
-        if (df==null) df = new DocumentFactory();
-        return df;
+    public static DocumentFactory getInstance(){
+        if (instance==null) instance = new DocumentFactory();
+        return instance;
     }
 
-    public Document getDocument(Class c) throws DocumentExistsException{
-
-        //Generating registration number and performing check for the same existing number in  "registeredDocNumbers"
-        int registerNumber = rand.nextInt(100);
-        if (registeredDocNumbers.contains(registerNumber)){
-            throw new DocumentExistsException("Registration number already exists - " + registerNumber);
-        } else {
-            registeredDocNumbers.add(registerNumber);
-        }
-
+    public Document getDocument(Class c){
+        Document result = null;
         int id = ++counter;
-        String docName = "Docname#" + id;
-        String text = "Text#" + id;
-        Date registerDate = new Date(System.currentTimeMillis());
-        String author = getRandomPerson();
 
         if (c.equals(Task.class)){
-            Date deliveryDate = getRandomFutureDate(1);
-            Date finishDate = getRandomFutureDate(48);
-            String performer = getRandomPerson();
-            boolean controlTag = rand.nextBoolean();
-            String controller = null;
-            if(controlTag) controller = getRandomPerson();
-            return new Task(id, docName, text, registerNumber, registerDate, author, deliveryDate, finishDate, performer, controlTag, controller);
+            result = new Task();
+            ((Task) result).setDeliveryDate(getRandomFutureDate(1));
+            ((Task) result).setFinishDate(getRandomFutureDate(48));
+            ((Task) result).setPerformer(getRandomPerson());
+            ((Task) result).setControlTag(rand.nextBoolean());
+            ((Task) result).setController(getRandomPerson());
         }else if(c.equals(Outgoing.class)){
-            return new Outgoing(id, docName, text, registerNumber, registerDate, author, getRandomPerson(), "Someway");
+            result = new Outgoing();
+            ((Outgoing)result).setDestination(getRandomPerson());
+            ((Outgoing)result).setDeliveryMethod("SomeDeliveryMethod");
         }else if(c.equals(Incoming.class)){
-            return new Incoming(id, docName, text, registerNumber, registerDate, author, getRandomPerson(), getRandomPerson(), getRandomInt(5000), getRandomFutureDate(24));
+            result = new Incoming();
+            ((Incoming) result).setOrigination(getRandomPerson());
+            ((Incoming) result).setDestination(getRandomPerson());
+            ((Incoming) result).setOutgoingNumber(getRandomInt(5000));
+            ((Incoming) result).setOutgoingDate(getRandomFutureDate(3));
         }
-        return null;
+        result.setId(id);
+        result.setDocName("Docname#" + id);
+        result.setText("Text#" + id);
+        result.setRegistrationNumber(rand.nextInt(MAX_REGISTRATION_NUMBER));
+        result.setRegisterDate(new Date(System.currentTimeMillis()));
+        result.setAuthor(getRandomPerson());
+
+        return result;
     }
 
     private String getRandomPerson(){
@@ -60,6 +61,7 @@ public class DocumentFactory {
         return rand.nextInt(max);
     }
 
+    //Method adds some "hours" to current time and returns. May have problems with hours>596)
     private Date getRandomFutureDate(int hours){
         return new Date(System.currentTimeMillis() + rand.nextInt(hours*3600000));
     }

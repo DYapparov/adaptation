@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Outgoing extends Document {
     private String destination;
-    private String deliverymethod;
+    private String deliveryMethod;
 
     public Outgoing(){
 
@@ -14,7 +14,7 @@ public class Outgoing extends Document {
     public Outgoing(int id, String docName, String text, Integer registerNumber, Date registerDate, String author, String destination, String deliverymethod) {
         super(id, docName, text, registerNumber, registerDate, author);
         this.destination = destination;
-        this.deliverymethod = deliverymethod;
+        this.deliveryMethod = deliverymethod;
     }
 
     public String getDestination() {
@@ -25,16 +25,16 @@ public class Outgoing extends Document {
         this.destination = destination;
     }
 
-    public String getDeliverymethod() {
-        return deliverymethod;
+    public String getDeliveryMethod() {
+        return deliveryMethod;
     }
 
-    public void setDeliverymethod(String deliverymethod) {
-        this.deliverymethod = deliverymethod;
+    public void setDeliveryMethod(String deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", destination " + destination + ", delivery method: " + deliverymethod;
+        return super.toString() + ", destination " + destination + ", delivery method: " + deliveryMethod;
     }
 }
