@@ -4,7 +4,7 @@ package ru.vasya.document;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class Document implements Comparable{
+public abstract class Document implements Comparable, IStorable{
 
     private static final String DATE_PATTERN = "HH:mm:ss dd.MM.yyyy";
 
@@ -13,7 +13,7 @@ public abstract class Document implements Comparable{
     private int id;
     private String docName;
     private String text;
-    private Integer registerNumber;
+    private Integer registrationNumber;
     private Date registerDate;
     private String author;
 
@@ -25,7 +25,7 @@ public abstract class Document implements Comparable{
         this.id = id;
         this.docName = docName;
         this.text = text;
-        this.registerNumber = registerNumber;
+        this.registrationNumber = registerNumber;
         this.registerDate = registerDate;
         this.author = author;
     }
@@ -54,12 +54,12 @@ public abstract class Document implements Comparable{
         this.text = text;
     }
 
-    public Integer getRegisterNumber() {
-        return registerNumber;
+    public Integer getRegistrationNumber() {
+        return registrationNumber;
     }
 
-    public void setRegisterNumber(Integer registerNumber) {
-        this.registerNumber = registerNumber;
+    public void setRegistrationNumber(Integer registerNumber) {
+        this.registrationNumber = registerNumber;
     }
 
     public Date getRegisterDate() {
@@ -81,22 +81,23 @@ public abstract class Document implements Comparable{
     @Override
     public String toString() {
         return this.getClass().getSimpleName() +": id " + id + ", document name: " + docName + ", text: " + text +
-                ", author: " + author + ", registration number " + registerNumber + ", registration date " + sdf.format(registerDate);
+                ", author: " + author + ", registration number " + registrationNumber + ", registration date " + sdf.format(registerDate);
     }
 
     public String toStringForReport(){
-        return this.getClass().getSimpleName() + " №" + registerNumber + " created " + sdf.format(registerDate) + ". " + docName;
-                //Петров Петр Петрович:
-                //Поручение №1 от 10.10.2010. Название документа
-
+        return this.getClass().getSimpleName() + " №" + registrationNumber + " created " + sdf.format(registerDate) + ". " + docName;
     }
 
     public int compareTo(Object o) {
         Document d = (Document) o;
         int result = author.compareTo(d.author);
         if (result==0){
-            return registerNumber.compareTo(d.registerNumber);
+            return registrationNumber.compareTo(d.registrationNumber);
         }
         return result;
+    }
+
+    public String getTable() {
+        return this.getClass().getSimpleName();
     }
 }

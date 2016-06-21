@@ -1,6 +1,7 @@
 package ru.vasya.document;
 
 
-public interface iStorable {
-    public int getid();
+public interface IStorable {
+    Integer getRegistrationNumber();
+    String getTable();
 }
