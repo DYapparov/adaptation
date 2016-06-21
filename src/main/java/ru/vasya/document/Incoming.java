@@ -2,6 +2,7 @@ package ru.vasya.document;
 
 import java.util.Date;
 
+@SedItem
 public class Incoming extends Document {
     private String origination;
     private String destination;

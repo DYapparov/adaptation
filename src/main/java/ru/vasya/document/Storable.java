@@ -1,7 +1,6 @@
 package ru.vasya.document;
 
-
-public interface IStorable {
+public interface Storable {
     Integer getRegistrationNumber();
     String getTable();
 }

@@ -1,8 +1,6 @@
 package ru.vasya.document;
 
-
-import java.util.Date;
-
+@SedItem
 public class Outgoing extends Document {
     private String destination;
     private String deliveryMethod;

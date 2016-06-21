@@ -1,9 +1,13 @@
 package ru.vasya.document;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Field;
 import java.util.*;
 
 public class DocumentFactory {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DocumentFactory.class);
 
     private ArrayList<String> persons = new ArrayList<String>(Arrays.asList("First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"));
     private Random rand = new Random();
@@ -39,10 +43,8 @@ public class DocumentFactory {
                 }
                 field.setAccessible(false);
             }
-        } catch (IllegalAccessException e){
-            e.printStackTrace();
-        } catch (InstantiationException e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            LOGGER.warn("Could not initialize new Document", e);
         }
         return result;
     }

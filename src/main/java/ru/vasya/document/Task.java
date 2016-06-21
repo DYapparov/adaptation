@@ -2,6 +2,7 @@ package ru.vasya.document;
 
 import java.util.Date;
 
+@SedItem
 public class Task extends  Document {
     private Date deliveryDate;
     private Date finishDate;

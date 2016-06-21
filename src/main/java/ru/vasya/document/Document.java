@@ -4,7 +4,7 @@ package ru.vasya.document;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class Document implements Comparable, IStorable{
+public abstract class Document implements Comparable, Storable {
 
     private static final String DATE_PATTERN = "HH:mm:ss dd.MM.yyyy";
 
