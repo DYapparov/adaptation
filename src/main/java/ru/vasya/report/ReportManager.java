@@ -3,17 +3,17 @@ package ru.vasya.report;
 
 import ru.vasya.document.Document;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 public class ReportManager {
 
-    public static String getReport(List<Document> docs){
+    public static String getReport(Collection<Document> docs){
 
         String authorCash=null;
         StringBuilder sb = new StringBuilder();
-        Collections.sort(docs);
         Iterator<Document> i = docs.iterator();
 
         while(i.hasNext()){

@@ -13,15 +13,6 @@ public class Task extends  Document {
 
     }
 
-    public Task(int id, String docName, String text, Integer registerNumber, Date registerDate, String author, Date deliveryDate, Date finishDate, String performer, boolean controlTag, String controller) {
-        super(id, docName, text, registerNumber, registerDate, author);
-        this.deliveryDate = deliveryDate;
-        this.finishDate = finishDate;
-        this.performer = performer;
-        this.controlTag = controlTag;
-        this.controller = controller;
-    }
-
     public Date getDeliveryDate() {
         return deliveryDate;
     }
@@ -64,7 +55,7 @@ public class Task extends  Document {
 
     @Override
     public String toString(){
-        return super.toString() + ", delivery date " + sdf.format(deliveryDate) + ", finish date " +
-                sdf.format(finishDate) + ", performer :" + performer + ", control tag " + controlTag + (controlTag?", controller " + controller:"");
+        return super.toString() + ", delivery date " + dateFormat.format(deliveryDate) + ", finish date " +
+                dateFormat.format(finishDate) + ", performer :" + performer + ", control tag " + controlTag + (controlTag?", controller " + controller:"");
     }
 }

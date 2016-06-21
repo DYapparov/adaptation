@@ -9,7 +9,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        List<Document> docs;
+        Collection<Document> docs;
         DocService ds = DocService.getInstance();
 
         docs = ds.getRandomDocs(100);

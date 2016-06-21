@@ -8,7 +8,7 @@ public abstract class Document implements Comparable, IStorable{
 
     private static final String DATE_PATTERN = "HH:mm:ss dd.MM.yyyy";
 
-    protected SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+    protected SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
 
     private int id;
     private String docName;
@@ -16,19 +16,6 @@ public abstract class Document implements Comparable, IStorable{
     private Integer registrationNumber;
     private Date registerDate;
     private String author;
-
-    public Document(){
-
-    }
-
-    public Document(int id, String docName, String text, Integer registerNumber, Date registerDate, String author) {
-        this.id = id;
-        this.docName = docName;
-        this.text = text;
-        this.registrationNumber = registerNumber;
-        this.registerDate = registerDate;
-        this.author = author;
-    }
 
     public int getId() {
         return id;
@@ -81,11 +68,11 @@ public abstract class Document implements Comparable, IStorable{
     @Override
     public String toString() {
         return this.getClass().getSimpleName() +": id " + id + ", document name: " + docName + ", text: " + text +
-                ", author: " + author + ", registration number " + registrationNumber + ", registration date " + sdf.format(registerDate);
+                ", author: " + author + ", registration number " + registrationNumber + ", registration date " + dateFormat.format(registerDate);
     }
 
     public String toStringForReport(){
-        return this.getClass().getSimpleName() + " №" + registrationNumber + " created " + sdf.format(registerDate) + ". " + docName;
+        return this.getClass().getSimpleName() + " №" + registrationNumber + " created " + dateFormat.format(registerDate) + ". " + docName;
     }
 
     public int compareTo(Object o) {

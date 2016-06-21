@@ -12,14 +12,6 @@ public class Incoming extends Document {
 
     }
 
-    public Incoming(int id, String docName, String text, Integer registerNumber, Date registerDate, String author, String origination, String destination, int outgoingNumber, Date outgoingDate) {
-        super(id, docName, text, registerNumber, registerDate, author);
-        this.origination = origination;
-        this.destination = destination;
-        this.outgoingNumber = outgoingNumber;
-        this.outgoingDate = outgoingDate;
-    }
-
     public String getOrigination() {
         return origination;
     }
@@ -54,6 +46,6 @@ public class Incoming extends Document {
 
     @Override
     public String toString(){
-        return super.toString() + ", origination: " + origination + ", destination: " + destination + ", outgoing number: " + outgoingNumber + ", outgoing date: " + sdf.format(outgoingDate);
+        return super.toString() + ", origination: " + origination + ", destination: " + destination + ", outgoing number: " + outgoingNumber + ", outgoing date: " + dateFormat.format(outgoingDate);
     }
 }

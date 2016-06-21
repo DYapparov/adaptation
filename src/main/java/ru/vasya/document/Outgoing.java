@@ -11,12 +11,6 @@ public class Outgoing extends Document {
 
     }
 
-    public Outgoing(int id, String docName, String text, Integer registerNumber, Date registerDate, String author, String destination, String deliverymethod) {
-        super(id, docName, text, registerNumber, registerDate, author);
-        this.destination = destination;
-        this.deliveryMethod = deliverymethod;
-    }
-
     public String getDestination() {
         return destination;
     }
