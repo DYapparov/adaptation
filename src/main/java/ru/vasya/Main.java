@@ -9,7 +9,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        Collection<Document> docs;
+        Map<String, TreeSet<Document>> docs;
         DocService ds = DocService.getInstance();
 
         docs = ds.getRandomDocs(100);

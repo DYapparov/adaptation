@@ -3,30 +3,20 @@ package ru.vasya.report;
 
 import ru.vasya.document.Document;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ReportManager {
-
-    public static String getReport(Collection<Document> docs){
-
-        String authorCash=null;
+    public static String getReport(Map<String, TreeSet<Document>> docs){
         StringBuilder sb = new StringBuilder();
-        Iterator<Document> i = docs.iterator();
-
-        while(i.hasNext()){
-            Document d =i.next();
-            if (!d.getAuthor().equals(authorCash)){
-                authorCash = d.getAuthor();
-                sb.append("\n");
-                sb.append(d.getAuthor());
-                sb.append("\n---");
-                sb.append(d.toStringForReport());
-            } else
-                sb.append("\n---" + d.toStringForReport());
-
+        sb.append("\n");
+        sb.append("--------------------------------------------------------------------------\n");
+        sb.append("|                             The Report                                 |\n");
+        sb.append("--------------------------------------------------------------------------\n");
+        for(String author: docs.keySet()){
+            sb.append(author).append(":\n");
+            for(Document d: docs.get(author)){
+                sb.append("  - ").append(d.toStringForReport()).append("\n");
+            }
         }
         return sb.toString();
     }

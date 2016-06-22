@@ -42,13 +42,20 @@ public class DocService {
         registeredDocNumbers.add(regNum);
     }
 
-    public Collection<Document> getRandomDocs(int count){
-        Collection<Document> result = new TreeSet<Document>();
+    public Map<String, TreeSet<Document>> getRandomDocs(int count){
+        Map<String, TreeSet<Document>> result = new TreeMap<String, TreeSet<Document>>();
+        Document d = null;
         for (int i =0; i < count; i++){
-            Document d = df.getDocument(docClasses.get(rand.nextInt(docClasses.size())));
+            d = df.getDocument(docClasses.get(rand.nextInt(docClasses.size())));
             try {
                 registerDocument(d);
-                result.add(d);
+                if(result.keySet().contains(d.getAuthor())){
+                    result.get(d.getAuthor()).add(d);
+                } else {
+                    TreeSet<Document> newTreeSet = new TreeSet<Document>();
+                    newTreeSet.add(d);
+                    result.put(d.getAuthor(), newTreeSet);
+                }
                 LOGGER.info("Created: Document " + d.getRegistrationNumber());
             } catch (DocumentExistsException e){
                 LOGGER.warn("Document already exists", e);
@@ -62,8 +69,9 @@ public class DocService {
 
         try {
             ClassPath classpath = ClassPath.from(Thread.currentThread().getContextClassLoader());
+            Class c = null;
             for (ClassPath.ClassInfo classInfo : classpath.getTopLevelClassesRecursive("ru.vasya.document")) {
-                Class c = classInfo.load();
+                c = classInfo.load();
                 for (Annotation annotation:c.getAnnotations()) {
                     if(annotation.annotationType().equals(SedItem.class)){
                         result.add(c);

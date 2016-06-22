@@ -6,9 +6,11 @@ import java.util.Date;
 
 public abstract class Document implements Comparable, Storable {
 
-    private static final String DATE_PATTERN = "HH:mm:ss dd.MM.yyyy";
+    private static final String DATE_PATTERN = "dd.MM.yyyy";
+    private static final String DATE_PATTERN_FOR_SORT = "yyyy.MM.dd";
 
-    protected SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+    protected static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+    protected static final SimpleDateFormat dateFormatForSort = new SimpleDateFormat(DATE_PATTERN_FOR_SORT);
 
     private int id;
     private String docName;
@@ -77,7 +79,7 @@ public abstract class Document implements Comparable, Storable {
 
     public int compareTo(Object o) {
         Document d = (Document) o;
-        int result = author.compareTo(d.author);
+        int result = dateFormatForSort.format(registerDate).compareTo(dateFormatForSort.format(d.registerDate));
         if (result==0){
             return registrationNumber.compareTo(d.registrationNumber);
         }
