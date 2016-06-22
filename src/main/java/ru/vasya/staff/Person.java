@@ -52,6 +52,6 @@ public class Person extends Staff {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + ": " + lastName + " " + firstName + " " + midleName + ", " + position;
+        return this.getClass().getSimpleName() + "(id " + getId() + "): " + lastName + " " + firstName + " " + midleName + ", " + position;
     }
 }

@@ -1,4 +1,5 @@
 package ru.vasya.staff;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -49,5 +50,10 @@ public class Organization extends Staff {
     @XmlElement
     public void setContacts(String contacts) {
         this.contacts = contacts;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "(id " + getId() + "): " + fullName + ". Head: " + head + ". Contacts: " + contacts;
     }
 }
