@@ -1,14 +1,16 @@
 package ru.vasya.document;
 
+import ru.vasya.staff.Person;
+
 import java.util.Date;
 
 @SedItem
 public class Task extends  Document {
     private Date deliveryDate;
     private Date finishDate;
-    private String performer;
+    private Person performer;
     private boolean controlTag;
-    private String controller;
+    private Person controller;
 
     public Task(){
 
@@ -30,11 +32,11 @@ public class Task extends  Document {
         this.finishDate = finishDate;
     }
 
-    public String getPerformer() {
+    public Person getPerformer() {
         return performer;
     }
 
-    public void setPerformer(String performer) {
+    public void setPerformer(Person performer) {
         this.performer = performer;
     }
 
@@ -46,11 +48,11 @@ public class Task extends  Document {
         this.controlTag = controlTag;
     }
 
-    public String getController() {
+    public Person getController() {
         return controller;
     }
 
-    public void setController(String controller) {
+    public void setController(Person controller) {
         this.controller = controller;
     }
 

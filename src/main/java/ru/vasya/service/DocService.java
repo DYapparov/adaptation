@@ -4,6 +4,7 @@ import com.google.common.reflect.ClassPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vasya.document.*;
+import ru.vasya.staff.Person;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -42,21 +43,20 @@ public class DocService {
         registeredDocNumbers.add(regNum);
     }
 
-    public Map<String, TreeSet<Document>> getRandomDocs(int count){
-        Map<String, TreeSet<Document>> result = new TreeMap<String, TreeSet<Document>>();
+    public Map<Person, TreeSet<Document>> getRandomDocs(int count){
+        Map<Person, TreeSet<Document>> result = new TreeMap<Person, TreeSet<Document>>();
         Document d = null;
         for (int i =0; i < count; i++){
             d = df.getDocument(docClasses.get(rand.nextInt(docClasses.size())));
             try {
                 registerDocument(d);
-                if(result.keySet().contains(d.getAuthor())){
-                    result.get(d.getAuthor()).add(d);
-                } else {
-                    TreeSet<Document> newTreeSet = new TreeSet<Document>();
-                    newTreeSet.add(d);
-                    result.put(d.getAuthor(), newTreeSet);
+                TreeSet<Document> documents = result.get(d.getAuthor());
+                if (documents == null) {
+                    documents = new TreeSet<Document>();
+                    result.put(d.getAuthor(), documents);
                 }
-                LOGGER.info("Created: Document " + d.getRegistrationNumber());
+                documents.add(d);
+                LOGGER.info("Registered: Document " + d.getRegistrationNumber());
             } catch (DocumentExistsException e){
                 LOGGER.warn("Document already exists", e);
             }

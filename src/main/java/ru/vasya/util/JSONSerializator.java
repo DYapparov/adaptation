@@ -1,18 +1,13 @@
 package ru.vasya.util;
 
 import java.io.*;
-import java.lang.reflect.Type;
-import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.vasya.staff.Department;
-import ru.vasya.staff.Organization;
-import ru.vasya.staff.Person;
-import ru.vasya.staff.Staff;
+import ru.vasya.document.Task;
+import ru.vasya.document.TaskSerializer;
 
 public class JSONSerializator {
     private static final Logger LOGGER = LoggerFactory.getLogger(JSONSerializator.class);
@@ -20,7 +15,7 @@ public class JSONSerializator {
     Gson gson;
 
     private JSONSerializator(){
-        gson = new GsonBuilder().setPrettyPrinting().create();
+        gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Task.class, new TaskSerializer()).create();
     }
 
     public static JSONSerializator getInstance(){

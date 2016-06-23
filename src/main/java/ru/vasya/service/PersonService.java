@@ -1,0 +1,87 @@
+package ru.vasya.service;
+
+
+import ru.vasya.staff.Department;
+import ru.vasya.staff.Organization;
+import ru.vasya.staff.Person;
+import ru.vasya.util.XMLSerializator;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+//----------------------Delete...or not
+public class PersonService {
+    private static PersonService instance;
+    XMLSerializator xmlSerializator;
+
+    private PersonService(){
+        xmlSerializator = XMLSerializator.getInstance();
+    }
+
+    public static PersonService getInstance(){
+        if (instance==null){
+            instance = new PersonService();
+        }
+        return instance;
+    }
+
+    public List<Person> getPersonList(){
+        List<Person> result = new ArrayList<Person>();
+        File personsFile = new File(Person.class.getSimpleName() + ".xml");
+        result = xmlSerializator.unmarshal(personsFile);
+        return result;
+    }
+
+    //Used for generating xml files.
+    public List<Person> getRandomPersonList(int count){
+        List<Person> result = new ArrayList<Person>();
+        for(int i = 0; i <count; i++) {
+            Person p = new Person();
+            p.setId(i);
+            p.setFirstName(randomWord(6));
+            p.setLastName(randomWord(8));
+            p.setMidleName(randomWord(10));
+            p.setPosition("Slave");
+            result.add(p);
+        }
+        return result;
+    }
+    public List<Organization> getRandomOrganizationList(int count){
+        List<Organization> result = new ArrayList<Organization>();
+        for(int i = 0; i <count; i++) {
+            Organization o = new Organization();
+            o.setId(i);
+            o.setFullName(randomWord(6));
+            o.setHead(randomWord(7));
+            o.setContacts(new Random().nextInt(90) + "");
+            result.add(o);
+        }
+        return result;
+    }
+    public List<Department> getRandomDepartmentList(int count){
+        List<Department> result = new ArrayList<Department>();
+        for(int i = 0; i <count; i++) {
+            Department d = new Department();
+            d.setId(i);
+            d.setFullName(randomWord(6));
+            d.setHead(randomWord(7));
+            d.setContacts(new Random().nextInt(90) + "");
+            result.add(d);
+        }
+        return result;
+    }
+
+    private static String randomWord(int length){
+        String vowels = "aeyuio";
+        String consonants = "qwrtpsdfghjklzxcvbnm";
+        Random rand = new Random();
+        String result = "" + (consonants+vowels).charAt(rand.nextInt(vowels.length()+consonants.length()));
+        result = result.toUpperCase();
+        for (int i = 0; i < length; i++){
+            result += (vowels.indexOf(result.charAt(result.length()-1))!=-1)?consonants.charAt(rand.nextInt(consonants.length())):vowels.charAt(rand.nextInt(vowels.length()));
+        }
+        return result;
+    }
+}

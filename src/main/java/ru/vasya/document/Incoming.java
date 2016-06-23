@@ -1,11 +1,13 @@
 package ru.vasya.document;
 
+import ru.vasya.staff.Person;
+
 import java.util.Date;
 
 @SedItem
 public class Incoming extends Document {
-    private String origination;
-    private String destination;
+    private Person origination;
+    private Person destination;
     private int outgoingNumber;
     private Date outgoingDate;
 
@@ -13,19 +15,19 @@ public class Incoming extends Document {
 
     }
 
-    public String getOrigination() {
+    public Person getOrigination() {
         return origination;
     }
 
-    public void setOrigination(String origination) {
+    public void setOrigination(Person origination) {
         this.origination = origination;
     }
 
-    public String getDestination() {
+    public Person getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Person destination) {
         this.destination = destination;
     }
 

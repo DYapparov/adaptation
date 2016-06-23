@@ -1,19 +1,21 @@
 package ru.vasya.document;
 
+import ru.vasya.staff.Person;
+
 @SedItem
 public class Outgoing extends Document {
-    private String destination;
+    private Person destination;
     private String deliveryMethod;
 
     public Outgoing(){
 
     }
 
-    public String getDestination() {
+    public Person getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Person destination) {
         this.destination = destination;
     }
 

@@ -1,6 +1,8 @@
 package ru.vasya.document;
 
 
+import ru.vasya.staff.Person;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,7 +19,7 @@ public abstract class Document implements Comparable, Storable {
     private String text;
     private Integer registrationNumber;
     private Date registerDate;
-    private String author;
+    private Person author;
 
     public int getId() {
         return id;
@@ -59,11 +61,11 @@ public abstract class Document implements Comparable, Storable {
         this.registerDate = registerDate;
     }
 
-    public String getAuthor() {
+    public Person getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Person author) {
         this.author = author;
     }
 
