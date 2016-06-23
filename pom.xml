@@ -8,6 +8,29 @@
     <artifactId>Adaptation</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+    <properties>
+        <main.class>ru.vasya.Main</main.class>
+        <output.Directory>C:\Users\dyapparov\Desktop</output.Directory>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>swing</id>
+            <properties>
+                <main.class>ru.vasya.view.SwingLayout</main.class>
+                <output.Directory>C:\Users\dyapparov\Desktop\SwingPackage</output.Directory>
+            </properties>
+        </profile>
+        <profile>
+            <id>javafx</id>
+            <properties>
+                <main.class>ru.vasya.view.JavaFXLayout</main.class>
+                <output.Directory>C:\Users\dyapparov\Desktop\JavaFXPackage</output.Directory>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -43,10 +66,10 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.vasya.Main</mainClass>
+                            <mainClass>${main.class}</mainClass>
                         </manifest>
                     </archive>
-                    <outputDirectory>C:\Users\dyapparov\Desktop</outputDirectory>
+                    <outputDirectory>${output.Directory}</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -63,11 +86,10 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.vasya.Main</mainClass>
+                    <mainClass>${main.class}</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 
 </project>

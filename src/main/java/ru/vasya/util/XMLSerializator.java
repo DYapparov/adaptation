@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 public class XMLSerializator {
@@ -41,6 +42,18 @@ public class XMLSerializator {
             result = ((JAXBStaffList)intermediateResult).getItems();
         } catch (JAXBException e){
             LOGGER.error("Could not unmarshal file: " + file.getAbsolutePath(), e);
+        }
+        return result;
+    }
+
+    public List unmarshal(InputStream inputStream) {
+        List result = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(JAXBStaffList.class);
+            Object intermediateResult = context.createUnmarshaller().unmarshal(inputStream);
+            result = ((JAXBStaffList)intermediateResult).getItems();
+        } catch (JAXBException e){
+            LOGGER.error("Could not unmarshal file: " + inputStream, e);
         }
         return result;
     }

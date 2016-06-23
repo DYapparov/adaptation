@@ -3,6 +3,7 @@ package ru.vasya.document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vasya.Main;
+import ru.vasya.service.PersonService;
 import ru.vasya.staff.Person;
 
 import java.lang.reflect.Field;
@@ -14,9 +15,12 @@ public class DocumentFactory {
     //private ArrayList<String> persons = new ArrayList<String>(Arrays.asList("First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"));
     private Random rand = new Random();
     private int counter = 0;
+    private PersonService personService;
     private static DocumentFactory instance;
 
-    private DocumentFactory(){}
+    private DocumentFactory(){
+        personService = PersonService.getInstance();
+    }
 
     public static DocumentFactory getInstance(){
         if (instance==null) {
@@ -55,7 +59,7 @@ public class DocumentFactory {
         return result;
     }
     private Person getRandomPerson(){
-        return Main.persons.get(rand.nextInt(Main.persons.size()));
+        return personService.getPersonList().get(rand.nextInt(personService.getPersonList().size()));
     }
 
     private int getRandomInt(int max){

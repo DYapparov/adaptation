@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stafflist>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>0</id>
+        <contacts>67</contacts>
+        <fullName>Nywaquz</fullName>
+        <head>Rihetomy</head>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>1</id>
+        <contacts>33</contacts>
+        <fullName>Lelevon</fullName>
+        <head>Sabosibu</head>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>2</id>
+        <contacts>33</contacts>
+        <fullName>Qolenis</fullName>
+        <head>Sutahega</head>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>3</id>
+        <contacts>52</contacts>
+        <fullName>Refoxot</fullName>
+        <head>Mofuqeni</head>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>4</id>
+        <contacts>70</contacts>
+        <fullName>Sitarok</fullName>
+        <head>Bobiqivu</head>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>5</id>
+        <contacts>70</contacts>
+        <fullName>Wekyfan</fullName>
+        <head>Zudowyca</head>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>6</id>
+        <contacts>18</contacts>
+        <fullName>Muxibud</fullName>
+        <head>Eojyvaka</head>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>7</id>
+        <contacts>47</contacts>
+        <fullName>Xywunaw</fullName>
+        <head>Bedoqojo</head>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>8</id>
+        <contacts>45</contacts>
+        <fullName>Kuryhab</fullName>
+        <head>Sywoxino</head>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
+        <id>9</id>
+        <contacts>74</contacts>
+        <fullName>Hinojub</fullName>
+        <head>Aehorusi</head>
+    </item>
+</stafflist>

@@ -7,6 +7,8 @@ import ru.vasya.staff.Person;
 import ru.vasya.util.XMLSerializator;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,6 +17,8 @@ import java.util.Random;
 public class PersonService {
     private static PersonService instance;
     XMLSerializator xmlSerializator;
+
+    private List<Person> persons;
 
     private PersonService(){
         xmlSerializator = XMLSerializator.getInstance();
@@ -28,10 +32,17 @@ public class PersonService {
     }
 
     public List<Person> getPersonList(){
-        List<Person> result = new ArrayList<Person>();
-        File personsFile = new File(Person.class.getSimpleName() + ".xml");
-        result = xmlSerializator.unmarshal(personsFile);
-        return result;
+        if (persons == null) {
+            //File personsFile = new File(Person.class.getSimpleName() + ".xml");
+            InputStream inputPersonFile = this.getClass().getResourceAsStream("/" + Person.class.getSimpleName() + ".xml");
+            persons = xmlSerializator.unmarshal(inputPersonFile);
+            try {
+                inputPersonFile.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        return persons;
     }
 
     //Used for generating xml files.

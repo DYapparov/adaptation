@@ -12,22 +12,14 @@ import java.util.*;
 
 public class Main {
 
-    public static List<Person> persons;
-
     public static void main(String[] args) {
         DocService ds = DocService.getInstance();
-        JSONSerializator jsonSerializator = JSONSerializator.getInstance();
-        persons = PersonService.getInstance().getPersonList();
 
-        Map<Person, TreeSet<Document>> docs;
-        docs = ds.getRandomDocs(100);
+        Map<Person, TreeSet<Document>> docs = ds.getRandomDocs(100);
 
-        String report = ReportManager.getReport(docs);
-
+        String report = ReportManager.getReport(docs); //Task 1 report
         System.out.println(report);
-        for(Person p: persons){
-            File f = new File(p.getLastName() + " " + p.getFirstName() + " " + p.getMidleName() + ".json");
-            jsonSerializator.marshal(docs.get(p), f);
-        }
+
+        ReportManager.saveDocsToJSON(docs);            //Task 2 report to json
     }
 }

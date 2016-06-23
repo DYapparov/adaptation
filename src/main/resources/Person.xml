@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stafflist>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>0</id>
+        <firstName>Kiduzyp</firstName>
+        <lastName>Pimypaquz</lastName>
+        <midleName>Rigywyxusik</midleName>
+        <position>Slave</position>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>1</id>
+        <firstName>Cynanod</firstName>
+        <lastName>Eecagejah</lastName>
+        <midleName>Vimoxyxutuq</midleName>
+        <position>Slave</position>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>2</id>
+        <firstName>Fufezuj</firstName>
+        <lastName>Wewenihim</lastName>
+        <midleName>Uucixamuxyk</midleName>
+        <position>Slave</position>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>3</id>
+        <firstName>Yajuces</firstName>
+        <lastName>Jyvokisyh</lastName>
+        <midleName>Iokafazobil</midleName>
+        <position>Slave</position>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>4</id>
+        <firstName>Lazusef</firstName>
+        <lastName>Busetigon</lastName>
+        <midleName>Oatusycadux</midleName>
+        <position>Slave</position>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>5</id>
+        <firstName>Iosytuk</firstName>
+        <lastName>Dabopesoj</lastName>
+        <midleName>Fucidopakik</midleName>
+        <position>Slave</position>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>6</id>
+        <firstName>Kujemex</firstName>
+        <lastName>Tapolidek</lastName>
+        <midleName>Zanukanypuz</midleName>
+        <position>Slave</position>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>7</id>
+        <firstName>Uohagod</firstName>
+        <lastName>Puduhesoc</lastName>
+        <midleName>Eihutirixyr</midleName>
+        <position>Slave</position>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>8</id>
+        <firstName>Uofylas</firstName>
+        <lastName>Wamuqoqab</lastName>
+        <midleName>Earejecaxoz</midleName>
+        <position>Slave</position>
+    </item>
+    <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
+        <id>9</id>
+        <firstName>Ioquraw</firstName>
+        <lastName>Gyverexud</lastName>
+        <midleName>Woxynaqesoc</midleName>
+        <position>Slave</position>
+    </item>
+</stafflist>
