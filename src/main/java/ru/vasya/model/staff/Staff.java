@@ -1,4 +1,4 @@
-package ru.vasya.staff;
+package ru.vasya.model.staff;
 
 
 public abstract class Staff {

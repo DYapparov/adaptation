@@ -1,10 +1,9 @@
-package ru.vasya.view;
+package ru.vasya.layout;
 
 
-import ru.vasya.document.Document;
-import ru.vasya.report.ReportManager;
+import ru.vasya.model.document.Document;
 import ru.vasya.service.DocService;
-import ru.vasya.staff.Person;
+import ru.vasya.model.staff.Person;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;

@@ -1,4 +1,4 @@
-package ru.vasya.document;
+package ru.vasya.model.document;
 
 
 

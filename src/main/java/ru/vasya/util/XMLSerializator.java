@@ -2,8 +2,7 @@ package ru.vasya.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.vasya.staff.JAXBStaffList;
-import ru.vasya.staff.Staff;
+import ru.vasya.model.staff.Staff;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -24,15 +23,18 @@ public class XMLSerializator {
         }
         return instance;
     }
-    /*
+
     public void marshal(List list, File file) {
         JAXBStaffList jaxbStaffList = new JAXBStaffList<Staff>(list);
-        JAXBContext context = JAXBContext.newInstance(JAXBStaffList.class);
-        Marshaller m = context.createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        m.marshal(jaxbStaffList, file);
+        try {
+            JAXBContext context = JAXBContext.newInstance(JAXBStaffList.class);
+            Marshaller m = context.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            m.marshal(jaxbStaffList, file);
+        } catch (JAXBException e){
+            LOGGER.error("Could not marshal into file: " + file.getAbsolutePath(), e);
+        }
     }
-    */
 
     public List unmarshal(File file) {
         List result = null;

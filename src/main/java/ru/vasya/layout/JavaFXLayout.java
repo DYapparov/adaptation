@@ -1,4 +1,4 @@
-package ru.vasya.view;
+package ru.vasya.layout;
 
 
 import javafx.application.Application;
@@ -8,10 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-import ru.vasya.document.Document;
+import ru.vasya.model.document.Document;
 import ru.vasya.report.ReportManager;
 import ru.vasya.service.DocService;
-import ru.vasya.staff.Person;
+import ru.vasya.model.staff.Person;
 
 import java.util.Map;
 import java.util.TreeSet;

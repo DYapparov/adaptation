@@ -18,14 +18,14 @@
         <profile>
             <id>swing</id>
             <properties>
-                <main.class>ru.vasya.view.SwingLayout</main.class>
+                <main.class>ru.vasya.layout.SwingLayout</main.class>
                 <output.Directory>C:\Users\dyapparov\Desktop\SwingPackage</output.Directory>
             </properties>
         </profile>
         <profile>
             <id>javafx</id>
             <properties>
-                <main.class>ru.vasya.view.JavaFXLayout</main.class>
+                <main.class>ru.vasya.layout.JavaFXLayout</main.class>
                 <output.Directory>C:\Users\dyapparov\Desktop\JavaFXPackage</output.Directory>
             </properties>
         </profile>
@@ -52,9 +52,15 @@
             <artifactId>gson</artifactId>
             <version>2.7</version>
         </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>Adaptation</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -91,5 +97,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

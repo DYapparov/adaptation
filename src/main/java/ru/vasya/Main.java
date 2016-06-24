@@ -1,13 +1,10 @@
 package ru.vasya;
 
-import ru.vasya.document.*;
+import ru.vasya.model.document.*;
 import ru.vasya.report.ReportManager;
 import ru.vasya.service.DocService;
-import ru.vasya.staff.Person;
-import ru.vasya.service.PersonService;
-import ru.vasya.util.JSONSerializator;
+import ru.vasya.model.staff.Person;
 
-import java.io.File;
 import java.util.*;
 
 public class Main {

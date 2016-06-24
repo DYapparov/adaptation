@@ -1,12 +1,11 @@
 package ru.vasya.service;
 
 
-import ru.vasya.staff.Department;
-import ru.vasya.staff.Organization;
-import ru.vasya.staff.Person;
+import ru.vasya.model.staff.Department;
+import ru.vasya.model.staff.Organization;
+import ru.vasya.model.staff.Person;
 import ru.vasya.util.XMLSerializator;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class PersonService {
             Organization o = new Organization();
             o.setId(i);
             o.setFullName(randomWord(6));
-            o.setHead(randomWord(7));
+            o.setHead(getPersonList().get(new Random().nextInt(getPersonList().size())));
             o.setContacts(new Random().nextInt(90) + "");
             result.add(o);
         }
@@ -77,7 +76,7 @@ public class PersonService {
             Department d = new Department();
             d.setId(i);
             d.setFullName(randomWord(6));
-            d.setHead(randomWord(7));
+            d.setHead(getPersonList().get(new Random().nextInt(getPersonList().size())));
             d.setContacts(new Random().nextInt(90) + "");
             result.add(d);
         }

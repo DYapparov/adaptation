@@ -3,8 +3,8 @@ package ru.vasya.service;
 import com.google.common.reflect.ClassPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.vasya.document.*;
-import ru.vasya.staff.Person;
+import ru.vasya.model.document.*;
+import ru.vasya.model.staff.Person;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -16,13 +16,13 @@ public class DocService {
 
     private static DocService instance;
     private DocumentFactory df;
-    private Set<Integer> registeredDocNumbers;
+    private Set<String> registeredDocNumbers;
     private List<Class> docClasses;
     private Random rand;
 
     private DocService(){
         df = DocumentFactory.getInstance();
-        registeredDocNumbers = new HashSet<Integer>();
+        registeredDocNumbers = new HashSet<String>();
         rand = new Random();
         docClasses = getDocumentClasses();
     }
@@ -35,7 +35,7 @@ public class DocService {
     }
 
     public void registerDocument(Document d) throws DocumentExistsException{
-        int regNum = rand.nextInt(MAX_REGISTRATION_NUMBER);
+        String regNum = "" + rand.nextInt(MAX_REGISTRATION_NUMBER);
         d.setRegistrationNumber(regNum);
         d.setRegisterDate(new Date());
         if(registeredDocNumbers.contains(regNum))
@@ -70,7 +70,7 @@ public class DocService {
         try {
             ClassPath classpath = ClassPath.from(Thread.currentThread().getContextClassLoader());
             Class c = null;
-            for (ClassPath.ClassInfo classInfo : classpath.getTopLevelClassesRecursive("ru.vasya.document")) {
+            for (ClassPath.ClassInfo classInfo : classpath.getTopLevelClassesRecursive("ru.vasya.model.document")) {
                 c = classInfo.load();
                 for (Annotation annotation:c.getAnnotations()) {
                     if(annotation.annotationType().equals(SedItem.class)){

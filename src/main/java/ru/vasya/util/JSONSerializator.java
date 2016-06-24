@@ -1,18 +1,25 @@
 package ru.vasya.util;
 
 import java.io.*;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.vasya.document.Task;
-import ru.vasya.document.TaskSerializer;
+import ru.vasya.model.document.Task;
+import ru.vasya.model.document.TaskSerializer;
+import ru.vasya.model.staff.Department;
+import ru.vasya.model.staff.Organization;
+import ru.vasya.model.staff.Person;
+import ru.vasya.model.staff.Staff;
 
 public class JSONSerializator {
     private static final Logger LOGGER = LoggerFactory.getLogger(JSONSerializator.class);
     private static JSONSerializator instance;
-    Gson gson;
+    private Gson gson;
 
     private JSONSerializator(){
         gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Task.class, new TaskSerializer()).create();
@@ -31,12 +38,19 @@ public class JSONSerializator {
             writer = new FileWriter(f);
             writer.write(gson.toJson(o));
             writer.flush();
-            writer.close();
         }catch (IOException e){
             LOGGER.error("Could not write file: " + f.getAbsolutePath(), e);
+        } finally {
+            if (writer!=null) {
+                try {
+                    writer.close();
+                } catch (IOException e){
+                    LOGGER.error("Could not close file: " + f.getAbsolutePath(), e);
+                }
+            }
         }
     }
-    /*
+
     public List<Staff> unmarshal(Class c, File f){
         BufferedReader reader = null ;
         StringBuilder inputStringBuilder = new StringBuilder();
@@ -50,8 +64,15 @@ public class JSONSerializator {
             LOGGER.error("File not found: " + f.getAbsolutePath(), e);
         } catch (IOException e){
             LOGGER.error("Could not read file: " + f.getAbsolutePath(), e);
+        } finally {
+            if (reader!=null) {
+                try {
+                    reader.close();
+                } catch (IOException e){
+                    LOGGER.error("Could not close file: " + f.getAbsolutePath(), e);
+                }
+            }
         }
-
         Type collectionType = null;
         if(Person.class.equals(c)) {
             collectionType = new TypeToken<List<Person>>(){}.getType();
@@ -63,5 +84,5 @@ public class JSONSerializator {
         List<Staff> result = gson.fromJson(inputStringBuilder.toString(),collectionType);
         return result;
     }
-    */
+
 }

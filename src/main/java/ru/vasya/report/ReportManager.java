@@ -1,8 +1,8 @@
 package ru.vasya.report;
 
 
-import ru.vasya.document.Document;
-import ru.vasya.staff.Person;
+import ru.vasya.model.document.Document;
+import ru.vasya.model.staff.Person;
 import ru.vasya.util.JSONSerializator;
 
 import java.io.File;

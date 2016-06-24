@@ -1,6 +1,6 @@
-package ru.vasya.document;
+package ru.vasya.model.document;
 
-import ru.vasya.staff.Person;
+import ru.vasya.model.staff.Person;
 
 @SedItem
 public class Outgoing extends Document {

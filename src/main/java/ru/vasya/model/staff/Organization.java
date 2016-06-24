@@ -1,4 +1,4 @@
-package ru.vasya.staff;
+package ru.vasya.model.staff;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 public class Organization extends Staff {
     private String fullName;
     private String shortName;
-    private String head;
+    private Person head;
     private String contacts;
 
     public Organization(){
@@ -34,12 +34,12 @@ public class Organization extends Staff {
         this.shortName = shortName;
     }
 
-    public String getHead() {
+    public Person getHead() {
         return head;
     }
 
     @XmlElement
-    public void setHead(String head) {
+    public void setHead(Person head) {
         this.head = head;
     }
 

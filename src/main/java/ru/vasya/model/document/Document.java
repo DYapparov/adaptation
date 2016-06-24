@@ -1,7 +1,7 @@
-package ru.vasya.document;
+package ru.vasya.model.document;
 
 
-import ru.vasya.staff.Person;
+import ru.vasya.model.staff.Person;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +17,7 @@ public abstract class Document implements Comparable, Storable {
     private int id;
     private String docName;
     private String text;
-    private Integer registrationNumber;
+    private String registrationNumber;
     private Date registerDate;
     private Person author;
 
@@ -45,11 +45,11 @@ public abstract class Document implements Comparable, Storable {
         this.text = text;
     }
 
-    public Integer getRegistrationNumber() {
+    public String getRegistrationNumber() {
         return registrationNumber;
     }
 
-    public void setRegistrationNumber(Integer registerNumber) {
+    public void setRegistrationNumber(String registerNumber) {
         this.registrationNumber = registerNumber;
     }
 
@@ -89,6 +89,7 @@ public abstract class Document implements Comparable, Storable {
     }
 
     public String getTable() {
-        return this.getClass().getSimpleName();
+        // --------------------------------  to do название таблицы
+        return "";
     }
 }

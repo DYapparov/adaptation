@@ -1,4 +1,4 @@
-package ru.vasya.staff;
+package ru.vasya.model.staff;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

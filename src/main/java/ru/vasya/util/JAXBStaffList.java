@@ -1,4 +1,8 @@
-package ru.vasya.staff;
+package ru.vasya.util;
+
+import ru.vasya.model.staff.Department;
+import ru.vasya.model.staff.Organization;
+import ru.vasya.model.staff.Person;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
