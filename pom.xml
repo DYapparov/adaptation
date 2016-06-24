@@ -7,11 +7,14 @@
     <groupId>ru.vasya</groupId>
     <artifactId>Adaptation</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
 
     <properties>
         <main.class>ru.vasya.Main</main.class>
         <output.Directory>C:\Users\dyapparov\Desktop</output.Directory>
+        <final.Name>Adaptation</final.Name>
+        <phase.param>package</phase.param>
     </properties>
 
     <profiles>
@@ -20,6 +23,7 @@
             <properties>
                 <main.class>ru.vasya.layout.SwingLayout</main.class>
                 <output.Directory>C:\Users\dyapparov\Desktop\SwingPackage</output.Directory>
+                <final.Name>Adaptation-swing</final.Name>
             </properties>
         </profile>
         <profile>
@@ -27,6 +31,7 @@
             <properties>
                 <main.class>ru.vasya.layout.JavaFXLayout</main.class>
                 <output.Directory>C:\Users\dyapparov\Desktop\JavaFXPackage</output.Directory>
+                <final.Name>Adaptation-javafx</final.Name>
             </properties>
         </profile>
     </profiles>
@@ -67,6 +72,8 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4.1</version>
                 <configuration>
+                    <finalName>${final.Name}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
@@ -80,12 +87,22 @@
                 <executions>
                     <execution>
                         <id>make-assembly</id>
-                        <phase>package</phase>
+                        <phase>${phase.param}</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <outputDirectory>C:\Users\dyapparov\Desktop\War</outputDirectory>
+                    <webXml>web\WEB-INF\web.xml</webXml>
+                </configuration>
             </plugin>
 
             <plugin>
