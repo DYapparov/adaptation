@@ -62,6 +62,11 @@
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.12.1.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -112,6 +117,46 @@
                     <mainClass>${main.class}</mainClass>
                 </configuration>
             </plugin>
+
+            <!--plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.5.0</version>
+                <configuration>
+                    <wait>true</wait>
+                    <container>
+                        <containerId>glassfish4x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.hostname>172.16.124.194</cargo.hostname>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password>12345678</cargo.remote.password>
+                            <cargo.glassfish.admin.port>4848</cargo.glassfish.admin.port>
+                            <cargo.glassfish.domain.name>domain1</cargo.glassfish.domain.name>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/app</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.glassfish.deployment</groupId>
+                        <artifactId>deployment-client</artifactId>
+                        <version>3.2-b06</version>
+                    </dependency>
+                </dependencies>
+            </plugin-->
         </plugins>
     </build>
 </project>

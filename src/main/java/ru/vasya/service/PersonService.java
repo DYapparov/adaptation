@@ -6,6 +6,11 @@ import ru.vasya.model.staff.Organization;
 import ru.vasya.model.staff.Person;
 import ru.vasya.util.XMLSerializator;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -13,13 +18,15 @@ import java.util.List;
 import java.util.Random;
 
 //----------------------Delete...or not
+@ApplicationScoped
 public class PersonService {
     private static PersonService instance;
+
     XMLSerializator xmlSerializator;
 
     private List<Person> persons;
 
-    private PersonService(){
+    public PersonService(){
         xmlSerializator = XMLSerializator.getInstance();
     }
 

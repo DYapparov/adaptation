@@ -6,6 +6,8 @@ import ru.vasya.service.DocService;
 import ru.vasya.service.PersonService;
 import ru.vasya.util.JAXBDocumentCollection;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -14,21 +16,39 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Set;
 
+@RequestScoped
 @Path("/ecm")
 public class EmployeesController {
+
+    @Inject
+    PersonService ps;
+
+    @Inject
+    DocService ds;
 
     @GET
     @Path("/employees")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Person> getEmployees(){
-        return PersonService.getInstance().getPersonList();
+        return ps.getPersonList();
     }
 
     @GET
     @Path("/employees/{id}")
     @Produces(MediaType.APPLICATION_XML)
-    public JAXBDocumentCollection getPerson(@PathParam("id") int id){
-        Set<Document> docs = DocService.getInstance().getRandomDocs(100).get(PersonService.getInstance().getPersonList().get(id));
+    public JAXBDocumentCollection getPersonDocs(@PathParam("id") int id){
+        Set<Document> docs = ds.getRandomDocs(100).get(ps.getPersonList().get(id));
         return new JAXBDocumentCollection(docs);
+    }
+
+    //Ne katit :
+    //MessageBodyWriter not found for media type=application/xml,
+    //type=class [Ljava.lang.Object;, genericType=class [Ljava.lang.Object;
+    @GET
+    @Path("/employees/array/{id}")
+    @Produces(MediaType.APPLICATION_XML)
+    public Document[] getPersonDocsAsArray(@PathParam("id") int id){
+        Set<Document> docs = ds.getRandomDocs(100).get(ps.getPersonList().get(id));
+        return (Document[])docs.toArray();
     }
 }

@@ -5,9 +5,12 @@ import org.slf4j.LoggerFactory;
 import ru.vasya.service.PersonService;
 import ru.vasya.model.staff.Person;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.util.*;
 
+@ApplicationScoped
 public class DocumentFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentFactory.class);
 

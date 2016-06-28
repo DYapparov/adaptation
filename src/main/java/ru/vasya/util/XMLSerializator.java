@@ -4,12 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vasya.model.staff.Staff;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
+
 
 public class XMLSerializator {
     private static final Logger LOGGER = LoggerFactory.getLogger(XMLSerializator.class);
