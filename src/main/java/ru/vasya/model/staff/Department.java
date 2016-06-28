@@ -1,12 +1,14 @@
 package ru.vasya.model.staff;
 
+import ru.vasya.model.document.Storable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
 @XmlType
-public class Department extends Staff {
+public class Department extends Staff implements Comparable, Storable {
     private String fullName;
     private String shortName;
     private Person head;
@@ -50,6 +52,14 @@ public class Department extends Staff {
     @XmlElement
     public void setContacts(String contacts) {
         this.contacts = contacts;
+    }
+
+    public int compareTo(Object o) {
+        return fullName.compareTo(((Department)o).fullName);
+    }
+
+    public String getTable() {
+        return this.getClass().getSimpleName();
     }
 
     @Override

@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@XmlRootElement
+@XmlRootElement(name = "documents")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlSeeAlso({Task.class, Incoming.class, Outgoing.class})
 public class JAXBDocumentCollection {

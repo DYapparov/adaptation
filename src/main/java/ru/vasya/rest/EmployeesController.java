@@ -49,6 +49,8 @@ public class EmployeesController {
     @Produces(MediaType.APPLICATION_XML)
     public Document[] getPersonDocsAsArray(@PathParam("id") int id){
         Set<Document> docs = ds.getRandomDocs(100).get(ps.getPersonList().get(id));
-        return (Document[])docs.toArray();
+        Document[] docsArr = new Document[100];
+        docs.toArray(docsArr);
+        return docsArr;
     }
 }
