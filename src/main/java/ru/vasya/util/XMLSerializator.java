@@ -4,7 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vasya.model.staff.Staff;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -12,12 +15,12 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
-
+@Stateless
 public class XMLSerializator {
     private static final Logger LOGGER = LoggerFactory.getLogger(XMLSerializator.class);
     private static XMLSerializator instance;
 
-    private XMLSerializator(){}
+    public XMLSerializator(){}
 
     public static XMLSerializator getInstance(){
         if (instance==null){

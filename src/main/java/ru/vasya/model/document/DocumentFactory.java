@@ -3,25 +3,29 @@ package ru.vasya.model.document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vasya.service.PersonService;
+import ru.vasya.service.PersonServiceImpl;
 import ru.vasya.model.staff.Person;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.util.*;
 
-@ApplicationScoped
+@Stateless
 public class DocumentFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentFactory.class);
 
     //private ArrayList<String> persons = new ArrayList<String>(Arrays.asList("First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"));
     private Random rand = new Random();
     private int counter = 0;
-    private PersonService personService;
+
+    @EJB
+    private PersonService personServiceImpl;
+
     private static DocumentFactory instance;
 
-    private DocumentFactory(){
-        personService = PersonService.getInstance();
+    public DocumentFactory(){
     }
 
     public static DocumentFactory getInstance(){
@@ -61,7 +65,7 @@ public class DocumentFactory {
         return result;
     }
     private Person getRandomPerson(){
-        return personService.getPersonList().get(rand.nextInt(personService.getPersonList().size()));
+        return personServiceImpl.getPersonList().get(rand.nextInt(personServiceImpl.getPersonList().size()));
     }
 
     private int getRandomInt(int max){

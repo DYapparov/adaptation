@@ -6,23 +6,28 @@ import org.slf4j.LoggerFactory;
 import ru.vasya.model.document.*;
 import ru.vasya.model.staff.Person;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.*;
 
-@ApplicationScoped
+@Stateless
 public class DocService {
     private static final int MAX_REGISTRATION_NUMBER = 1000;
     private static final Logger LOGGER = LoggerFactory.getLogger(DocService.class);
     private static DocService instance;
+
+    @EJB
     private DocumentFactory df;
+
     private Set<String> registeredDocNumbers;
     private List<Class> docClasses;
     private Random rand;
 
     public DocService(){
-        df = DocumentFactory.getInstance();
         registeredDocNumbers = new HashSet<String>();
         rand = new Random();
         docClasses = getDocumentClasses();

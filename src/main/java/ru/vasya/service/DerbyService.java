@@ -213,7 +213,7 @@ public class DerbyService {
 
     public static void main(String[] args) {
         DerbyService dBs = getInstance();
-        PersonService ps = PersonService.getInstance();
+        PersonServiceImpl ps = PersonServiceImpl.getInstance();
         dBs.createTable(Person.class);
         List<Person> persons = ps.getPersonList();
         for (Person p : persons){

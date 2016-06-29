@@ -4,9 +4,10 @@ import ru.vasya.model.document.Document;
 import ru.vasya.model.staff.Person;
 import ru.vasya.service.DocService;
 import ru.vasya.service.PersonService;
+import ru.vasya.service.PersonServiceImpl;
 import ru.vasya.util.JAXBDocumentCollection;
 
-import javax.enterprise.context.RequestScoped;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,14 +17,14 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Set;
 
-@RequestScoped
+
 @Path("/ecm")
 public class EmployeesController {
 
-    @Inject
+    @EJB
     PersonService ps;
 
-    @Inject
+    @EJB
     DocService ds;
 
     @GET
