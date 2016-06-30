@@ -8,7 +8,6 @@ import ru.vasya.util.XMLSerializator;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ public class PersonServiceImpl implements PersonService {
     private List<Person> persons;
 
     public PersonServiceImpl(){
+        xmlSerializator = XMLSerializator.getInstance();
     }
 
     public static PersonServiceImpl getInstance(){
@@ -57,7 +57,7 @@ public class PersonServiceImpl implements PersonService {
             p.setId(i);
             p.setFirstName(randomWord(6));
             p.setLastName(randomWord(8));
-            p.setMidleName(randomWord(10));
+            p.setMiddleName(randomWord(10));
             p.setPosition("Slave");
             result.add(p);
         }

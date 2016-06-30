@@ -1,7 +1,13 @@
 package ru.vasya.model.staff;
 
 
-public abstract class Staff {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.io.Serializable;
+
+@Entity
+public abstract class Staff implements Serializable {
+    @Id
     private int id;
 
     public int getId(){

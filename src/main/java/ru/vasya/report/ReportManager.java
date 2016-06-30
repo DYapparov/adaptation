@@ -28,7 +28,7 @@ public class ReportManager {
     public static void saveDocsToJSON(Map<Person, TreeSet<Document>> docs){
         JSONSerializator jsonSerializator = JSONSerializator.getInstance();
         for(Person p: docs.keySet()){
-            File f = new File(p.getLastName() + " " + p.getFirstName() + " " + p.getMidleName() + ".json");
+            File f = new File(p.getLastName() + " " + p.getFirstName() + " " + p.getMiddleName() + ".json");
             jsonSerializator.marshal(docs.get(p), f);
         }
     }

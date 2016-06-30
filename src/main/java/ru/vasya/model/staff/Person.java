@@ -1,15 +1,19 @@
 package ru.vasya.model.staff;
 
+import ru.vasya.model.document.Storable;
+
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+@Entity
 @XmlRootElement
 @XmlType
-public class Person extends Staff implements Comparable {
+public class Person extends Staff implements Comparable, Storable {
     private String lastName;
     private String firstName;
-    private String midleName;
+    private String middleName;
     private String position;
 
     public Person(){
@@ -34,13 +38,13 @@ public class Person extends Staff implements Comparable {
         this.firstName = firstName;
     }
 
-    public String getMidleName() {
-        return midleName;
+    public String getMiddleName() {
+        return middleName;
     }
 
     @XmlElement
-    public void setMidleName(String midleName) {
-        this.midleName = midleName;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public String getPosition() {
@@ -57,14 +61,18 @@ public class Person extends Staff implements Comparable {
         if (result==0){
             result = firstName.compareTo(p.firstName);
             if (result == 0){
-                result = midleName.compareTo(p.midleName);
+                result = middleName.compareTo(p.middleName);
             }
         }
         return result;
     }
 
+    public String getTable() {
+        return this.getClass().getSimpleName();
+    }
+
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "(id " + getId() + "): " + lastName + " " + firstName + " " + midleName + ", " + position;
+        return this.getClass().getSimpleName() + "(id " + getId() + "): " + lastName + " " + firstName + " " + middleName + ", " + position;
     }
 }
