@@ -1,44 +1,49 @@
 package ru.vasya.service.query;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import ru.vasya.service.query.parts.FieldsPart;
+import ru.vasya.service.query.parts.Table;
 
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class InsertQuery implements Query {
-    private Class clazz;
-    private Set valuesSet = new HashSet();
+/**
+ * Created by dyapparov on 30.06.2016.
+ */
+public class InsertQuery extends Query {
+    private Table into;
+    private Collection<FieldsPart> values = new ArrayList<FieldsPart>();
 
-    public InsertQuery(Class c){
-        clazz = c;
+    public Table getInto() {
+        return into;
     }
 
-    public InsertQuery addUpdateValue(String field, Object value){
-        valuesSet.add(Criteria.equals(field, value));
-        return this;
+    public void setInto(Table into) {
+        this.into = into;
     }
 
-    private String generateUpdateClause(){
-        StringBuilder fields = new StringBuilder();
-        StringBuilder values = new StringBuilder();
-        for(Iterator it = valuesSet.iterator(); it.hasNext();){
-            Criteria c = (Criteria) it.next();
-            if (fields.length()!=0){
-                fields.append(", ");
-                values.append(", ");
-            } else {
-                fields.append(" (");
-                values.append(" VALUES (");
-            }
-            fields.append(c.getField());
-            values.append(c.getValue());
+    public Collection<FieldsPart> getValues() {
+        return values;
+    }
+
+    public void setValues(Collection<FieldsPart> values) {
+        this.values = values;
+    }
+
+    public static Builder builder(){
+        return new InsertQuery().new Builder();
+    }
+
+    public class Builder {
+        public Builder setTable(Table table){
+            InsertQuery.this.setInto(table);
+            return this;
         }
-        fields.append(") ");
-        values.append(") ");
-        return fields.toString() + values.toString();
-    }
-
-    public String toSQL(){
-        return "INSERT INTO " + clazz.getSimpleName() + generateUpdateClause();
+        public Builder addValue(FieldsPart value){
+            InsertQuery.this.values.add(value);
+            return this;
+        }
+        public InsertQuery build(){
+            return InsertQuery.this;
+        }
     }
 }

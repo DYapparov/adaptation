@@ -1,106 +1,66 @@
 package ru.vasya.service.query;
 
+import ru.vasya.service.query.parts.FieldToSelect;
+import ru.vasya.service.query.parts.FieldsPart;
+import ru.vasya.service.query.parts.Table;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class SelectQuery implements Query {
-    private Class clazz;
-    private List criterias = new LinkedList();
+/**
+ * Created by dyapparov on 30.06.2016.
+ */
+public class SelectQuery extends Query {
+    private Collection<FieldToSelect> fields = new ArrayList<FieldToSelect>();
+    private Table from;
+    private Collection<FieldsPart> fieldsParts = new ArrayList<FieldsPart>();
 
-    public SelectQuery(Class c){
-        clazz = c;
+    public Collection<FieldToSelect> getFields() {
+        return fields;
     }
 
-    public SelectQuery addCriteria(Criteria c){
-        criterias.add(c);
-        return this;
+    public void setFields(Collection<FieldToSelect> fields) {
+        this.fields = fields;
     }
 
-    private String generateWhereClause(){
-        StringBuilder result = new StringBuilder();
-        for(Iterator it = criterias.iterator(); it.hasNext();){
-            Criteria c = (Criteria) it.next();
-            if (result.length()!=0){
-                result.append(" AND ");
-            } else {
-                result.append(" WHERE ");
-            }
-            result.append(c.toSQL());
+    public Table getFrom() {
+        return from;
+    }
+
+    public void setFrom(Table from) {
+        this.from = from;
+    }
+
+    public Collection<FieldsPart> getFieldsParts() {
+        return fieldsParts;
+    }
+
+    public void setFieldsParts(Collection<FieldsPart> fieldsParts) {
+        this.fieldsParts = fieldsParts;
+    }
+
+    public static Builder builder() {
+        return new SelectQuery().new Builder();
+    }
+
+    public class Builder {
+        public Builder setTable(Table table) {
+            SelectQuery.this.setFrom(table);
+            return this;
         }
-        return result.toString();
-    }
 
-    public String toSQL(){
-        return "SELECT * FROM " + clazz.getSimpleName() + generateWhereClause();
-    }
-}
+        public Builder addField(FieldToSelect field) {
+            SelectQuery.this.fields.add(field);
+            return this;
+        }
 
+        public Builder addWherePart(FieldsPart fieldsPart) {
+            SelectQuery.this.fieldsParts.add(fieldsPart);
+            return this;
+        }
 
-/*
-abstract class QueryType{
-}
-
-class Select extends QueryType{
-
-    private String[] fields;
-
-    public Select(){
-        fields = new String[]{"*"};
-    }
-
-    public Select(String... fields){
-        this.fields = fields;
-    }
-
-    @Override
-    public String toString(){
-        return this.getClass().getSimpleName().toUpperCase() + " " + fields + " FROM ";
+        public SelectQuery build() {
+            return SelectQuery.this;
+        }
     }
 }
-
-class Delete extends QueryType{
-
-    @Override
-    public String toString(){
-        return this.getClass().getSimpleName().toUpperCase() + " FROM ";
-    }
-}
-
-class Update extends QueryType{
-
-    private String[] fields;
-
-    public Update(){
-        fields = new String[]{"*"};
-    }
-
-    public Update(String... fields){
-        this.fields = fields;
-    }
-
-    @Override
-    public String toString(){
-        return this.getClass().getSimpleName().toUpperCase() + " + " FROM ";
-    }
-}
-
-class Insert extends QueryType{
-
-    private String[] fields;
-
-    public Select(){
-        fields = new String[]{"*"};
-    }
-
-    public Select(String... fields){
-        this.fields = fields;
-    }
-
-    @Override
-    public String toString(){
-        return this.getClass().getSimpleName().toUpperCase() + " " + fields + " FROM ";
-    }
-}
-*/

@@ -1,56 +1,66 @@
 package ru.vasya.service.query;
 
+import ru.vasya.service.query.parts.FieldsPart;
+import ru.vasya.service.query.parts.Table;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class UpdateQuery implements Query {
-    private Class clazz;
-    private List criterias = new LinkedList();
-    private Set values = new HashSet();
+/**
+ * Created by dyapparov on 30.06.2016.
+ */
+public class UpdateQuery extends  Query {
+    private Collection<FieldsPart> updatefields = new ArrayList<FieldsPart>();
+    private Table table;
+    private Collection<FieldsPart> whereFields = new ArrayList<FieldsPart>();
 
-    public UpdateQuery(Class c){
-        clazz = c;
+    public Collection<FieldsPart> getUpdatefields() {
+        return updatefields;
     }
 
-    public UpdateQuery addCriteria(Criteria c){
-        criterias.add(c);
-        return this;
+    public void setUpdatefields(Collection<FieldsPart> updatefields) {
+        this.updatefields = updatefields;
     }
 
-    public UpdateQuery addUpdateValue(String field, Object value){
-        values.add(Criteria.equals(field, value));
-        return this;
+    public Table getTable() {
+        return table;
     }
 
-    private String generateWhereClause(){
-        StringBuilder result = new StringBuilder();
-        for(Iterator it = criterias.iterator(); it.hasNext();){
-            Criteria c = (Criteria) it.next();
-            if (result.length()!=0){
-                result.append(" AND ");
-            } else {
-                result.append(" WHERE ");
-            }
-            result.append(c.toSQL());
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
+    public Collection<FieldsPart> getWhereFields() {
+        return whereFields;
+    }
+
+    public void setWhereFields(Collection<FieldsPart> whereFields) {
+        this.whereFields = whereFields;
+    }
+
+    public static Builder builder(){
+        return new UpdateQuery().new Builder();
+    }
+
+    public class Builder{
+        public Builder setTable(Table table){
+            UpdateQuery.this.setTable(table);
+            return this;
         }
-        return result.toString();
-    }
 
-    private String generateUpdateClause(){
-        StringBuilder result = new StringBuilder();
-        for(Iterator it = values.iterator(); it.hasNext();){
-            Criteria c = (Criteria) it.next();
-            if (result.length()!=0){
-                result.append(", ");
-            } else {
-                result.append(" SET ");
-            }
-            result.append(c.toSQL());
+        public Builder addUpdateField(FieldsPart field){
+            UpdateQuery.this.updatefields.add(field);
+            return this;
         }
-        return result.toString();
+
+        public Builder addWherePart(FieldsPart where){
+            UpdateQuery.this.whereFields.add(where);
+            return this;
+        }
+
+        public UpdateQuery build(){
+            return UpdateQuery.this;
+        }
     }
 
-    public String toSQL(){
-        return "UPDATE " + clazz.getSimpleName() + generateUpdateClause() + generateWhereClause();
-    }
 }

@@ -1,38 +1,52 @@
 package ru.vasya.service.query;
 
+import ru.vasya.service.query.parts.FieldsPart;
+import ru.vasya.service.query.parts.Table;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class DeleteQuery implements Query {
-    private Class clazz;
-    private List criterias = new LinkedList();
+/**
+ * Created by dyapparov on 30.06.2016.
+ */
+public class DeleteQuery extends Query {
+    private Table table;
+    private Collection<FieldsPart> whereFields = new ArrayList<FieldsPart>();
 
-    public DeleteQuery(Class c){
-        clazz = c;
+    public Table getTable() {
+        return table;
     }
 
-    public DeleteQuery addCriteria(Criteria c){
-        criterias.add(c);
-        return this;
+    public void setTable(Table table) {
+        this.table = table;
     }
 
-    private String generateWhereClause(){
-        StringBuilder result = new StringBuilder();
-        for(Iterator it = criterias.iterator(); it.hasNext();){
-            Criteria c = (Criteria) it.next();
-            if (result.length()!=0){
-                result.append(" AND ");
-            } else {
-                result.append(" WHERE ");
-            }
-            result.append(c.toSQL());
+    public Collection<FieldsPart> getWhereFields() {
+        return whereFields;
+    }
+
+    public void setWhereFields(Collection<FieldsPart> whereFields) {
+        this.whereFields = whereFields;
+    }
+
+    public static Builder builder(){
+        return new DeleteQuery().new Builder();
+    }
+
+    public class Builder{
+        public Builder setTable(Table table){
+            DeleteQuery.this.setTable(table);
+            return this;
         }
-        return result.toString();
+
+        public Builder addWherePart(FieldsPart where){
+            DeleteQuery.this.whereFields.add(where);
+            return this;
+        }
+
+        public DeleteQuery build(){
+            return DeleteQuery.this;
+        }
     }
 
-    public String toSQL(){
-        return "DELETE FROM " + clazz.getSimpleName() + generateWhereClause();
-    }
 }

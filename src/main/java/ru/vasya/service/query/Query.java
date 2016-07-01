@@ -1,6 +1,7 @@
 package ru.vasya.service.query;
 
-
-public interface Query {
-    String toSQL();
+/**
+ * Created by dyapparov on 30.06.2016.
+ */
+public abstract class Query {
 }

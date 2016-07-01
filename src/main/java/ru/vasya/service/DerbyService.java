@@ -8,6 +8,10 @@ import ru.vasya.model.staff.Department;
 import ru.vasya.model.staff.Person;
 import ru.vasya.model.staff.Staff;
 import ru.vasya.service.query.*;
+import ru.vasya.service.query.parts.FieldToSelect;
+import ru.vasya.service.query.parts.FieldsPart;
+import ru.vasya.service.query.parts.LogicalOperation;
+import ru.vasya.service.query.parts.Table;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -20,19 +24,6 @@ import java.util.TreeSet;
 
 public class DerbyService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DerbyService.class);
-
-    private static DerbyService instance;
-
-    private DerbyService(){
-
-    }
-
-    public static DerbyService getInstance(){
-        if(instance==null){
-            instance = new DerbyService();
-        }
-        return instance;
-    }
 
     public void createTable(Class c){
         Connection conn = DerbyConnection.getConnection();
@@ -65,12 +56,20 @@ public class DerbyService {
     public void insertItem(Staff item){
         Connection conn = DerbyConnection.getConnection();
         try {
-            QueryBuilder q = QueryBuilder.insertQuery(item);
-            System.out.println(q.toSQL());
-            PreparedStatement st = conn.prepareStatement(q.toSQL());
+            InsertQuery.Builder builder = InsertQuery.builder().setTable(new Table(item.getClass().getSimpleName(), item.getClass().getSimpleName()));
+            for (Field f: item.getClass().getDeclaredFields()){
+                f.setAccessible(true);
+                builder.addValue(new FieldsPart(new FieldToSelect(f.getName(), f.getName().toUpperCase()), f.get(item), LogicalOperation.EQUALS));
+            }
+            builder.addValue(new FieldsPart(new FieldToSelect("id", "ID"), item.getId(), LogicalOperation.EQUALS));
+            PreparedStatement st = conn.prepareStatement(QueryToSqlConverter.convert(builder.build()));
             st.execute();
         } catch (SQLException e){
             LOGGER.error("Could not insert new item in table " + item.getClass().getSimpleName(), e);
+        } catch (IllegalAccessException e) {
+            LOGGER.error("Could not read values of " + item, e);
+        } catch (Exception e){
+            LOGGER.error("Convertion to SQL failed ", e);
         } finally {
             closeConnection(conn);
         }
@@ -80,10 +79,16 @@ public class DerbyService {
         Staff s = null;
         Connection conn = DerbyConnection.getConnection();
         try {
-            QueryBuilder q = QueryBuilder.selectQuery(c);
-            q.addCriteria(Criteria.equals("id", id));
+            SelectQuery.Builder builder = SelectQuery.builder().setTable(new Table(c.getSimpleName(), c.getSimpleName().toUpperCase()));
+            for (Field f: c.getDeclaredFields()){
+                builder.addField(new FieldToSelect(f.getName().toUpperCase(), f.getName()));
+            }
+            builder.addField(new FieldToSelect("id", "ID"));
+            builder.addWherePart(new FieldsPart(new FieldToSelect("id", "ID"), id, LogicalOperation.EQUALS));
             s = (Staff)c.newInstance();
-            PreparedStatement ps = conn.prepareStatement(q.toSQL());
+            SelectQuery query = builder.build();
+            LOGGER.info(QueryToSqlConverter.convert(query));//----------------------------------------------------------
+            PreparedStatement ps = conn.prepareStatement(QueryToSqlConverter.convert(query));
             ResultSet rs = ps.executeQuery();
             rs.next();
             s.setId(rs.getInt("id"));
@@ -101,6 +106,10 @@ public class DerbyService {
             LOGGER.error("Could not instantiate new object " + c.getSimpleName(), e);
         } catch (IllegalAccessException e){
             LOGGER.error("Could not instantiate new object " + c.getSimpleName(), e);
+        } catch (Exception e){
+            LOGGER.error("Convertion to SQL failed ", e);
+        } finally {
+            closeConnection(conn);
         }
 
         return s;
@@ -110,8 +119,14 @@ public class DerbyService {
         Set<Staff> staff = new TreeSet<Staff>();
         Connection conn = DerbyConnection.getConnection();
         try {
-            QueryBuilder q = QueryBuilder.selectQuery(c);
-            ResultSet rs = conn.prepareStatement(q.toSQL()).executeQuery();
+            SelectQuery.Builder builder = SelectQuery.builder().setTable(new Table(c.getSimpleName(), c.getSimpleName()));
+            for (Field f: c.getDeclaredFields()){
+                builder.addField(new FieldToSelect(f.getName(), f.getName().toUpperCase()));
+            }
+            builder.addField(new FieldToSelect("id", "ID"));
+            SelectQuery query = builder.build();
+            LOGGER.info(QueryToSqlConverter.convert(query));//----------------------------------------------------------
+            ResultSet rs = conn.prepareStatement(QueryToSqlConverter.convert(query)).executeQuery();
             while (rs.next()){
                 Staff s = (Staff) c.newInstance();
                 s.setId(rs.getInt("id"));
@@ -131,8 +146,9 @@ public class DerbyService {
             LOGGER.error("Could not instantiate new object " + c.getSimpleName(), e);
         } catch (IllegalAccessException e){
             LOGGER.error("Could not instantiate new object " + c.getSimpleName(), e);
-        }
-        finally {
+        } catch (Exception e){
+            LOGGER.error("Convertion to SQL failed ", e);
+        } finally {
             closeConnection(conn);
         }
 
@@ -142,12 +158,20 @@ public class DerbyService {
     public void updateItem(Staff item){
         Connection conn = DerbyConnection.getConnection();
         try {
-            QueryBuilder q = QueryBuilder.updateQuery(item);
-            q.addCriteria(Criteria.equals("id", item.getId()));
-            PreparedStatement st = conn.prepareStatement(q.toSQL());
+            UpdateQuery.Builder builder = UpdateQuery.builder().setTable(new Table(item.getClass().getSimpleName(), item.getClass().getSimpleName()));
+            builder.addWherePart(new FieldsPart(new FieldToSelect("id", "ID"), item.getId(), LogicalOperation.EQUALS));
+            for (Field f: item.getClass().getDeclaredFields()){
+                f.setAccessible(true);
+                builder.addUpdateField(new FieldsPart(new FieldToSelect(f.getName(), f.getName().toUpperCase()), f.get(item), LogicalOperation.EQUALS));
+            }
+            PreparedStatement st = conn.prepareStatement(QueryToSqlConverter.convert(builder.build()));
             st.executeUpdate();
         } catch (SQLException e){
-            LOGGER.error("Could not insert new item in table " + item.getClass().getSimpleName(), e);
+            LOGGER.error("Could not update item in table " + item, e);
+        } catch (IllegalAccessException e){
+            LOGGER.error("Could not read object fields for " + item, e);
+        } catch (Exception e){
+            LOGGER.error("Convertion to SQL failed ", e);
         } finally {
             closeConnection(conn);
         }
@@ -156,12 +180,14 @@ public class DerbyService {
     public void deleteItem(Staff item){
         Connection conn = DerbyConnection.getConnection();
         try {
-            QueryBuilder q = QueryBuilder.deleteQuery(item);
-            q.addCriteria(Criteria.equals("id", item.getId()));
-            PreparedStatement st = conn.prepareStatement(q.toSQL());
+            DeleteQuery.Builder builder = DeleteQuery.builder().setTable(new Table(item.getClass().getSimpleName(), item.getClass().getSimpleName()));
+            builder.addWherePart(new FieldsPart(new FieldToSelect("id", "ID"), item.getId(), LogicalOperation.EQUALS));
+            PreparedStatement st = conn.prepareStatement(QueryToSqlConverter.convert(builder.build()));
             st.execute();
         } catch (SQLException e){
             LOGGER.error("Could not insert new item in table " + item.getClass().getSimpleName(), e);
+        } catch (Exception e){
+            LOGGER.error("Convertion to SQL failed ", e);
         } finally {
             closeConnection(conn);
         }
@@ -178,7 +204,7 @@ public class DerbyService {
     }
 
     public static void main(String[] args) {
-        DerbyService dBs = getInstance();
+        DerbyService dBs = new DerbyService();
         dBs.createTable(Person.class);
         dBs.createTable(Department.class);
 
