@@ -1,14 +1,12 @@
-package ru.vasya.model.document;
+package ru.vasya.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.vasya.service.PersonService;
-import ru.vasya.service.PersonServiceImpl;
+import ru.vasya.model.document.Document;
 import ru.vasya.model.staff.Person;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.util.*;
 

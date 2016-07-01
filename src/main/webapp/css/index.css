@@ -1,0 +1,66 @@
+body{
+    background: papayawhip;
+}
+
+.row1 {
+    background-color: papayawhip;
+}
+
+table{
+    width: 100%;
+    horiz-align: center;
+    border: none;
+}
+
+tr{
+    border-bottom: solid black 2px;
+}
+
+.detailsButton{
+    border: none;
+}
+
+.tableHeader{
+    background: burlywood;
+    text-align: center;
+}
+.detailsButton {
+    text-align: center;
+}
+
+#wrapper{
+    background: white;
+    width: 80%;
+    margin: 2% auto;
+    padding: 0 3% 3% 3%;
+}
+
+h1{
+    text-align: center;
+    margin: auto;
+    padding: 1em 0;
+    color: #B76A2F;
+}
+
+#documentDetailsForm {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#documentDetailsForm table{
+    margin: 0 auto;
+    width: 50%;
+}
+
+#documentDetailsForm td {
+    text-align: left;
+}
+
+#documentDetailsForm td input {
+    width: 25em;
+    text-align: left;
+}
+
+#documentDetailsForm td .iarrr {
+    width: 10em;
+}

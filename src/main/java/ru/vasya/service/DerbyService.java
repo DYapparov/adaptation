@@ -202,30 +202,4 @@ public class DerbyService {
             LOGGER.error("Could not close database connection", e);
         }
     }
-
-    public static void main(String[] args) {
-        DerbyService dBs = new DerbyService();
-        dBs.createTable(Person.class);
-        dBs.createTable(Department.class);
-
-        PersonServiceImpl ps = PersonServiceImpl.getInstance();
-        List<Person> persons = ps.getPersonList();
-        for (Person p : persons){
-            dBs.insertItem(p);
-        }
-        System.out.println(dBs.getAll(Person.class));
-        persons.get(1).setPosition("Master");
-        dBs.updateItem(persons.get(1));
-        System.out.println(dBs.getAll(Person.class));
-        dBs.deleteItem(persons.get(1));
-        System.out.println(dBs.getAll(Person.class));
-        dBs.insertItem(persons.get(1));
-        System.out.println(dBs.getAll(Person.class));
-        List<Department> depts = ps.getRandomDepartmentList(10);
-        for (Department d : depts){
-            dBs.insertItem(d);
-        }
-        System.out.println(dBs.getAll(Department.class));
-        System.out.println(dBs.getById(Department.class, 4));
-    }
 }
