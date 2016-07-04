@@ -12,10 +12,6 @@ table{
     border: none;
 }
 
-tr{
-    border-bottom: solid black 2px;
-}
-
 .detailsButton{
     border: none;
 }
@@ -61,6 +57,6 @@ h1{
     text-align: left;
 }
 
-#documentDetailsForm td .iarrr {
-    width: 10em;
+.selectable:hover{
+    background-color: dodgerblue;
 }

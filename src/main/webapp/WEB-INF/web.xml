@@ -10,7 +10,7 @@
 
     <servlet>
         <servlet-name>Person servlet</servlet-name>
-        <servlet-class>ru.vasya.PersonServlet</servlet-class>
+        <servlet-class>ru.vasya.servlet.PersonServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Person servlet</servlet-name>
@@ -19,7 +19,7 @@
 
     <servlet>
         <servlet-name>Person's documents servlet</servlet-name>
-        <servlet-class>ru.vasya.DocumentServlet</servlet-class>
+        <servlet-class>ru.vasya.servlet.DocumentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Person's documents servlet</servlet-name>
@@ -28,7 +28,7 @@
 
     <servlet>
         <servlet-name>Document details servlet</servlet-name>
-        <servlet-class>ru.vasya.DocumentDetailsServlet</servlet-class>
+        <servlet-class>ru.vasya.servlet.DocumentDetailsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Document details servlet</servlet-name>

@@ -1,4 +1,4 @@
-package ru.vasya;
+package ru.vasya.servlet;
 
 import ru.vasya.model.staff.Person;
 import ru.vasya.service.PersonService;

@@ -40,7 +40,7 @@ public class DocumentFactory {
             result = (Document) c.newInstance();
             result.setId(id);
             result.setDocName("Docname#" + id);
-            result.setText("Text#" + id);
+            result.setText("Русский текст#" + id);
             result.setAuthor(getRandomPerson());
             for (Field field : c.getDeclaredFields()) {
                 field.setAccessible(true);

@@ -20,16 +20,16 @@
         <c:set var="rowSwitch" value="0" scope="page"/>
         <table>
             <tr class="tableHeader">
-                <td>id</td>
-                <td>Document name</td>
-                <td>RegNum</td>
-                <td>RegDate</td>
-                <td>Text</td>
-                <td>Explore</td>
+                <th>id</th>
+                <th>Document name</th>
+                <th>RegNum</th>
+                <th>RegDate</th>
+                <th>Текст документа</th>
+                <th>Details</th>
             </tr>
             <c:forEach items="${requestScope.docs}" var="document">
                 <c:set var="rowSwitch" value="${rowSwitch+1}"/>
-                <tr class="<c:out value="row${rowSwitch mod 2}"/>">
+                <tr class="<c:out value="row${rowSwitch mod 2}"/> selectable">
                     <td><c:out value = "${document.id}"/></td>
                     <td><c:out value = "${document.docName}"/></td>
                     <td><c:out value = "${document.registrationNumber}"/></td>
@@ -39,6 +39,7 @@
                 </tr>
             </c:forEach>
         </table>
+        <p><a href="javascript:history.back();">Назад</a></p>
     </div>
 </body>
 </html>

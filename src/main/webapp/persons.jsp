@@ -5,6 +5,8 @@
   Time: 12:03
   To change this template use File | Settings | File Templates.
 --%>
+
+<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -19,17 +21,17 @@
         <h1>List of slaves</h1>
         <table>
             <tr class="tableHeader">
-                <td>id</td>
-                <td>Lastname</td>
-                <td>Firstname</td>
-                <td>Middlename</td>
-                <td>Position</td>
-                <td>Explore</td>
+                <th>id</th>
+                <th>Lastname</th>
+                <th>Firstname</th>
+                <th>Middlename</th>
+                <th>Position</th>
+                <th>Details</th>
             </tr>
             <c:set var="rowSwitch" value="0" scope="page"/>
             <c:forEach items="${requestScope.persons}" var="person">
                 <c:set var="rowSwitch" value="${rowSwitch+1}"/>
-                <tr class="<c:out value="row${rowSwitch mod 2}"/>">
+                <tr class="<c:out value="row${rowSwitch mod 2}"/> selectable">
                     <td><c:out value = "${person.id}"/></td>
                     <td><c:out value = "${person.lastName}"/></td>
                     <td><c:out value = "${person.firstName}"/></td>
@@ -39,6 +41,7 @@
                 </tr>
             </c:forEach>
         </table>
+        <p><a href="javascript:history.back();">Назад</a></p>
     </div>
 </body>
 </html>
