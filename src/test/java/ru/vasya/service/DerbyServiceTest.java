@@ -5,8 +5,6 @@ import ru.vasya.model.staff.Person;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by dyapparov on 01.07.2016.
  */
@@ -34,7 +32,7 @@ public class DerbyServiceTest {
 
     @Test
     public void updateItem() throws Exception {
-        persons.get(1).setPosition("Master");
+        persons.get(1).setPost("Master");
         dBs.updateItem(persons.get(1));
         System.out.println(dBs.getAll(Person.class));
     }

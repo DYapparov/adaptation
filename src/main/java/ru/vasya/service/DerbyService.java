@@ -4,7 +4,6 @@ package ru.vasya.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vasya.db.DerbyConnection;
-import ru.vasya.model.staff.Department;
 import ru.vasya.model.staff.Person;
 import ru.vasya.model.staff.Staff;
 import ru.vasya.service.query.*;
@@ -13,15 +12,18 @@ import ru.vasya.service.query.parts.FieldsPart;
 import ru.vasya.service.query.parts.LogicalOperation;
 import ru.vasya.service.query.parts.Table;
 
+import javax.ejb.Stateless;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
+@Stateless
 public class DerbyService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DerbyService.class);
 
@@ -30,14 +32,16 @@ public class DerbyService {
         StringBuilder createTableSQL = new StringBuilder();
         createTableSQL.append("CREATE TABLE ")
                     .append(c.getSimpleName())
-                    .append("(id INTEGER PRIMARY KEY NOT NULL");
+                    .append("(id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)");
         for(Field f: c.getDeclaredFields()){
             createTableSQL.append(", ");
             createTableSQL.append(f.getName());
             if(Person.class.equals(f.getType())){
                 createTableSQL.append(" INTEGER");
+            } else if (Date.class.equals(f.getType())){
+                createTableSQL.append(" DATE");
             } else {
-                createTableSQL.append(" VARCHAR(30)");
+                createTableSQL.append(" VARCHAR(50)");
             }
         }
         createTableSQL.append(")");
@@ -61,9 +65,9 @@ public class DerbyService {
                 f.setAccessible(true);
                 builder.addValue(new FieldsPart(new FieldToSelect(f.getName(), f.getName().toUpperCase()), f.get(item), LogicalOperation.EQUALS));
             }
-            builder.addValue(new FieldsPart(new FieldToSelect("id", "ID"), item.getId(), LogicalOperation.EQUALS));
             PreparedStatement st = conn.prepareStatement(QueryToSqlConverter.convert(builder.build()));
             st.execute();
+            LOGGER.info("Inserting: " + QueryToSqlConverter.convert(builder.build()));
         } catch (SQLException e){
             LOGGER.error("Could not insert new item in table " + item.getClass().getSimpleName(), e);
         } catch (IllegalAccessException e) {
@@ -96,6 +100,8 @@ public class DerbyService {
                 f.setAccessible(true);
                 if(Person.class.equals(f.getType())){
                     f.set(s, getById(Person.class, (Integer)rs.getObject(f.getName())));
+                } else if(Date.class.equals(f.getType())) {
+                    f.set(s, new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(f.getName())));
                 } else {
                     f.set(s, rs.getObject(f.getName()));
                 }
@@ -134,6 +140,8 @@ public class DerbyService {
                     f.setAccessible(true);
                     if(Person.class.equals(f.getType())){
                         f.set(s, getById(Person.class, (Integer)rs.getObject(f.getName())));
+                    } else if (Date.class.equals(f.getType())) {
+                        f.set(s, new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(f.getName())));
                     } else {
                         f.set(s, rs.getObject(f.getName()));
                     }

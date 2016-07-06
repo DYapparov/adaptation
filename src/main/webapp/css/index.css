@@ -60,3 +60,7 @@ h1{
 .selectable:hover{
     background-color: dodgerblue;
 }
+
+.hidden {
+    display: none;
+}

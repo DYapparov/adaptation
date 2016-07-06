@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
 
 @Entity
 @XmlRootElement
@@ -14,7 +15,9 @@ public class Person extends Staff implements Comparable, Storable {
     private String lastName;
     private String firstName;
     private String middleName;
-    private String position;
+    private String post;
+    private Date birthday;
+    private String photoURL;
 
     public Person(){
 
@@ -47,12 +50,28 @@ public class Person extends Staff implements Comparable, Storable {
         this.middleName = middleName;
     }
 
-    public String getPosition() {
-        return position;
+    public String getPost() {
+        return post;
     }
     @XmlElement
-    public void setPosition(String position) {
-        this.position = position;
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
     }
 
     public int compareTo(Object o) {
@@ -73,6 +92,6 @@ public class Person extends Staff implements Comparable, Storable {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "(id " + getId() + "): " + lastName + " " + firstName + " " + middleName + ", " + position;
+        return this.getClass().getSimpleName() + "(id " + getId() + "): " + getLastName() + " " + getFirstName() + " " + getMiddleName() + ", " + getPost() + ", birthday: " + getBirthday();
     }
 }

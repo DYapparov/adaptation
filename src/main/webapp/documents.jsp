@@ -39,7 +39,7 @@
                 </tr>
             </c:forEach>
         </table>
-        <p><a href="javascript:history.back();">Назад</a></p>
+        <p><a href="javascript:history.back();">Back</a></p>
     </div>
 </body>
 </html>

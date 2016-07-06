@@ -29,19 +29,27 @@
                 <th>Details</th>
             </tr>
             <c:set var="rowSwitch" value="0" scope="page"/>
+            <tr class="<c:out value="row${rowSwitch mod 2}"/> selectable">
+            <td></td>
+            <td><a href="new_person">New slave</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
             <c:forEach items="${requestScope.persons}" var="person">
                 <c:set var="rowSwitch" value="${rowSwitch+1}"/>
                 <tr class="<c:out value="row${rowSwitch mod 2}"/> selectable">
-                    <td><c:out value = "${person.id}"/></td>
+                    <td><a href="edit_person?id=<c:out value = "${person.id}"/>" ><c:out value = "${person.id}"/></a></td>
                     <td><c:out value = "${person.lastName}"/></td>
                     <td><c:out value = "${person.firstName}"/></td>
                     <td><c:out value = "${person.middleName}"/></td>
-                    <td><c:out value = "${person.position}"/></td>
+                    <td><c:out value = "${person.post}"/></td>
                     <td class="detailsButton"><a href="<c:out value="personDocuments?id=${person.id}"/>" title="Details" ><img src="img/details.png" alt="Details" width="32"/></a></td>
                 </tr>
             </c:forEach>
         </table>
-        <p><a href="javascript:history.back();">Назад</a></p>
+        <p><a href="javascript:history.back();">Back</a></p>
     </div>
 </body>
 </html>

@@ -10,9 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 //----------------------Delete...or not
 @Stateless
@@ -25,7 +23,7 @@ public class PersonServiceImpl implements PersonService {
     private List<Person> persons;
 
     public PersonServiceImpl(){
-        xmlSerializator = XMLSerializator.getInstance();
+
     }
 
     public static PersonServiceImpl getInstance(){
@@ -58,7 +56,8 @@ public class PersonServiceImpl implements PersonService {
             p.setFirstName(randomWord(6));
             p.setLastName(randomWord(8));
             p.setMiddleName(randomWord(10));
-            p.setPosition("Slave");
+            p.setPost("Slave");
+            p.setBirthday(new Date(new Random().nextLong()% 1892160000000L));
             result.add(p);
         }
         return result;

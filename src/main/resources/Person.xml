@@ -2,72 +2,92 @@
 <stafflist>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>0</id>
-        <firstName>Kiduzyp</firstName>
-        <lastName>Pimypaquz</lastName>
-        <middleName>Rigywyxusik</middleName>
-        <position>Slave</position>
+        <birthday>1949-04-01T12:58:47.943+03:00</birthday>
+        <firstName>Nuquhan</firstName>
+        <lastName>Sacajuxih</lastName>
+        <middleName>Sejymysumyx</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>1</id>
-        <firstName>Cynanod</firstName>
-        <lastName>Eecagejah</lastName>
-        <middleName>Vimoxyxutuq</middleName>
-        <position>Slave</position>
+        <birthday>1976-06-07T05:19:48.568+04:00</birthday>
+        <firstName>Yotumob</firstName>
+        <lastName>Laqivalun</lastName>
+        <middleName>Vomovygetyn</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>2</id>
-        <firstName>Fufezuj</firstName>
-        <lastName>Wewenihim</lastName>
-        <middleName>Uucixamuxyk</middleName>
-        <position>Slave</position>
+        <birthday>2004-11-19T19:47:08.671+04:00</birthday>
+        <firstName>Riryzix</firstName>
+        <lastName>Zariceruz</lastName>
+        <middleName>Tixaxafivih</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>3</id>
-        <firstName>Yajuces</firstName>
-        <lastName>Jyvokisyh</lastName>
-        <middleName>Iokafazobil</middleName>
-        <position>Slave</position>
+        <birthday>1939-07-11T21:53:01.015+03:00</birthday>
+        <firstName>Xyviqys</firstName>
+        <lastName>Gysuvuboc</lastName>
+        <middleName>Cicopeqipyw</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>4</id>
-        <firstName>Lazusef</firstName>
-        <lastName>Busetigon</lastName>
-        <middleName>Oatusycadux</middleName>
-        <position>Slave</position>
+        <birthday>1964-05-09T22:25:16.814+04:00</birthday>
+        <firstName>Yefyguq</firstName>
+        <lastName>Qubonaxib</lastName>
+        <middleName>Syxitopihoc</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>5</id>
-        <firstName>Iosytuk</firstName>
-        <lastName>Dabopesoj</lastName>
-        <middleName>Fucidopakik</middleName>
-        <position>Slave</position>
+        <birthday>2005-01-07T13:17:50.345+04:00</birthday>
+        <firstName>Musoreq</firstName>
+        <lastName>Cifihirof</lastName>
+        <middleName>Aavypodilak</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>6</id>
-        <firstName>Kujemex</firstName>
-        <lastName>Tapolidek</lastName>
-        <middleName>Zanukanypuz</middleName>
-        <position>Slave</position>
+        <birthday>2003-06-26T07:01:01.462+05:00</birthday>
+        <firstName>Taxakok</firstName>
+        <lastName>Wojatucif</lastName>
+        <middleName>Uetyzepuhow</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>7</id>
-        <firstName>Uohagod</firstName>
-        <lastName>Puduhesoc</lastName>
-        <middleName>Eihutirixyr</middleName>
-        <position>Slave</position>
+        <birthday>2002-12-06T11:36:50.080+04:00</birthday>
+        <firstName>Wytahaf</firstName>
+        <lastName>Zakazicuv</lastName>
+        <middleName>Lepekusyzit</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>8</id>
-        <firstName>Uofylas</firstName>
-        <lastName>Wamuqoqab</lastName>
-        <middleName>Earejecaxoz</middleName>
-        <position>Slave</position>
+        <birthday>2001-06-12T07:49:34.973+04:00</birthday>
+        <firstName>Auwesab</firstName>
+        <lastName>Rytucyqis</lastName>
+        <middleName>Fabinemoloj</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="person">
         <id>9</id>
-        <firstName>Ioquraw</firstName>
-        <lastName>Gyverexud</lastName>
-        <middleName>Woxynaqesoc</middleName>
-        <position>Slave</position>
+        <birthday>1962-02-14T15:06:19.943+04:00</birthday>
+        <firstName>Juxilil</firstName>
+        <lastName>Nadygebir</lastName>
+        <middleName>Vajokododek</middleName>
+        <post>Slave</post>
+        <photoURL>img/avatars/African_Male.png</photoURL>
     </item>
 </stafflist>

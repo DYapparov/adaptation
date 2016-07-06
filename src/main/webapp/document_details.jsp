@@ -23,7 +23,7 @@
             <h2><c:out value="${docType}"/> №<c:out value="${document.registrationNumber}"/></h2>
             <table>
                 <tr><td class="iarrr">id:</td><td><input type="number" name = "id" value="<c:out value="${document.id}"/>"/></td></tr>
-                <tr><td class="iarrr">Rocument name:</td> <td><input type="text" name = "docName" value="<c:out value="${document.docName}"/>"/></td></tr>
+                <tr><td class="iarrr">Document name:</td> <td><input type="text" name = "docName" value="<c:out value="${document.docName}"/>"/></td></tr>
                 <tr><td class="iarrr">Registration number:</td> <td><input type="text" name = "registrationNumber" value="<c:out value="${document.registrationNumber}"/>"/></td></tr>
                 <tr><td class="iarrr">Registration date:</td> <td><input type="date" name = "registerDate" value="<fmt:formatDate value="${document.registerDate}" pattern="yyyy-MM-dd"/>"/></td></tr>
                 <tr><td class="iarrr">Text:</td> <td><input type="text" name = "text" value="<c:out value="${document.text}"/>"/></td></tr>
@@ -56,7 +56,7 @@
                 </c:choose>
             </table>
         </form>
-        <p><a href="javascript:history.back();">Назад</a></p>
+        <p><a href="javascript:history.back();">Back</a></p>
     </div>
 </body>
 </html>

@@ -10,7 +10,7 @@
 
     <servlet>
         <servlet-name>Person servlet</servlet-name>
-        <servlet-class>ru.vasya.servlet.PersonServlet</servlet-class>
+        <servlet-class>ru.vasya.servlet.person.PersonServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Person servlet</servlet-name>
@@ -34,4 +34,42 @@
         <servlet-name>Document details servlet</servlet-name>
         <url-pattern>/documentDetails</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Person details servlet</servlet-name>
+        <servlet-class>ru.vasya.servlet.person.PersonDetails</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Person details servlet</servlet-name>
+        <url-pattern>/edit_person</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Photo servlet</servlet-name>
+        <servlet-class>ru.vasya.servlet.person.PhotoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Photo servlet</servlet-name>
+        <url-pattern>/post_photo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Update person servlet</servlet-name>
+        <servlet-class>ru.vasya.servlet.person.PersonDetails</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Update person servlet</servlet-name>
+        <url-pattern>/update_person</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>New person servlet</servlet-name>
+        <servlet-class>ru.vasya.servlet.person.NewPersonServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>New person servlet</servlet-name>
+        <url-pattern>/new_person</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

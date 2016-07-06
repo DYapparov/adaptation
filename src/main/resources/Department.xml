@@ -9,7 +9,7 @@
             <firstName>Iosytuk</firstName>
             <lastName>Dabopesoj</lastName>
             <middleName>Fucidopakik</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
@@ -21,7 +21,7 @@
             <firstName>Uohagod</firstName>
             <lastName>Puduhesoc</lastName>
             <middleName>Eihutirixyr</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
@@ -33,7 +33,7 @@
             <firstName>Uofylas</firstName>
             <lastName>Wamuqoqab</lastName>
             <middleName>Earejecaxoz</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
@@ -45,7 +45,7 @@
             <firstName>Cynanod</firstName>
             <lastName>Eecagejah</lastName>
             <middleName>Vimoxyxutuq</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
@@ -57,7 +57,7 @@
             <firstName>Iosytuk</firstName>
             <lastName>Dabopesoj</lastName>
             <middleName>Fucidopakik</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
@@ -69,7 +69,7 @@
             <firstName>Kiduzyp</firstName>
             <lastName>Pimypaquz</lastName>
             <middleName>Rigywyxusik</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
@@ -81,7 +81,7 @@
             <firstName>Kujemex</firstName>
             <lastName>Tapolidek</lastName>
             <middleName>Zanukanypuz</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
@@ -93,7 +93,7 @@
             <firstName>Kujemex</firstName>
             <lastName>Tapolidek</lastName>
             <middleName>Zanukanypuz</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
@@ -105,7 +105,7 @@
             <firstName>Uofylas</firstName>
             <lastName>Wamuqoqab</lastName>
             <middleName>Earejecaxoz</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
     <item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="department">
@@ -117,7 +117,7 @@
             <firstName>Kiduzyp</firstName>
             <lastName>Pimypaquz</lastName>
             <middleName>Rigywyxusik</middleName>
-            <position>Slave</position>
+            <post>Slave</post>
         </head>
     </item>
 </stafflist>
