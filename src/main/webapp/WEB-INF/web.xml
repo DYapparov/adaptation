@@ -10,7 +10,7 @@
 
     <servlet>
         <servlet-name>Person servlet</servlet-name>
-        <servlet-class>ru.vasya.servlet.person.PersonServlet</servlet-class>
+        <servlet-class>ru.vasya.servlet.person.PersonsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Person servlet</servlet-name>
@@ -19,25 +19,25 @@
 
     <servlet>
         <servlet-name>Person's documents servlet</servlet-name>
-        <servlet-class>ru.vasya.servlet.DocumentServlet</servlet-class>
+        <servlet-class>ru.vasya.servlet.document.DocumentsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Person's documents servlet</servlet-name>
-        <url-pattern>/personDocuments</url-pattern>
+        <url-pattern>/persons_documents</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>Document details servlet</servlet-name>
-        <servlet-class>ru.vasya.servlet.DocumentDetailsServlet</servlet-class>
+        <servlet-class>ru.vasya.servlet.document.DocumentDetailsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Document details servlet</servlet-name>
-        <url-pattern>/documentDetails</url-pattern>
+        <url-pattern>/document</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>Person details servlet</servlet-name>
-        <servlet-class>ru.vasya.servlet.person.PersonDetails</servlet-class>
+        <servlet-class>ru.vasya.servlet.person.PersonSevlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Person details servlet</servlet-name>
@@ -55,7 +55,7 @@
 
     <servlet>
         <servlet-name>Update person servlet</servlet-name>
-        <servlet-class>ru.vasya.servlet.person.PersonDetails</servlet-class>
+        <servlet-class>ru.vasya.servlet.person.PersonSevlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Update person servlet</servlet-name>
@@ -71,5 +71,22 @@
         <url-pattern>/new_person</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Post servlet</servlet-name>
+        <servlet-class>ru.vasya.servlet.post.PostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Post servlet</servlet-name>
+        <url-pattern>/posts</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>NewPost servlet</servlet-name>
+        <servlet-class>ru.vasya.servlet.post.NewPostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NewPost servlet</servlet-name>
+        <url-pattern>/post</url-pattern>
+    </servlet-mapping>
 
 </web-app>

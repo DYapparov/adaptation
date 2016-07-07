@@ -56,7 +56,7 @@
                 </c:choose>
             </table>
         </form>
-        <p><a href="javascript:history.back();">Back</a></p>
+        <p><a href="persons_documents?id=<c:out value="${document.author.id}"/>"><img src="img/back.png" alt="Back" class="backButton"></a></p>
     </div>
 </body>
 </html>

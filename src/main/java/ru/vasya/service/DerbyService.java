@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -46,12 +47,22 @@ public class DerbyService {
         }
         createTableSQL.append(")");
         try{
-            conn.createStatement().execute("DROP TABLE " + c.getSimpleName());
             conn.createStatement().execute(createTableSQL.toString());
             LOGGER.info("Created table: " + c.getSimpleName());
             LOGGER.info("SQL: " + createTableSQL.toString());
         } catch (SQLException e){
             LOGGER.error("Could not create table for " + c.getSimpleName(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
+
+    public void dropTable(Class c){
+        Connection conn = DerbyConnection.getConnection();
+        try{
+            conn.createStatement().execute("DROP TABLE " + c.getSimpleName());
+        } catch (SQLException e){
+            LOGGER.error("Could not delete table " + c.getSimpleName(), e);
         } finally {
             closeConnection(conn);
         }
@@ -199,6 +210,29 @@ public class DerbyService {
         } finally {
             closeConnection(conn);
         }
+    }
+
+    public boolean contains(Class c, Map<String, Object> values){
+        Connection conn = DerbyConnection.getConnection();
+        boolean result = false;
+        try {
+            SelectQuery.Builder builder = SelectQuery.builder().setTable(new Table(c.getSimpleName(), c.getSimpleName().toUpperCase()));
+            for(String field: values.keySet()){
+                builder.addWherePart(new FieldsPart(new FieldToSelect(field, field.toUpperCase()), values.get(field), LogicalOperation.EQUALS));
+            }
+            SelectQuery query = builder.build();
+            LOGGER.info(QueryToSqlConverter.convert(query));//------------------------------------------------------------------
+            PreparedStatement ps = conn.prepareStatement(QueryToSqlConverter.convert(query));
+            ResultSet rs = ps.executeQuery();
+            result = rs.next();
+        } catch (SQLException e){
+            LOGGER.error("Could not get " + c.getSimpleName() + " with specified parameters", e);
+        } catch (Exception e){
+            LOGGER.error("Convertion to SQL failed ", e);
+        } finally {
+            closeConnection(conn);
+        }
+        return result;
     }
 
     private void closeConnection(Connection conn){

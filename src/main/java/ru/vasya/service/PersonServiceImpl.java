@@ -35,7 +35,7 @@ public class PersonServiceImpl implements PersonService {
 
     public List<Person> getPersonList(){
         if (persons == null) {
-            //File personsFile = new File(Person.class.getSimpleName() + ".xml");
+            //File personsFile = new File(PersonSevlet.class.getSimpleName() + ".xml");
             InputStream inputPersonFile = this.getClass().getResourceAsStream("/" + Person.class.getSimpleName() + ".xml");
             persons = xmlSerializator.unmarshal(inputPersonFile);
             try {

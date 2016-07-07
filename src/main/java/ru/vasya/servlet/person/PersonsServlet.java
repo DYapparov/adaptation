@@ -1,6 +1,7 @@
 package ru.vasya.servlet.person;
 
 import ru.vasya.model.staff.Person;
+import ru.vasya.model.staff.Post;
 import ru.vasya.model.staff.Staff;
 import ru.vasya.service.DerbyService;
 import ru.vasya.service.PersonService;
@@ -18,22 +19,16 @@ import java.util.Set;
 /**
  * Created by dyapparov on 01.07.2016.
  */
-public class PersonServlet extends HttpServlet{
-    @EJB
-    PersonService ps;
+public class PersonsServlet extends HttpServlet{
     @EJB
     DerbyService ds;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*ds.createTable(Person.class);
-        List<Person> persons = ps.getPersonList();
-        for (Person p : persons){
-            ds.insertItem(p);
-        }*/
+
         Set<Staff> personsFromDB= ds.getAll(Person.class);
         req.setAttribute("persons", personsFromDB);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/persons.jsp");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/person/persons.jsp");
         rd.forward(req, resp);
     }
 }

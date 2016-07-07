@@ -3,13 +3,16 @@ package ru.vasya.service;
 import org.junit.Test;
 import ru.vasya.model.staff.Person;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dyapparov on 01.07.2016.
  */
 public class DerbyServiceTest {
     DerbyService dBs = new DerbyService();
+
     PersonServiceImpl ps = PersonServiceImpl.getInstance();
     List<Person> persons = ps.getPersonList();
 
@@ -43,6 +46,13 @@ public class DerbyServiceTest {
         System.out.println(dBs.getAll(Person.class));
         dBs.insertItem(persons.get(1));
         System.out.println(dBs.getAll(Person.class));
+    }
+
+    @Test
+    public void containsTest() throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("firstName", "Auwesab");
+        System.out.println(dBs.contains(Person.class, map));
     }
 
 }

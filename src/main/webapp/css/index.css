@@ -2,28 +2,6 @@ body{
     background: papayawhip;
 }
 
-.row1 {
-    background-color: papayawhip;
-}
-
-table{
-    width: 100%;
-    horiz-align: center;
-    border: none;
-}
-
-.detailsButton{
-    border: none;
-}
-
-.tableHeader{
-    background: burlywood;
-    text-align: center;
-}
-.detailsButton {
-    text-align: center;
-}
-
 #wrapper{
     background: white;
     width: 80%;
@@ -36,6 +14,21 @@ h1{
     margin: auto;
     padding: 1em 0;
     color: #B76A2F;
+}
+
+.row1 {
+    background-color: papayawhip;
+}
+
+table{
+    width: 100%;
+    horiz-align: center;
+    border: none;
+}
+
+.tableHeader{
+    background: burlywood;
+    text-align: center;
 }
 
 #documentDetailsForm {
@@ -61,6 +54,31 @@ h1{
     background-color: dodgerblue;
 }
 
+.listTable {
+    text-align: center;
+}
+
+.avatar img {
+    width: 8em;
+}
+
 .hidden {
     display: none;
 }
+
+#confirmRemove{
+    display: none;
+    background: salmon;
+    width: 30%;
+    opacity: 1;
+    z-index: 100;
+    position: fixed;
+    top: 30%;
+    left: 35%;
+    text-align: center;
+}
+
+.backButton {
+    width: 2.5em;
+}
+

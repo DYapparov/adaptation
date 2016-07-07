@@ -1,10 +1,11 @@
-package ru.vasya.servlet;
+package ru.vasya.servlet.document;
 
 import ru.vasya.model.document.Document;
 import ru.vasya.model.staff.Person;
 import ru.vasya.service.DocService;
 
 import javax.ejb.EJB;
+import javax.print.Doc;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +18,7 @@ import java.util.TreeSet;
 /**
  * Created by dyapparov on 01.07.2016.
  */
-public class DocumentServlet extends HttpServlet {
+public class DocumentDetailsServlet extends HttpServlet {
 
     @EJB
     DocService ds;
@@ -27,12 +28,14 @@ public class DocumentServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         Map<Person, TreeSet<Document>> docs = ds.getDocuments();
         for(Person p : docs.keySet()){
-            if (p.getId()==id){
-                req.setAttribute("person", p);
-                req.setAttribute("docs", docs.get(p));
+            for(Document d: docs.get(p)){
+                if(d.getId()==id){
+                    req.setAttribute("document", d);
+                    req.setAttribute("docType", d.getClass().getSimpleName());
+                }
             }
         }
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/documents.jsp");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/document/document_details.jsp");
         rd.forward(req, resp);
     }
 }

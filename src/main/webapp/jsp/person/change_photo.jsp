@@ -15,6 +15,7 @@
     <link href="css/index.css" rel="stylesheet" type="text/css" >
 </head>
 <body>
+
 <div id="wrapper">
     <h1>Изменение фото</h1>
     <form id="set_photo_form" method="post" action="post_photo" enctype="multipart/form-data">
@@ -22,7 +23,8 @@
         Выберите файл:<input type="file" name = "photo" value="Browse..."/>
         <input type="submit" value="submit"/>
     </form>
-    <p><a href="javascript:history.back();">Назад</a></p>
+    <p><a href="javascript:history.back();"><img src="img/back.png" alt="Back" class="backButton"></a></p>
 </div>
+
 </body>
 </html>

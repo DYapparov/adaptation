@@ -60,7 +60,11 @@ public class QueryToSqlConverter {
             stringBuilder.append("SELECT ");
 
             SelectQuery selectQuery = (SelectQuery) query;
-            stringBuilder.append(convert(selectQuery.getFields()));
+            if(selectQuery.getFields().isEmpty()){
+                stringBuilder.append("*");
+            } else {
+                stringBuilder.append(convert(selectQuery.getFields()));
+            }
             stringBuilder.append(" FROM ");
             stringBuilder.append(convert(selectQuery.getFrom()));
 
