@@ -78,13 +78,6 @@ public class DocService {
         return result;
     }
 
-    public Map<Person, TreeSet<Document>> getDocs(){
-        if(documents == null){
-            documents = getRandomDocs(200);
-        }
-        return documents;
-    }
-
     private List<Class> getDocumentClasses(){
         List<Class> result = new ArrayList<Class>();
 

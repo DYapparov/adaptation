@@ -6,7 +6,12 @@
 var currentTab, currentHeader;
 
 function start() {
-    loadHelloTab();
+    loadPersons();
+    loadDocuments(); //new
+    addTab("Slaves", "persons");
+}
+
+function loadPersons() {
     var xmlhttp = getXmlHttp();
     xmlhttp.open('GET', 'http://localhost:8080/Adaptation/rest/ecm/employees', true);
     xmlhttp.send();
@@ -17,7 +22,8 @@ function start() {
                 var person = persons[i];
                 var newDiv = document.createElement("div");
                 newDiv.setAttribute("class", "listItem");
-                newDiv.setAttribute("onclick", "getDocuments(" + person.id + ")");
+                //newDiv.setAttribute("onclick", "getDocuments(" + person.id + ")");
+                newDiv.setAttribute("onclick", "addTab('Person " + person.id + "', 'edit_person?id=" + person.id + "')");
                 newDiv.innerHTML = "<p>" + person.lastName + " " + person.firstName + " " + person.middleName + "</p>";
                 document.getElementById("persons").appendChild(newDiv);
             }
@@ -25,10 +31,9 @@ function start() {
     };
 }
 
-function getDocuments(id) {
-    document.getElementById("documents").innerHTML = "";
+function loadDocuments() {
     var xmlhttp = getXmlHttp();
-    xmlhttp.open('GET', 'http://localhost:8080/Adaptation/rest/ecm/employees/' + id, true);
+    xmlhttp.open('GET', 'http://localhost:8080/Adaptation/rest/documents/all/', true);
     xmlhttp.send();
     var docs;
     xmlhttp.onreadystatechange = function() {
@@ -39,68 +44,60 @@ function getDocuments(id) {
                 var id = docs[i].childNodes[2].firstChild.nodeValue;
                 var newDiv = document.createElement("div");
                 newDiv.setAttribute("class", "listItem");
-                newDiv.setAttribute("onclick", "addDocTab(" + id + ")");
+                newDiv.setAttribute("onclick", "addTab('Document " + id + "', 'document?id=" + id + "')");
+                //newDiv.setAttribute("onclick", "addDocTab(" + id + ")");
                 newDiv.innerHTML = "<p>" + docName + "</p>";
                 document.getElementById("documents").appendChild(newDiv);
             }
         }
     };
-    addPersonTab(id);
 }
 
-function loadHelloTab() {
-    var newTabHeader = document.createElement('div');
-    newTabHeader.setAttribute("class", "tabHeader");
-    newTabHeader.innerHTML = "Slaves";
-    $('#tabHeaders').append(newTabHeader);
+function addTab(header, source) {
     var newTab = document.createElement('div');
     newTab.setAttribute("class", "tab");
-    currentHeader = newTabHeader;
-    currentTab = newTab;
-    $(newTab).load("persons");
+    $(newTab).load(source);
     newTab.setAttribute('style', "display: block");
     $('#tabContainer').append(newTab);
+
+    var newTabHeader = document.createElement('div');
+    newTabHeader.setAttribute("class", "activeTabHeader");
+    newTabHeader.innerHTML = header;
+    $('#tabHeaders').append(newTabHeader);
     newTabHeader.onclick = function () {
         updateTab(newTabHeader, newTab);
     };
+
+    var closeButton = document.createElement('div');
+    closeButton.setAttribute('class', 'closeButton');
+    closeButton.innerHTML = 'X';
+    closeButton.onclick = function () {
+        newTabHeader.remove();
+        newTab.remove();
+        console.log(currentHeader, currentTab);
+        //updateTab(currentHeader, currentTab);
+        currentTab.setAttribute('style', 'display: block');
+        currentHeader.setAttribute('class', 'activeTabHeader');
+    };
+    newTabHeader.appendChild(closeButton);
+
+    if(currentHeader!=undefined&&currentTab!=undefined){
+        currentHeader.removeAttribute('class');
+        currentHeader.setAttribute('class', 'inActiveTabHeader');
+        currentTab.setAttribute('style', 'display: none');
+    }
+    currentHeader = newTabHeader;
+    currentTab = newTab;
 }
 
-function addDocTab(id) {
-    var newTabHeader = document.createElement('div');
-    newTabHeader.setAttribute("class", "tabHeader");
-    newTabHeader.innerHTML = "Document id " + id;
-    $('#tabHeaders').append(newTabHeader);
-    var newTab = document.createElement('div');
-    newTab.setAttribute("class", "tab");
-    currentHeader.setAttribute('style', 'background-color: lightgrey');
+function updateTab(header, tab){
     currentTab.setAttribute('style', 'display: none');
-    currentHeader = newTabHeader;
-    currentTab = newTab;
-    $(newTab).load("document?id=" + id);
-    newTab.setAttribute('style', "display: block");
-    $('#tabContainer').append(newTab);
-    newTabHeader.onclick = function () {
-        updateTab(newTabHeader, newTab);
-    };
-}
-
-function addPersonTab(id) {
-    var newTabHeader = document.createElement('div');
-    newTabHeader.setAttribute("class", "tabHeader");
-    newTabHeader.innerHTML = "Employee " + id;
-    $('#tabHeaders').append(newTabHeader);
-    var newTab = document.createElement('div');
-    newTab.setAttribute("class", "tab");
-    currentHeader.setAttribute('style', 'background-color: lightgrey');
-    currentTab.setAttribute('style', 'display: none');
-    currentHeader = newTabHeader;
-    currentTab = newTab;
-    $(newTab).load("edit_person?id=" + id);
-    newTab.setAttribute('style', "display: block");
-    $('#tabContainer').append(newTab);
-    newTabHeader.onclick = function () {
-        updateTab(newTabHeader, newTab);
-    };
+    currentHeader.removeAttribute('class');
+    currentHeader.setAttribute('class', 'inActiveTabHeader');
+    currentTab = tab;
+    currentHeader = header;
+    currentTab.setAttribute('style', 'display: block');
+    currentHeader.setAttribute('class', 'activeTabHeader');
 }
 
 function getXmlHttp(){
@@ -118,15 +115,6 @@ function getXmlHttp(){
         xmlhttp = new XMLHttpRequest();
     }
     return xmlhttp;
-}
-
-function updateTab(header, tab){
-    currentTab.setAttribute('style', 'display: none');
-    currentHeader.setAttribute('style', 'background-color: lightgrey');
-    currentTab = tab;
-    currentHeader = header;
-    currentTab.setAttribute('style', 'display: block');
-    currentHeader.setAttribute('style', 'background-color: white');
 }
 
 window.onload = start();

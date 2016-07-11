@@ -2,11 +2,9 @@ package ru.vasya.rest;
 
 import ru.vasya.model.document.Document;
 import ru.vasya.model.staff.Person;
-import ru.vasya.model.staff.Staff;
 import ru.vasya.service.DerbyService;
 import ru.vasya.service.DocService;
 import ru.vasya.service.PersonService;
-import ru.vasya.service.query.SelectQuery;
 import ru.vasya.util.JAXBDocumentCollection;
 
 import javax.ejb.EJB;
@@ -42,7 +40,7 @@ public class EmployeesController {
     @Path("/employees/{id}")
     @Produces(MediaType.APPLICATION_XML)
     public JAXBDocumentCollection getPersonDocs(@PathParam("id") int id){
-        Map<Person, TreeSet<Document>> docs = ds.getDocs();
+        Map<Person, TreeSet<Document>> docs = ds.getDocuments();
         for (Person p : docs.keySet()){
             if (p.getId()==id){
                 return new JAXBDocumentCollection(docs.get(p));

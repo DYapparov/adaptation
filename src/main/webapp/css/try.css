@@ -29,7 +29,7 @@ h2 {
 }
 
 #rightContainer{
-    background-color: white;
+    background-color: lightskyblue;
     width: 78.5%;
     height: 99%;
     float: left;
@@ -64,25 +64,63 @@ h2 {
     display: none;
 }
 
-#tabHeaders {
+#tabHeadersContainer {
     height: 3em;
+    width: 100%;
     background-color: lightskyblue;
-
+    overflow: hidden;
 }
 
-.tabHeader {
+#tabHeadersScroll {
+    height: 5em;
+    overflow-x: scroll;
+}
+
+#tabHeaders {
+    height: 3em;
+    display: inline-flex;
+}
+
+.activeTabHeader {
+    background-color: white;
     height: 100%;
     width: 6em;
     display: inline-block;
-    background-color: white;
+    text-align: center;
+    vertical-align: top;
+    border-right: solid 2px grey;
+}
+
+.inActiveTabHeader {
+    background-color: lightgrey;
+    height: 100%;
+    width: 6em;
+    display: inline-block;
     text-align: center;
     vertical-align: top;
 }
 
-.tabHeader:hover {
+.inActiveTabHeader:hover {
     cursor: pointer;
     cursor: hand;
-    background-color: gray;
+    background-color: grey;
+}
+
+.tab {
+    background-color: white;
+    height: 100%;
+}
+
+.closeButton{
+    font-weight: bold;
+    float: right;
+}
+
+.closeButton:hover {
+    cursor: pointer;
+    cursor: hand;
+    background-color: darkgray;
+
 }
 
 .clear {
