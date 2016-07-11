@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/try.css" rel="stylesheet" type="text/css" >
+</head>
+<body>
+<div id="mainWrapper">
+    <div id="leftContainer">
+        <div id="topContainer">
+            <h2 onclick="$('#rightContainer').load('persons');">Сотрудники</h2>
+            <div id="persons">
+            </div>
+        </div>
+        <div id="botContainer">
+            <h2>Документы</h2>
+            <div id="documents"></div>
+        </div>
+    </div>
+    <div id="rightContainer">
+        <div id="tabHeaders"></div>
+        <div class="clear"></div>
+        <div id="tabContainer"></div>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="js/jquery-3.0.0.min.js">
+</script>
+<script type="text/javascript" src="js/index.js">
+</script>

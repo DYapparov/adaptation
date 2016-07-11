@@ -16,7 +16,7 @@ import java.util.*;
 
 @Stateless
 public class DocService {
-    private static final int MAX_REGISTRATION_NUMBER = 1000;
+    private static final int MAX_REGISTRATION_NUMBER = 100000;
     private static final Logger LOGGER = LoggerFactory.getLogger(DocService.class);
     private static DocService instance;
     private static Map<Person, TreeSet<Document>> documents;
@@ -30,7 +30,7 @@ public class DocService {
 
     public Map<Person, TreeSet<Document>> getDocuments(){
         if (documents==null){
-            documents = getRandomDocs(100);
+            documents = getRandomDocs(200);
         }
         return documents;
     }
@@ -76,6 +76,13 @@ public class DocService {
             }
         }
         return result;
+    }
+
+    public Map<Person, TreeSet<Document>> getDocs(){
+        if(documents == null){
+            documents = getRandomDocs(200);
+        }
+        return documents;
     }
 
     private List<Class> getDocumentClasses(){

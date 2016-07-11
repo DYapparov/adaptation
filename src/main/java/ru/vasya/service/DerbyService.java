@@ -25,15 +25,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 @Stateless
-public class DerbyService {
+public class DerbyService<T extends Staff> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DerbyService.class);
 
     public void createTable(Class c){
         Connection conn = DerbyConnection.getConnection();
         StringBuilder createTableSQL = new StringBuilder();
         createTableSQL.append("CREATE TABLE ")
-                    .append(c.getSimpleName())
-                    .append("(id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)");
+                .append(c.getSimpleName())
+                .append("(id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)");
         for(Field f: c.getDeclaredFields()){
             createTableSQL.append(", ");
             createTableSQL.append(f.getName());
@@ -90,8 +90,8 @@ public class DerbyService {
         }
     }
 
-    public Staff getById(Class c, int id){
-        Staff s = null;
+    public T getById(Class c, int id){
+        T s = null;
         Connection conn = DerbyConnection.getConnection();
         try {
             SelectQuery.Builder builder = SelectQuery.builder().setTable(new Table(c.getSimpleName(), c.getSimpleName().toUpperCase()));
@@ -100,7 +100,7 @@ public class DerbyService {
             }
             builder.addField(new FieldToSelect("id", "ID"));
             builder.addWherePart(new FieldsPart(new FieldToSelect("id", "ID"), id, LogicalOperation.EQUALS));
-            s = (Staff)c.newInstance();
+            s = (T)c.newInstance();
             SelectQuery query = builder.build();
             LOGGER.info(QueryToSqlConverter.convert(query));//----------------------------------------------------------
             PreparedStatement ps = conn.prepareStatement(QueryToSqlConverter.convert(query));
@@ -132,8 +132,8 @@ public class DerbyService {
         return s;
     }
 
-    public Set<Staff> getAll(Class c){
-        Set<Staff> staff = new TreeSet<Staff>();
+    public Set<T> getAll(Class c){
+        Set<T> staff = new TreeSet<T>();
         Connection conn = DerbyConnection.getConnection();
         try {
             SelectQuery.Builder builder = SelectQuery.builder().setTable(new Table(c.getSimpleName(), c.getSimpleName()));
@@ -145,7 +145,7 @@ public class DerbyService {
             LOGGER.info(QueryToSqlConverter.convert(query));//----------------------------------------------------------
             ResultSet rs = conn.prepareStatement(QueryToSqlConverter.convert(query)).executeQuery();
             while (rs.next()){
-                Staff s = (Staff) c.newInstance();
+                T s = (T) c.newInstance();
                 s.setId(rs.getInt("id"));
                 for (Field f: c.getDeclaredFields()){
                     f.setAccessible(true);

@@ -1,23 +1,19 @@
-body{
-    background: papayawhip;
-}
-
+/*
 #wrapper{
-    background: white;
     width: 80%;
     margin: 2% auto;
     padding: 0 3% 3% 3%;
-}
+}*/
 
 h1{
     text-align: center;
     margin: auto;
     padding: 1em 0;
-    color: #B76A2F;
+    color: #33095d;
 }
 
 .row1 {
-    background-color: papayawhip;
+    background-color: lightskyblue;
 }
 
 table{
@@ -27,7 +23,7 @@ table{
 }
 
 .tableHeader{
-    background: burlywood;
+    background: deepskyblue;
     text-align: center;
 }
 
@@ -50,16 +46,22 @@ table{
     text-align: left;
 }
 
-.selectable:hover{
-    background-color: dodgerblue;
+.avatar {
+    width: 8em;
+    float: right;
+}
+
+#edit_person_form table {
+    width: auto;
+    margin-left: 2em;
 }
 
 .listTable {
     text-align: center;
 }
 
-.avatar img {
-    width: 8em;
+.selectable:hover{
+    background-color: dodgerblue;
 }
 
 .hidden {
@@ -72,7 +74,7 @@ table{
     width: 30%;
     opacity: 1;
     z-index: 100;
-    position: fixed;
+    position: absolute;
     top: 30%;
     left: 35%;
     text-align: center;

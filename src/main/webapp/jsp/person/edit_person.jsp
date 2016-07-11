@@ -55,7 +55,7 @@
         </table>
         <input type="submit" value="Save" name="action"/>
     </form>
-    <button onclick="getElementById('confirmRemove').style.display='block'; ; getElementById('wrapper').style.opacity='0.2'">Delete</button>
+    <button onclick="getElementById('confirmRemove').style.display='block'; getElementById('wrapper').style.opacity='0.2'">Delete</button>
     <p><a href="persons"><img src="img/back.png" alt="Back" class="backButton"></a></p>
 </div>
 
