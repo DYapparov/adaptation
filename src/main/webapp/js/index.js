@@ -7,8 +7,8 @@ var currentTab, currentHeader;
 
 function start() {
     loadPersons();
-    loadDocuments(); //new
-    addTab("Slaves", "persons");
+    loadDocuments();
+    addTab('persons', '1');
 }
 
 function loadPersons() {
@@ -22,8 +22,7 @@ function loadPersons() {
                 var person = persons[i];
                 var newDiv = document.createElement("div");
                 newDiv.setAttribute("class", "listItem");
-                //newDiv.setAttribute("onclick", "getDocuments(" + person.id + ")");
-                newDiv.setAttribute("onclick", "addTab('Person " + person.id + "', 'edit_person?id=" + person.id + "')");
+                newDiv.setAttribute("onclick", "addTab('person', " + person.id + ")");
                 newDiv.innerHTML = "<p>" + person.lastName + " " + person.firstName + " " + person.middleName + "</p>";
                 document.getElementById("persons").appendChild(newDiv);
             }
@@ -44,8 +43,7 @@ function loadDocuments() {
                 var id = docs[i].childNodes[2].firstChild.nodeValue;
                 var newDiv = document.createElement("div");
                 newDiv.setAttribute("class", "listItem");
-                newDiv.setAttribute("onclick", "addTab('Document " + id + "', 'document?id=" + id + "')");
-                //newDiv.setAttribute("onclick", "addDocTab(" + id + ")");
+                newDiv.setAttribute("onclick", "addTab('document', " + id + ")");
                 newDiv.innerHTML = "<p>" + docName + "</p>";
                 document.getElementById("documents").appendChild(newDiv);
             }
@@ -53,19 +51,42 @@ function loadDocuments() {
     };
 }
 
-function addTab(header, source) {
+function addTab(type, id) {
+
+    var existingTab = document.getElementById(type + id + '_tab');
+    var existingTabHeader = document.getElementById(type + id);
+    if(existingTab!=undefined&&existingTabHeader!=undefined){
+        updateTab(existingTabHeader, existingTab);
+        return;
+    }
+
+    if (type=='person'){
+        link = 'edit_person?id=' + id;
+        header = 'Person ' + id;
+    } else if (type=='document'){
+        link = 'document?id=' + id;
+        header = 'Document ' + id;
+    } else {
+        link = 'persons';
+        header = 'Slaves';
+    }
+
     var newTab = document.createElement('div');
     newTab.setAttribute("class", "tab");
-    $(newTab).load(source);
+    newTab.setAttribute('id', type + id + '_tab');
+    $(newTab).load(link);
     newTab.setAttribute('style', "display: block");
     $('#tabContainer').append(newTab);
 
     var newTabHeader = document.createElement('div');
     newTabHeader.setAttribute("class", "activeTabHeader");
+    newTabHeader.setAttribute('id', type+id);
     newTabHeader.innerHTML = header;
     $('#tabHeaders').append(newTabHeader);
-    newTabHeader.onclick = function () {
-        updateTab(newTabHeader, newTab);
+    newTabHeader.onclick = function (e) {
+        if(e.target==this){
+            updateTab(newTabHeader, newTab);
+        }
     };
 
     var closeButton = document.createElement('div');
@@ -74,10 +95,15 @@ function addTab(header, source) {
     closeButton.onclick = function () {
         newTabHeader.remove();
         newTab.remove();
-        console.log(currentHeader, currentTab);
-        //updateTab(currentHeader, currentTab);
-        currentTab.setAttribute('style', 'display: block');
-        currentHeader.setAttribute('class', 'activeTabHeader');
+        if(currentHeader==newTabHeader){
+            var tabheaders = document.getElementById('tabHeaders').childNodes;
+            currentHeader = tabheaders[tabheaders.length-1];
+            var tabs = document.getElementById('tabContainer').childNodes;
+            currentTab = tabs[tabs.length-1];
+            currentTab.setAttribute('style', 'display: block');
+            currentHeader.removeAttribute('class');
+            currentHeader.setAttribute('class', 'activeTabHeader');
+        }
     };
     newTabHeader.appendChild(closeButton);
 
@@ -118,3 +144,28 @@ function getXmlHttp(){
 }
 
 window.onload = start();
+
+
+
+function postNa() {
+    $.ajax({
+        type: 'GET',
+        url: 'rest/ecm/employees/employee/1',
+        success: function(response) {
+            var p = response;
+            delete p['@type'];
+            console.log(p);
+            $.ajax({
+                type: 'POST',
+                url: 'rest/ecm/employees/employee/save',
+                data: p,
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function(response) {
+
+                },
+            });
+
+        },
+    });
+}
