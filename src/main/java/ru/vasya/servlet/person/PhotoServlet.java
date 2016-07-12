@@ -9,6 +9,7 @@ import ru.vasya.model.staff.Person;
 import ru.vasya.service.DerbyService;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,14 @@ public class PhotoServlet extends HttpServlet {
 
     @EJB
     DerbyService ds;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        req.setAttribute("id", id);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/person/change_photo.jsp");
+        rd.forward(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

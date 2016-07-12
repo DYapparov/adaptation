@@ -9,22 +9,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<html>
-<head>
-    <title>Photo</title>
-    <link href="css/index.css" rel="stylesheet" type="text/css" >
-</head>
-<body>
-
 <div id="wrapper">
+    <div id="topMenu">
+        <div class = "topButton" onclick="reloadTab('person', <c:out value="${param.id}"/>)">Back</div>
+        <div class = "topButton" onclick="savePhoto(<c:out value="${param.id}"/>)">Save</div>
+    </div>
     <h1>Изменение фото</h1>
-    <form id="set_photo_form" method="post" action="post_photo" enctype="multipart/form-data">
+    <form id="set_photo_form" name="set_photo_form" method="post" action="" enctype="multipart/form-data">
         <input class="hidden" type="number" name = "id" value="<c:out value="${param.id}"/>"/>
         Выберите файл:<input type="file" name = "photo" value="Browse..."/>
-        <input type="submit" value="submit"/>
     </form>
-    <p><a href="javascript:history.back();"><img src="img/back.png" alt="Back" class="backButton"></a></p>
 </div>
-
-</body>
-</html>

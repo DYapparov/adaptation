@@ -2,14 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pr</title>
+    <title>Title</title>
+    <link href="css/index.css" rel="stylesheet" type="text/css" >
 </head>
 <body>
-    <h1>The headerest header of the page</h1>
-    <a href="persons">PersonList</a>
-    <br/>
-    <a href="posts">Posts</a>
-    <br/>
-    <a href="rest/ecm/employees">Rest test</a>
+<div id="mainWrapper">
+    <div id="leftContainer">
+        <div id="topContainer">
+            <h2 onclick="addTab('personsTab', '')">Сотрудники</h2>
+            <div id="personsMenu">
+            </div>
+        </div>
+        <div id="botContainer">
+            <h2 onclick="postNa()">Документы</h2>
+            <div id="documents"></div>
+        </div>
+    </div>
+    <div id="rightContainer">
+        <div id="tabHeadersContainer"><div id="tabHeadersScroll"><div id="tabHeaders"></div></div></div>
+        <div class="clear"></div>
+        <div id="tabContainer"></div>
+    </div>
+</div>
 </body>
 </html>
+
+<script type="text/javascript" src="js/jquery-3.0.0.min.js">
+</script>
+<script type="text/javascript" src="js/index.js">
+</script>

@@ -9,25 +9,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<html>
-<head>
-    <title>Person details</title>
-    <link href="css/index.css" rel="stylesheet" type="text/css" >
-</head>
-<body>
-<div id="wrapper">
+<div id="edit_person_tab<c:out value="${person.id}"/>">
+    <div id="topMenu">
+        <div class = "topButton" onclick="closeTab('person', <c:out value="${person.id}"/>)">Back</div>
+        <div class = "topButton" onclick="savePerson(<c:out value="${person.id}"/>)">Save</div>
+        <div class = "topButton" onclick="getElementById('confirmRemove<c:out value="${person.id}"/>').style.display='block'; getElementById('edit_person_tab<c:out value="${person.id}"/>').style.opacity='0.2'">Delete</div>
+        <div class = "topButton" onclick="changePhoto(<c:out value="${person.id}"/>)">Photo</div>
+    </div>
     <h1>Person details</h1>
     <h2><c:out value="${person.lastName}"/> <c:out value="${person.firstName}"/> <c:out value="${person.middleName}"/></h2>
     <div class = "avatar">
         <img src="<c:out value="${person.photoURL}"/>">
-        <form action="change_photo.jsp" method="post">
-            <input class="hidden" type="number" name="id" value="<c:out value="${person.id}"/>"/>
-            <input type="submit" value="Change pic"/>
-        </form>
     </div>
-    <form id="edit_person_form" method="post" action="update_person" accept-charset="UTF-8">
+    <form id="edit_person_form" method="post" name="edit_person_form<c:out value="${person.id}"/>" action="" accept-charset="UTF-8">
         <table>
-            <tr class="hidden"><td>id:</td><td><input type="number" name = "id" value="<c:out value="${person.id}"/>"/></td></tr>
             <tr><td>Lastname:</td> <td><input type="text" name = "lastName" value="<c:out value="${person.lastName}"/>" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
             <tr><td>Firstname:</td> <td><input type="text" name = "firstName" value="<c:out value="${person.firstName}"/>" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
             <tr><td>Middlename:</td> <td><input type="text" name = "middleName" value="${person.middleName}" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
@@ -53,18 +48,12 @@
             </tr>
             <tr><td>Birthday:</td> <td><input type="date" name = "birthday" value="<fmt:formatDate value="${person.birthday}" pattern="yyyy-MM-dd"/>"/></td></tr>
         </table>
-        <input type="submit" value="Save" name="action"/>
     </form>
-    <button onclick="getElementById('confirmRemove').style.display='block'; getElementById('wrapper').style.opacity='0.2'">Delete</button>
-    <p><a href="persons"><img src="img/back.png" alt="Back" class="backButton"></a></p>
 </div>
 
 <!-- Confirm window-->
-<div id = "confirmRemove">
+<div id = "confirmRemove<c:out value="${person.id}"/>" class="confirmRemove">
     <p>Delete <c:out value="${person.lastName}"/> <c:out value="${person.firstName}"/> <c:out value="${person.middleName}"/>?</p>
-    <button name="action" value="Delete" form="edit_person_form">Yes</button>
-    <button onclick="getElementById('confirmRemove').style.display='none'; getElementById('wrapper').style.opacity='1'">No :(</button>
+    <button value="Delete" onclick="deletePerson(<c:out value="${person.id}"/>);">Yes</button>
+    <button onclick="getElementById('confirmRemove<c:out value="${person.id}"/>').style.display='none'; getElementById('edit_person_tab<c:out value="${person.id}"/>').style.opacity='1'">No :(</button>
 </div>
-
-</body>
-</html>

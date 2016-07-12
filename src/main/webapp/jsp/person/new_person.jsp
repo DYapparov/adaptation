@@ -9,16 +9,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<html>
-<head>
-    <title>New person</title>
-    <link href="css/index.css" rel="stylesheet" type="text/css" >
-</head>
-<body>
 <div id="wrapper">
+    <div id="topMenu">
+        <div class = "topButton" onclick="closeTab('newPerson', '')">Back</div>
+        <div class = "topButton" onclick="addPerson()">Save</div>
+    </div>
+
     <h1>Another slave</h1>
 
-    <form id="edit_person_form" method="post" action="new_person" accept-charset="UTF-8">
+    <form id="edit_person_form" name="new_person_form" method="post" action="" accept-charset="UTF-8">
         <table>
             <tr><td>Lastname:</td> <td><input type="text" name = "lastName" value="" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
             <tr><td>Firstname:</td> <td><input type="text" name = "firstName" value="" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
@@ -42,9 +41,5 @@
             </tr>
             <tr><td>Birthday:</td> <td><input type="date" name = "birthday" value="1900-1-1"/></td></tr>
         </table>
-        <input type="submit" value="Sign in"/>
     </form>
-    <p><a href="persons"><img src="img/back.png" alt="Back" class="backButton"></a></p>
 </div>
-</body>
-</html>
