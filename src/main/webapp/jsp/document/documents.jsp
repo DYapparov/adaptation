@@ -16,7 +16,7 @@
 </head>
 <body>
     <div id="wrapper">
-        <h1>Documents by <c:out value="${person.lastName}"/> <c:out value="${person.firstName}"/> <c:out value="${person.middleName}"/></h1>
+        <h1>Documents by ${person.lastName} ${person.firstName} ${person.middleName}</h1>
         <c:set var="rowSwitch" value="0" scope="page"/>
         <table class="listTable">
             <tr class="tableHeader">
@@ -28,12 +28,12 @@
             </tr>
             <c:forEach items="${requestScope.docs}" var="document">
                 <c:set var="rowSwitch" value="${rowSwitch+1}"/>
-                <tr class="<c:out value="row${rowSwitch mod 2}"/> selectable">
-                    <td><c:out value = "${document.docName}"/></td>
-                    <td><c:out value = "${document.registrationNumber}"/></td>
+                <tr class="row${rowSwitch mod 2} selectable">
+                    <td>${document.docName}</td>
+                    <td>${document.registrationNumber}</td>
                     <td><fmt:formatDate value="${document.registerDate}" pattern="HH:mm dd.MM.yyyy"/></td>
-                    <td><c:out value = "${document.text}"/></td>
-                    <td class="detailsButton"><a href="<c:out value="document?id=${document.id}"/>" title="Details" ><img src="img/documents.png" alt="Details" width="32"/></a></td>
+                    <td>${document.text}</td>
+                    <td class="detailsButton"><a href="document?id=${document.id}" title="Details" ><img src="img/documents.png" alt="Details" width="32"/></a></td>
                 </tr>
             </c:forEach>
         </table>

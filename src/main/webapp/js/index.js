@@ -44,12 +44,15 @@ function loadDocuments() {
         if (xmlhttp.readyState === 4 && xmlhttp.status===200) {
             docs = xmlhttp.responseXML.getElementsByTagName("docs");
             for (var i = 0; i<docs.length; i++){
-                var docName = docs[i].childNodes[1].firstChild.nodeValue;
+                var docName = docs[i].getAttribute('xsi:type');
                 var id = docs[i].childNodes[2].firstChild.nodeValue;
+                var regNum = docs[i].childNodes[4].firstChild.nodeValue;
                 var newDiv = document.createElement("div");
                 newDiv.setAttribute("class", "listItem");
                 newDiv.setAttribute("onclick", "addTab('document', " + id + ")");
-                newDiv.innerHTML = "<p>" + docName + "</p>";
+                var alpha = docName.charAt(0);
+                docName = alpha.toUpperCase() + docName.slice(1);
+                newDiv.innerHTML = "<p>" + docName + " №" + regNum + "</p>";
                 document.getElementById("documents").appendChild(newDiv);
             }
         }
@@ -66,16 +69,16 @@ function addTab(type, id) {
     var link, header;
     if (type=='person'){
         link = 'edit_person?id=' + id;
-        header = 'Person ' + id;
+        header = 'Сотрудник ' + id;
     } else if (type=='document'){
         link = 'document?id=' + id;
-        header = 'Document ' + id;
+        header = 'Документ №' + id;
     } else if(type=='newPerson') {
         link = 'new_person';
-        header = 'New person';
+        header = 'Создать';
     } else {
         link = 'persons';
-        header = 'Slaves';
+        header = 'Сотрудники';
     }
 
     var newTab = document.createElement('div');
@@ -91,19 +94,17 @@ function addTab(type, id) {
             registerListeners();
         }
     };
-    newTab.setAttribute('style', "display: block");
     document.getElementById('tabContainer').appendChild(newTab);
 
     var newTabHeader = document.createElement('div');
-    newTabHeader.setAttribute("class", "activeTabHeader");
     newTabHeader.setAttribute('id', type+id);
     newTabHeader.innerHTML = header;
-    document.getElementById('tabHeaders').appendChild(newTabHeader);
     newTabHeader.onclick = function (e) {
         if(e.target==this){
             updateActiveTab(newTabHeader, newTab);
         }
     };
+    document.getElementById('tabHeaders').appendChild(newTabHeader);
 
     var closeButton = document.createElement('div');
     closeButton.setAttribute('class', 'closeButton');
@@ -113,13 +114,7 @@ function addTab(type, id) {
     };
     newTabHeader.appendChild(closeButton);
 
-    if(currentHeader!=undefined&&currentTab!=undefined){
-        currentHeader.removeAttribute('class');
-        currentHeader.setAttribute('class', 'inActiveTabHeader');
-        currentTab.setAttribute('style', 'display: none');
-    }
-    currentHeader = newTabHeader;
-    currentTab = newTab;
+    updateActiveTab(newTabHeader, newTab);
 }
 
 function closeTab(type, id) {
@@ -131,21 +126,25 @@ function closeTab(type, id) {
         var tabheaders = document.getElementById('tabHeaders').childNodes;
         currentHeader = tabheaders[tabheaders.length-1];
         var tabs = document.getElementById('tabContainer').childNodes;
-        currentTab = tabs[tabs.length-1];
-        currentTab.setAttribute('style', 'display: block');
-        currentHeader.removeAttribute('class');
-        currentHeader.setAttribute('class', 'activeTabHeader');
+        if(tabs.length>0){
+            currentTab = tabs[tabs.length-1];
+            currentTab.setAttribute('style', 'display: block');
+            currentHeader.removeAttribute('class');
+            currentHeader.setAttribute('class', 'activeTabHeader');
+        }
     }
 }
 
 function updateActiveTab(header, tab){
-    currentTab.setAttribute('style', 'display: none');
-    currentHeader.removeAttribute('class');
-    currentHeader.setAttribute('class', 'inActiveTabHeader');
-    currentTab = tab;
+    if(currentHeader!=undefined&&currentTab!=undefined) {
+        currentHeader.removeAttribute('class');
+        currentHeader.setAttribute('class', 'inActiveTabHeader');
+        currentTab.setAttribute('style', 'display: none');
+    }
     currentHeader = header;
-    currentTab.setAttribute('style', 'display: block');
+    currentTab = tab;
     currentHeader.setAttribute('class', 'activeTabHeader');
+    currentTab.setAttribute('style', 'display: block');
 }
 
 function getXmlHttp(){
@@ -170,6 +169,14 @@ function savePerson(id) {
     xmlhttp.open('POST', 'http://localhost:8080/Adaptation/update_person', true);
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var form = document.forms.namedItem('edit_person_form' + id);
+
+    var valid=check(form.firstName);
+    valid&=check(form.lastName);
+    valid&=check(form.middleName);
+    if(!valid) {
+        return;
+    }
+
     var dataString =
         'id=' + encodeURIComponent(id) +
         '&firstName=' + encodeURIComponent(form.firstName.value) +
@@ -179,12 +186,29 @@ function savePerson(id) {
         '&post=' + encodeURIComponent(form.post.value);
     xmlhttp.send(dataString);
     xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState === 4 && xmlhttp.status===200) {
-            loadPersons();
-            closeTab('person', id);
-            reloadTab('personsTab', '');
+        if (xmlhttp.readyState === 4){
+            if(xmlhttp.status===200) {
+                loadPersons();
+                document.getElementById('person' + id + '_tab').innerHTML = xmlhttp.response;
+                //closeTab('person', id);
+                reloadTab('personsTab', '');
+            }
+            else if (xmlhttp.status===520) {
+                alert(xmlhttp.getResponseHeader('error'));
+            }
         }
     };
+}
+
+function check(field) {
+    var pattern = new RegExp(field.pattern);
+    var result = pattern.test(field.value);
+    if(!result){
+        field.setAttribute('style', 'border: solid 2px red');
+    } else {
+        field.setAttribute('style', 'border: ');
+    }
+    return result;
 }
 
 function addPerson() {
@@ -192,18 +216,34 @@ function addPerson() {
     xmlhttp.open('POST', 'http://localhost:8080/Adaptation/new_person', true);
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var form = document.forms.namedItem('new_person_form');
+
+    var valid=check(form.firstName);
+    valid&=check(form.lastName);
+    valid&=check(form.middleName);
+    if(!valid) {
+        return;
+    }
+
     var dataString =
         '&firstName=' + encodeURIComponent(form.firstName.value) +
         '&lastName=' + encodeURIComponent(form.lastName.value) +
         '&middleName=' + encodeURIComponent(form.middleName.value) +
         '&birthday=' + encodeURIComponent(form.birthday.value) +
         '&post=' + encodeURIComponent(form.post.value);
+
+
+
     xmlhttp.send(dataString);
     xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState === 4 && xmlhttp.status===200) {
-            loadPersons();
-            closeTab('newPerson', "");
-            reloadTab('personsTab', '');
+        if (xmlhttp.readyState === 4){
+            if(xmlhttp.status===200) {
+                loadPersons();
+                closeTab('newPerson', '');
+                reloadTab('personsTab', '');
+            }
+            else if (xmlhttp.status===520) {
+                alert(xmlhttp.getResponseHeader('error'));
+            }
         }
     };
 }
@@ -250,7 +290,6 @@ function savePhoto(id) {
     xmlhttp.open('POST', 'http://localhost:8080/Adaptation/post_photo', true);
     var form = document.forms.namedItem('set_photo_form');
     var data = new FormData(form);
-    console.log(data);
     xmlhttp.send(data);
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === 4 && xmlhttp.status===200) {
@@ -261,6 +300,9 @@ function savePhoto(id) {
 
 function reloadTab(type, id) {
     var tab = document.getElementById(type+id+'_tab');
+    if(tab==undefined) {
+        return;
+    }
     var xmlhttp = getXmlHttp();
     var link;
     if (type=='person'){
@@ -292,17 +334,29 @@ function registerListeners() {
             var row = table.rows[i];
             row.onclick = function () {
                 if (selectedRow!=undefined){
-                    $(selectedRow).removeClass('selected');
+                    selectedRow.classList.remove('selected');
                 } else {
-                    $('#edit_person_button').removeClass('hidden');
-                    $('#delete_person_button').removeClass('hidden');
+                    document.getElementById('edit_person_button').classList.remove('hidden');
+                    document.getElementById('delete_person_button').classList.remove('hidden');
                 }
-                $(this).addClass('selected');
+                this.classList.add('selected');
                 selectedRow = this;
                 selectedRowId = selectedRow.cells[0].innerHTML;
             };
         }
     }
+}
+
+function enableEditMode(button, id) {
+    button.innerHTML = 'Сохранить';
+    button.onclick = function(){
+        savePerson(id);
+    };
+    var form = document.forms.namedItem('edit_person_form' + id);
+    for (var i = 0; i<form.elements.length; i++){
+        form.elements[i].removeAttribute('disabled');
+    }
+    var buttons = button.parentNode.childNodes;
 }
 
 window.onload = start();

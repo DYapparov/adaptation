@@ -4,8 +4,7 @@ body{
 
 h1{
     text-align: center;
-    margin: auto;
-    padding: 1em 0;
+    padding: 1em 0 0 0;
     color: #33095d;
 }
 
@@ -100,6 +99,7 @@ h2 {
     border-right: solid 2px grey;
     text-indent: 0.5em;
     margin-right: 2px;
+    width: 9em;
 }
 
 .inActiveTabHeader {
@@ -111,6 +111,7 @@ h2 {
     vertical-align: top;
     text-indent: 0.5em;
     margin-right: 2px;
+    width: 9em;
 }
 
 .activeTabHeader:hover {
@@ -121,6 +122,11 @@ h2 {
     cursor: pointer;
     cursor: hand;
     background-color: grey;
+}
+
+.avatar {
+    cursor: pointer;
+    cursor: hand;
 }
 
 .tab {
@@ -141,7 +147,7 @@ h2 {
 
 }
 
-/*----------------------------------------------Persons/Documents--------------------------------------------------*/
+/*----------------------------------------------Persons--------------------------------------------------*/
 
 
 .row1 {
@@ -170,25 +176,6 @@ h2 {
     cursor: hand;
 }
 
-#documentDetailsForm {
-    text-align: center;
-    margin: 0 auto;
-}
-
-#documentDetailsForm table{
-    margin: 0 auto;
-    width: 50%;
-}
-
-#documentDetailsForm td {
-    text-align: left;
-}
-
-#documentDetailsForm td input {
-    width: 25em;
-    text-align: left;
-}
-
 .avatar {
     width: 8em;
     float: right;
@@ -214,7 +201,7 @@ h2 {
 
 /* ---------------------------------------------------------TOP MENU----------------------------------------------*/
 
-#topMenu {
+.topMenu {
     padding: 1em 0 0 1em;
 }
 

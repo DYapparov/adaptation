@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dyapparov on 04.07.2016.
@@ -44,22 +46,31 @@ public class PersonSevlet extends HttpServlet {
             p.setId(id);
             ds.deleteItem(p);
         } else {
+            List<String> wrongFields = new ArrayList<String>();
             ru.vasya.model.staff.Person p = (ru.vasya.model.staff.Person) ds.getById(ru.vasya.model.staff.Person.class, id);
             String lastName = req.getParameter("lastName").trim();
             String firstName = req.getParameter("firstName").trim();
             String middleName = req.getParameter("middleName").trim();
-            if(StringUtils.isAlpha(lastName)
-                    &&StringUtils.isAlpha(firstName)
-                    &&StringUtils.isAlpha(middleName)
-                    &&!lastName.isEmpty()
-                    &&!firstName.isEmpty()
-                    &&!middleName.isEmpty()){
+
+            if(!StringUtils.isAlpha(lastName) || lastName.isEmpty()){
+                wrongFields.add("lastName");
+            }
+            if(!StringUtils.isAlpha(firstName) || firstName.isEmpty()){
+                wrongFields.add("firstName");
+            }
+            if(!StringUtils.isAlpha(middleName) || middleName.isEmpty()){
+                wrongFields.add("middleName");
+            }
+
+            if (wrongFields.size()==0) {
                 p.setLastName(lastName);
                 p.setFirstName(firstName);
                 p.setMiddleName(middleName);
                 p.setPost(req.getParameter("post"));
             } else {
-                resp.sendRedirect("edit_person?id=" + id);
+                String errorMessage = "Please, provide valid infomation for fields " + StringUtils.join(wrongFields, ", ");
+                resp.setHeader("error", errorMessage);
+                resp.setStatus(520);
                 return;
             }
             try {
@@ -68,7 +79,7 @@ public class PersonSevlet extends HttpServlet {
                 LOGGER.error("Could not parse birthday date", e);
             }
             ds.updateItem(p);
+            resp.sendRedirect("edit_person?id=" + id);
         }
-        resp.sendRedirect("persons");
     }
 }

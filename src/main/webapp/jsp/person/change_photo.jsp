@@ -9,14 +9,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div id="wrapper">
-    <div id="topMenu">
-        <div class = "topButton" onclick="reloadTab('person', <c:out value="${param.id}"/>)">Back</div>
-        <div class = "topButton" onclick="savePhoto(<c:out value="${param.id}"/>)">Save</div>
+<div>
+    <div class="topMenu">
+        <div class = "topButton" onclick="reloadTab('person', ${param.id})">Назад</div>
+        <div class = "topButton" onclick="savePhoto(${param.id})">Сохранить</div>
     </div>
     <h1>Изменение фото</h1>
     <form id="set_photo_form" name="set_photo_form" method="post" action="" enctype="multipart/form-data">
-        <input class="hidden" type="number" name = "id" value="<c:out value="${param.id}"/>"/>
+        <input class="hidden" type="number" name = "id" value="${param.id}"/>
         Выберите файл:<input type="file" name = "photo" value="Browse..."/>
     </form>
 </div>

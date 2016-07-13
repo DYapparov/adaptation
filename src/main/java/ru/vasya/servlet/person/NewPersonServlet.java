@@ -16,9 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by dyapparov on 06.07.2016.
@@ -39,15 +37,20 @@ public class NewPersonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Person p = new Person();
+        List<String> wrongFields = new ArrayList<String>();
         String lastName = req.getParameter("lastName").trim();
         String firstName = req.getParameter("firstName").trim();
         String middleName = req.getParameter("middleName").trim();
-        if (StringUtils.isAlpha(lastName)
-                && StringUtils.isAlpha(firstName)
-                && StringUtils.isAlpha(middleName)
-                && !lastName.isEmpty()
-                && !firstName.isEmpty()
-                && !middleName.isEmpty()) {
+        if(!StringUtils.isAlpha(lastName) || lastName.isEmpty()){
+            wrongFields.add("lastName");
+        }
+        if(!StringUtils.isAlpha(firstName) || firstName.isEmpty()){
+            wrongFields.add("firstName");
+        }
+        if(!StringUtils.isAlpha(middleName) || middleName.isEmpty()){
+            wrongFields.add("middleName");
+        }
+        if (wrongFields.size()==0) {
             p.setLastName(lastName);
             p.setFirstName(firstName);
             p.setMiddleName(middleName);
@@ -61,11 +64,12 @@ public class NewPersonServlet extends HttpServlet {
             p.setPhotoURL("img/avatars/African_Male.png");
             if(!isDuplicate(p)) {
                 ds.insertItem(p);
-                resp.sendRedirect("persons");
-                return;
             }
+        } else {
+            String errorMessage = "Please, provide valid infomation for fields " + StringUtils.join(wrongFields, ", ");
+            resp.setHeader("error", errorMessage);
+            resp.setStatus(520);
         }
-        resp.sendRedirect("new_person");
     }
 
     private boolean isDuplicate(Person item){
