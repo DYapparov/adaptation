@@ -5,11 +5,27 @@
 
 var currentTab, currentHeader;
 var selectedRow, selectedRowId;
+//var serverIP="http://172.16.124.194:8080";
+var serverIP="http://localhost:8080";
 
 function start() {
     loadPersons();
     loadDocuments();
     addTab('personsTab', '');
+    if (document.getElementById('tabHeadersScroll').addEventListener) {
+        // IE9, Chrome, Safari, Opera
+        document.getElementById('tabHeadersScroll').addEventListener("mousewheel", scrollHorizontally, false);
+        // Firefox
+        document.getElementById('tabHeadersScroll').addEventListener("DOMMouseScroll", scrollHorizontally, false);
+    } else {
+        // IE 6/7/8
+        document.getElementById('tabHeadersScroll').attachEvent("onmousewheel", scrollHorizontally);
+    }
+    registerScrollListeners();
+    document.body.onresize = function () {
+        adjustScroll();
+    }
+
 }
 
 function loadPersons() {
@@ -18,7 +34,7 @@ function loadPersons() {
         personsMenu.firstChild.remove();
     }
     var xmlhttp = getXmlHttp();
-    xmlhttp.open('GET', 'http://localhost:8080/Adaptation/rest/ecm/employees', true);
+    xmlhttp.open('GET', serverIP + '/Adaptation/rest/ecm/employees', true);
     xmlhttp.send();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === 4 && xmlhttp.status===200) {
@@ -37,21 +53,28 @@ function loadPersons() {
 
 function loadDocuments() {
     var xmlhttp = getXmlHttp();
-    xmlhttp.open('GET', 'http://localhost:8080/Adaptation/rest/documents/all/', true);
+    xmlhttp.open('GET', serverIP + '/Adaptation/rest/documents/all/', true);
     xmlhttp.send();
     var docs;
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === 4 && xmlhttp.status===200) {
             docs = xmlhttp.responseXML.getElementsByTagName("docs");
             for (var i = 0; i<docs.length; i++){
-                var docName = docs[i].getAttribute('xsi:type');
+
                 var id = docs[i].childNodes[2].firstChild.nodeValue;
                 var regNum = docs[i].childNodes[4].firstChild.nodeValue;
+                var docName = docs[i].getAttribute('xsi:type');
+                if(docName == 'incoming'){
+                    docName='Входящее';
+                } else if(docName == 'outgoing'){
+                    docName='Исходящее';
+                } else if(docName == 'task'){
+                    docName='Поручение';
+                }
+
                 var newDiv = document.createElement("div");
                 newDiv.setAttribute("class", "listItem");
                 newDiv.setAttribute("onclick", "addTab('document', " + id + ")");
-                var alpha = docName.charAt(0);
-                docName = alpha.toUpperCase() + docName.slice(1);
                 newDiv.innerHTML = "<p>" + docName + " №" + regNum + "</p>";
                 document.getElementById("documents").appendChild(newDiv);
             }
@@ -99,8 +122,9 @@ function addTab(type, id) {
     var newTabHeader = document.createElement('div');
     newTabHeader.setAttribute('id', type+id);
     newTabHeader.innerHTML = header;
-    newTabHeader.onclick = function (e) {
-        if(e.target==this){
+    newTabHeader.onclick = function (event) {
+        var target = event.srcElement ? event.srcElement : event.target;
+        if(target==this){
             updateActiveTab(newTabHeader, newTab);
         }
     };
@@ -123,16 +147,19 @@ function closeTab(type, id) {
     var closingTab = document.getElementById(type + id + '_tab');
     closingTab.remove();
     if(currentHeader==closingHeader){
-        var tabheaders = document.getElementById('tabHeaders').childNodes;
-        currentHeader = tabheaders[tabheaders.length-1];
         var tabs = document.getElementById('tabContainer').childNodes;
         if(tabs.length>0){
+            var tabheaders = document.getElementById('tabHeaders').childNodes;
+            currentHeader = tabheaders[tabheaders.length-1];
             currentTab = tabs[tabs.length-1];
             currentTab.setAttribute('style', 'display: block');
             currentHeader.removeAttribute('class');
             currentHeader.setAttribute('class', 'activeTabHeader');
+        } else {
+            return;
         }
     }
+    adjustScroll();
 }
 
 function updateActiveTab(header, tab){
@@ -145,6 +172,30 @@ function updateActiveTab(header, tab){
     currentTab = tab;
     currentHeader.setAttribute('class', 'activeTabHeader');
     currentTab.setAttribute('style', 'display: block');
+
+    adjustScroll();
+}
+
+function adjustScroll() {
+    var headersContainer = document.getElementById('tabHeadersContainer');
+    var headersScroll = document.getElementById('tabHeadersScroll');
+    var visiblePos_m = headersScroll.scrollLeft;
+    var visiblePos_M = headersScroll.scrollLeft + headersContainer.offsetWidth;
+    var currentElemPos_m = currentHeader.offsetLeft;
+    var currentElemPos_M = currentHeader.offsetLeft+currentHeader.offsetWidth;
+
+    if(currentElemPos_M > visiblePos_M){
+        headersScroll.scrollLeft += currentElemPos_M - visiblePos_M;
+        document.getElementById('scrollButtons').setAttribute('style', 'display:block');
+    } else if (currentElemPos_m < visiblePos_m) {
+        headersScroll.scrollLeft -= visiblePos_m - currentElemPos_m;
+    }
+
+    if(headersScroll.scrollWidth>headersContainer.offsetWidth){
+        document.getElementById('scrollButtons').setAttribute('style', 'display:block');
+    } else{
+        document.getElementById('scrollButtons').setAttribute('style', 'display:none');
+    }
 }
 
 function getXmlHttp(){
@@ -166,7 +217,7 @@ function getXmlHttp(){
 
 function savePerson(id) {
     var xmlhttp = getXmlHttp();
-    xmlhttp.open('POST', 'http://localhost:8080/Adaptation/update_person', true);
+    xmlhttp.open('POST', serverIP + '/Adaptation/update_person', true);
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var form = document.forms.namedItem('edit_person_form' + id);
 
@@ -213,7 +264,7 @@ function check(field) {
 
 function addPerson() {
     var xmlhttp = getXmlHttp();
-    xmlhttp.open('POST', 'http://localhost:8080/Adaptation/new_person', true);
+    xmlhttp.open('POST', serverIP + '/Adaptation/new_person', true);
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var form = document.forms.namedItem('new_person_form');
 
@@ -250,7 +301,7 @@ function addPerson() {
 
 function deletePerson(id) {
     var xmlhttp = getXmlHttp();
-    xmlhttp.open('POST', 'http://localhost:8080/Adaptation/update_person', true);
+    xmlhttp.open('POST', serverIP + '/Adaptation/update_person', true);
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var dataString =
         'id=' + encodeURIComponent(id) +
@@ -274,7 +325,7 @@ function newPerson() {
 function changePhoto(id) {
     var tab = document.getElementById('person' + id + '_tab');
     var xmlhttp = getXmlHttp();
-    xmlhttp.open('GET', 'http://localhost:8080/Adaptation/post_photo?id=' + id, true);
+    xmlhttp.open('GET', serverIP + '/Adaptation/post_photo?id=' + id, true);
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xmlhttp.send(null);
     xmlhttp.onreadystatechange = function() {
@@ -287,7 +338,7 @@ function changePhoto(id) {
 function savePhoto(id) {
     var tab = document.getElementById('person' + id + '_tab');
     var xmlhttp = getXmlHttp();
-    xmlhttp.open('POST', 'http://localhost:8080/Adaptation/post_photo', true);
+    xmlhttp.open('POST', serverIP + '/Adaptation/post_photo', true);
     var form = document.forms.namedItem('set_photo_form');
     var data = new FormData(form);
     xmlhttp.send(data);
@@ -356,7 +407,22 @@ function enableEditMode(button, id) {
     for (var i = 0; i<form.elements.length; i++){
         form.elements[i].removeAttribute('disabled');
     }
-    var buttons = button.parentNode.childNodes;
+}
+
+function scrollHorizontally(e) {
+    e = window.event || e;
+    var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+    document.getElementById('tabHeadersScroll').scrollLeft -= (delta*40);
+    e.preventDefault();
+}
+
+function registerScrollListeners() {
+    document.getElementById('scrollLeftBut').onclick = function () {
+        document.getElementById('tabHeadersScroll').scrollLeft -= 40;
+    };
+    document.getElementById('scrollRightBut').onclick = function () {
+        document.getElementById('tabHeadersScroll').scrollLeft += 40;
+    };
 }
 
 window.onload = start();

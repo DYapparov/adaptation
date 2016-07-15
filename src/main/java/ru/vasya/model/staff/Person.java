@@ -15,7 +15,7 @@ public class Person extends Staff implements Comparable, Storable {
     private String lastName;
     private String firstName;
     private String middleName;
-    private String post;
+    private Post post;
     private Date birthday;
     private String photoURL;
 
@@ -50,11 +50,11 @@ public class Person extends Staff implements Comparable, Storable {
         this.middleName = middleName;
     }
 
-    public String getPost() {
+    public Post getPost() {
         return post;
     }
     @XmlElement
-    public void setPost(String post) {
+    public void setPost(Post post) {
         this.post = post;
     }
 
@@ -76,11 +76,11 @@ public class Person extends Staff implements Comparable, Storable {
 
     public int compareTo(Object o) {
         Person p = (Person) o;
-        int result = lastName.compareTo(p.lastName);
+        int result = lastName.compareToIgnoreCase(p.lastName);
         if (result==0){
-            result = firstName.compareTo(p.firstName);
+            result = firstName.compareToIgnoreCase(p.firstName);
             if (result == 0){
-                result = middleName.compareTo(p.middleName);
+                result = middleName.compareToIgnoreCase(p.middleName);
             }
         }
         return result;
@@ -92,6 +92,6 @@ public class Person extends Staff implements Comparable, Storable {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "(id " + getId() + "): " + getLastName() + " " + getFirstName() + " " + getMiddleName() + ", " + getPost() + ", birthday: " + getBirthday();
+        return this.getClass().getSimpleName() + "(id " + getId() + "): " + getLastName() + " " + getFirstName() + " " + getMiddleName() + ", " + getPost().getName() + ", birthday: " + getBirthday();
     }
 }

@@ -1,10 +1,11 @@
 body{
     margin: 0;
+    height: 100%;
+    width: 100%;
 }
 
 h1{
     text-align: center;
-    padding: 1em 0 0 0;
     color: #33095d;
 }
 
@@ -24,7 +25,7 @@ h2 {
 
 #leftContainer {
     width: 20%;
-    height: inherit;
+    height: 100%;
     float: left;
     margin-right: 0.5%;
     font-size: 12px;
@@ -35,20 +36,20 @@ h2 {
     width: 78.5%;
     height: 99%;
     float: left;
-    overflow: scroll;
+    position: relative;
 }
 
 #topContainer{
     background-color: white;
     height: 49%;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 #botContainer{
     background-color: white;
     height: 49%;
     margin-top: 0.5em;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .listItem p {
@@ -66,15 +67,20 @@ h2 {
     clear: both;
 }
 
-.hidden {
-    display: none;
-}
 
 
 /*---------------------------------------------TABS, TAB HEADERs----------------------------------------*/
+
+.tab {
+    background-color: white;
+    height: 95%;
+    width: 100%;
+    position: absolute;
+}
+
 #tabHeadersContainer {
     height: 2em;
-    width: 100%;
+    width: 97.5%;
     background-color: lightskyblue;
     overflow: hidden;
 }
@@ -87,6 +93,31 @@ h2 {
 #tabHeaders {
     height: 2em;
     display: inline-flex;
+}
+
+#scrollButtons {
+    height: 100%;
+    position: fixed;
+    width: 2%;
+    right: 0.5%;
+    display: none;
+    min-width: 20px;
+}
+
+#scrollLeftBut, #scrollRightBut {
+    height: 2em;
+    display: inline-block;
+    background-color: gainsboro;
+    text-align: center;
+    line-height: 2em;
+    width: 50%;
+    min-width: 10px;
+}
+
+#scrollLeftBut:hover, #scrollRightBut:hover {
+    background-color: white;
+    cursor: pointer;
+    cursor: hand;
 }
 
 .activeTabHeader {
@@ -129,12 +160,6 @@ h2 {
     cursor: hand;
 }
 
-.tab {
-    background-color: white;
-    height: 100%;
-    padding-bottom: 3em;
-}
-
 .closeButton{
     font-weight: bold;
     display: inline-block;
@@ -149,7 +174,6 @@ h2 {
 
 /*----------------------------------------------Persons--------------------------------------------------*/
 
-
 .row1 {
     background-color: lightskyblue;
 }
@@ -157,7 +181,13 @@ h2 {
 #personsTable{
     width: 100%;
 }
-.personTable tr{
+
+#personsWrap {
+    overflow: auto;
+    height: 75%;
+}
+
+#personTable tr{
     height: 2em;
 }
 
@@ -198,15 +228,15 @@ h2 {
     text-align: center;
 }
 
-
 /* ---------------------------------------------------------TOP MENU----------------------------------------------*/
 
 .topMenu {
-    padding: 1em 0 0 1em;
+    padding: 0.5em;
+    border-bottom: dashed 1px grey;
 }
 
 .topButton {
-    float: left;
+    display: inline-block;
     height: 1.5em;
     width: 5em;
     text-align: center;
@@ -215,8 +245,12 @@ h2 {
     margin-right: 0.5em;
 }
 
-.topButton:hover{
+.topButton:hover {
     cursor: pointer;
     cursor: hand;
     background-color: lavender;
+}
+
+.hidden {
+    display: none;
 }

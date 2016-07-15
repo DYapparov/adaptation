@@ -3,6 +3,7 @@ package ru.vasya.service.query;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import ru.vasya.model.staff.Person;
+import ru.vasya.model.staff.Post;
 import ru.vasya.service.query.parts.FieldToSelect;
 import ru.vasya.service.query.parts.FieldsPart;
 import ru.vasya.service.query.parts.Table;
@@ -44,6 +45,8 @@ public class QueryToSqlConverter {
         Object result;
         if (value instanceof Person){
             result = ((Person)value).getId();
+        } else if (value instanceof Post){
+            result = ((Post)value).getId();
         } else if (value instanceof Date){
             result = "'" + new SimpleDateFormat("yyyy-MM-dd").format(value) + "'";
         } else if (value instanceof Number){

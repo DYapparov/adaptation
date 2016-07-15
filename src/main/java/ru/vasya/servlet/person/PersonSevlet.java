@@ -66,7 +66,10 @@ public class PersonSevlet extends HttpServlet {
                 p.setLastName(lastName);
                 p.setFirstName(firstName);
                 p.setMiddleName(middleName);
-                p.setPost(req.getParameter("post"));
+                int postId = Integer.parseInt(req.getParameter("post"));
+                Post post = new Post();
+                post.setId(postId);
+                p.setPost(post);
             } else {
                 String errorMessage = "Please, provide valid infomation for fields " + StringUtils.join(wrongFields, ", ");
                 resp.setHeader("error", errorMessage);

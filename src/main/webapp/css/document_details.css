@@ -1,21 +1,22 @@
 
-.documentDetailsForm {
-    text-align: center;
-    margin: 0 auto;
+.documentDetailsTable{
+    margin: auto;
 }
 
-.documentDetailsForm table{
-    margin: 0 auto;
-    width: 50%;
+.documentDetailsTable tr {
+    height: 2.5em;
+    margin: auto;
 }
 
-.documentDetailsForm td {
+.leftAlign {
     text-align: left;
 }
 
-.documentDetailsForm td input {
-    width: 25em;
-    text-align: left;
+.documentDetailsTable td input {
+    width: 20em;
+}
+.documentDetailsTable td {
+   width: 1em;
 }
 
 .documentPane {

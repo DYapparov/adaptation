@@ -11,10 +11,11 @@ import java.util.Map;
  * Created by dyapparov on 01.07.2016.
  */
 public class DerbyServiceTest {
-    DerbyService dBs = new DerbyService();
+    private DerbyService<Person> dBs = new DerbyService<Person>();
 
-    PersonServiceImpl ps = PersonServiceImpl.getInstance();
-    List<Person> persons = ps.getPersonList();
+    private PersonServiceImpl ps = PersonServiceImpl.getInstance();
+
+    private List<Person> persons = ps.getPersonList();
 
     @Test
     public void createTable() throws Exception {
@@ -32,14 +33,14 @@ public class DerbyServiceTest {
     public void getAll() throws Exception {
         System.out.println(dBs.getAll(Person.class));
     }
-
+    /*
     @Test
     public void updateItem() throws Exception {
         persons.get(1).setPost("Master");
         dBs.updateItem(persons.get(1));
         System.out.println(dBs.getAll(Person.class));
     }
-
+    */
     @Test
     public void deleteItem() throws Exception {
         dBs.deleteItem(persons.get(1));

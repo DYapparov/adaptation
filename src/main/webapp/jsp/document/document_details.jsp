@@ -16,7 +16,7 @@
 
 <div class="documentPane">
     <div class="topMenu">
-        <div class = "topButton" onclick="closeTab('document', ${document.id})">Назад</div>
+        <div class = "topButton" onclick="closeTab('document', ${document.id})">Закрыть</div>
     </div>
 
     <h1>Детали поручения</h1>
@@ -25,37 +25,38 @@
         <h2>${docType} №${document.registrationNumber}</h2>
         <table class = "documentDetailsTable">
             <tr class="hidden"><td>id:</td><td><input type="number" name = "id" value="${document.id}"/></td></tr>
-            <tr><td>Имя документа:</td> <td><input type="text" name = "docName" value="${document.docName}"/></td></tr>
-            <tr><td>Регистрационный №:</td> <td><input type="text" name = "registrationNumber" value="${document.registrationNumber}" disabled/></td></tr>
-            <tr><td>Дата регистрации:</td> <td><input type="date" name = "registerDate" value="<fmt:formatDate value="${document.registerDate}" pattern="yyyy-MM-dd"/>" disabled/></td></tr>
-            <tr><td>Автор:</td> <td><input type="text" name = "author" value="${document.author}" disabled/></td></tr>
+            <tr><td>Имя документа:</td> <td class="leftAlign"><input type="text" name = "docName" value="${document.docName}" disabled/></td></tr>
+            <tr><td>Регистрационный №:</td> <td class="leftAlign"><input type="text" name = "registrationNumber" value="${document.registrationNumber}" disabled/></td></tr>
+            <tr><td>Дата регистрации:</td> <td class="leftAlign"><input type="date" name = "registerDate" value="<fmt:formatDate value="${document.registerDate}" pattern="yyyy-MM-dd"/>" disabled/></td></tr>
+            <tr><td>Автор:</td> <td class="leftAlign"><input type="text" name = "author" value="${document.author.lastName} ${document.author.firstName} ${document.author.middleName}, ${document.author.post.name}" disabled/></td></tr>
 
             <c:choose>
                 <c:when test="${requestScope.docType eq 'Task'}">
-                    <tr><td>Дата получения:</td> <td><input type="date" name = "deliveryDate" value="<fmt:formatDate value="${document.deliveryDate}" pattern="yyyy-MM-dd"/>"/></td></tr>
-                    <tr><td>Дата исполнения:</td> <td><input type="date" name = "finishDate" value="<fmt:formatDate value="${document.finishDate}" pattern="yyyy-MM-dd"/>"/></td></tr>
-                    <tr><td>Исполнитель:</td> <td><input type="text" name = "performer" value="${document.performer}"/></td></tr>
-                    <tr><td>Контрольный:</td> <td><input type="text" name = "controlTag" value="${document.controlTag}"/></td></tr>
+                    <tr><td>Дата получения:</td> <td class="leftAlign"><input type="date" name = "deliveryDate" value="<fmt:formatDate value="${document.deliveryDate}" pattern="yyyy-MM-dd"/>" disabled/></td></tr>
+                    <tr><td>Дата исполнения:</td> <td class="leftAlign"><input type="date" name = "finishDate" value="<fmt:formatDate value="${document.finishDate}" pattern="yyyy-MM-dd"/>" disabled/></td></tr>
+                    <tr><td>Исполнитель:</td> <td class="leftAlign"><input type="text" name = "performer" value="${document.performer.lastName} ${document.performer.firstName} ${document.performer.middleName}, ${document.performer.post.name}" disabled/></td></tr>
+                    <tr><td>Контрольный:</td> <td class="leftAlign"><input type="text" name = "controlTag" value="${document.controlTag}" disabled/></td></tr>
                     <c:if test="${document.controlTag eq 'true'}">
-                        <tr><td>Контроллер:</td> <td><input type="text" name = "controller" value="${document.controller}"/></td></tr>
+                        <tr><td>Контроллер:</td> <td class="leftAlign"><input type="text" name = "controller" value="${document.controller.lastName} ${document.controller.firstName} ${document.controller.middleName}, ${document.controller.post.name}" disabled/></td></tr>
                     </c:if>
                 </c:when>
                 <c:when test="${requestScope.docType eq 'Outgoing'}">
-                    <tr><td>Кому:</td> <td><input type="text" name = "destination" value="${document.destination.lastName}"/></td></tr>
-                    <tr><td>Способ доставки:</td> <td><input type="text" name = "deliveryMethod" value="${document.deliveryMethod}"/></td></tr>
+                    <tr><td>Кому:</td> <td class="leftAlign"><input type="text" name = "destination" value="${document.destination.lastName} ${document.destination.firstName} ${document.destination.middleName}, ${document.destination.post.name}" disabled/></td></tr>
+                    <tr><td>Способ доставки:</td> <td class="leftAlign"><input type="text" name = "deliveryMethod" value="${document.deliveryMethod}" disabled/></td></tr>
                 </c:when>
                 <c:when test="${requestScope.docType eq 'Incoming'}">
-                    <tr><td>От кого:</td> <td><input type="text" name = "origination" value="${document.origination}"/></td></tr>
-                    <tr><td>Кому:</td> <td><input type="text" name = "destination" value="${document.destination}"/></td></tr>
-                    <tr><td>Исходящий №:</td> <td><input type="number" name = "outgoingNumber" value="${document.outgoingNumber}"/></td></tr>
-                    <tr><td>Исходящая дата регистрации:</td> <td><input type="date" name = "outgoingDate" value="<fmt:formatDate value="${document.outgoingDate}" pattern="yyyy-MM-dd"/>"/></td></tr>
+                    <tr><td>От кого:</td> <td class="leftAlign"><input type="text" name = "origination" value="${document.origination.lastName} ${document.origination.firstName} ${document.origination.middleName}, ${document.origination.post.name}" disabled/></td></tr>
+                    <tr><td>Кому:</td> <td class="leftAlign"><input type="text" name = "destination" value="${document.destination.lastName} ${document.destination.firstName} ${document.destination.middleName}, ${document.destination.post.name}" disabled/></td></tr>
+                    <tr><td>Исходящий №:</td> <td class="leftAlign"><input type="number" name = "outgoingNumber" value="${document.outgoingNumber}" disabled/></td></tr>
+                    <tr><td>Исходящая дата регистрации:</td> <td class="leftAlign"><input type="date" name = "outgoingDate" value="<fmt:formatDate value="${document.outgoingDate}" pattern="yyyy-MM-dd"/>" disabled/></td></tr>
                 </c:when>
                 <c:otherwise>
                     <p>Unknown document type</p>
                 </c:otherwise>
             </c:choose>
 
-            <tr><td>Текст:</td> <td><input type="text" name = "text" value="${document.text}"/></td></tr>
+            <tr><td colspan="2" class="leftAlign">Текст:</td></tr>
+            <tr><td colspan="2" class="leftAlign"><textarea name = "text" cols="48" rows="5" disabled>${document.text}</textarea></td></tr>
         </table>
     </form>
 </div>

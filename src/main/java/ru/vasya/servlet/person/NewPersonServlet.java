@@ -54,7 +54,10 @@ public class NewPersonServlet extends HttpServlet {
             p.setLastName(lastName);
             p.setFirstName(firstName);
             p.setMiddleName(middleName);
-            p.setPost(req.getParameter("post"));
+            int postId = Integer.parseInt(req.getParameter("post"));
+            Post post = new Post();
+            post.setId(postId);
+            p.setPost(post);
             try {
                 p.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("birthday")));
             } catch (ParseException e) {
@@ -64,6 +67,9 @@ public class NewPersonServlet extends HttpServlet {
             p.setPhotoURL("img/avatars/African_Male.png");
             if(!isDuplicate(p)) {
                 ds.insertItem(p);
+            } else {
+                resp.setHeader("error", "Such employee already exists");
+                resp.setStatus(520);
             }
         } else {
             String errorMessage = "Please, provide valid infomation for fields " + StringUtils.join(wrongFields, ", ");

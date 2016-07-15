@@ -13,7 +13,6 @@
     <div class="topMenu">
         <div class = "topButton" onclick="closeTab('person', ${person.id})">Закрыть</div>
         <div class = "topButton" onclick="enableEditMode(this, ${person.id})">Изменить</div>
-        <div class = "topButton hidden" onclick="reloadTab('person', ${person.id})">Отмена</div>
         <div class = "topButton" onclick="getElementById('confirmRemove${person.id}').style.display='block';">Удалить</div>
         <div class = "topButton" onclick="changePhoto(${person.id})">Фото</div>
     </div>
@@ -26,9 +25,9 @@
     </div>
     <form method="post" name="edit_person_form${person.id}" action="" accept-charset="UTF-8">
         <table>
-            <tr><td>Фамилия:</td> <td><input type="text" name = "lastName" value="${person.lastName}" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}" disabled/></td></tr>
-            <tr><td>Имя:</td> <td><input type="text" name = "firstName" value="${person.firstName}" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}" disabled/></td></tr>
-            <tr><td>Отчество:</td> <td><input type="text" name = "middleName" value="${person.middleName}" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}" disabled/></td></tr>
+            <tr><td>Фамилия:</td> <td><input type="text" name = "lastName" value="${person.lastName}" required pattern="^[a-zA-Zа-яА-Я]{1,30}" disabled/></td></tr>
+            <tr><td>Имя:</td> <td><input type="text" name = "firstName" value="${person.firstName}" required pattern="^[a-zA-Zа-яА-Я]{1,30}" disabled/></td></tr>
+            <tr><td>Отчество:</td> <td><input type="text" name = "middleName" value="${person.middleName}" required pattern="^[a-zA-Zа-яА-Я]{1,30}" disabled/></td></tr>
             <tr>
                 <td>Должность:</td>
                 <td>
@@ -36,15 +35,15 @@
 
                         <c:forEach items="${requestScope.posts}" var="post">
                             <c:set var="selected" value=""/>
-                            <c:if test="${post.name eq person.post}">
+                            <c:if test="${post.id eq person.post.id}">
                                 <c:set var="selected" value="selected"/>
                             </c:if>
                             <!-- -NO MASTERS ANYMOARRRR- -->
                             <c:set var="disabled" value=""/>
-                            <c:if test="${post.name eq 'Master'}">
+                            <c:if test="${post.name eq 'Мастер'}">
                                 <c:set var="disabled" value="disabled"/>
                             </c:if>
-                            <option ${selected} ${disabled}>${post.name}</option>
+                            <option ${selected} ${disabled} value="${post.id}">${post.name}</option>
                         </c:forEach>
                     </select>
                 </td>

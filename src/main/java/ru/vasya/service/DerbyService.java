@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vasya.db.DerbyConnection;
 import ru.vasya.model.staff.Person;
+import ru.vasya.model.staff.Post;
 import ru.vasya.model.staff.Staff;
 import ru.vasya.service.query.*;
 import ru.vasya.service.query.parts.FieldToSelect;
@@ -38,6 +39,8 @@ public class DerbyService<T extends Staff> {
             createTableSQL.append(", ");
             createTableSQL.append(f.getName());
             if(Person.class.equals(f.getType())){
+                createTableSQL.append(" INTEGER");
+            } else if (Post.class.equals(f.getType())){
                 createTableSQL.append(" INTEGER");
             } else if (Date.class.equals(f.getType())){
                 createTableSQL.append(" DATE");
@@ -111,6 +114,8 @@ public class DerbyService<T extends Staff> {
                 f.setAccessible(true);
                 if(Person.class.equals(f.getType())){
                     f.set(s, getById(Person.class, (Integer)rs.getObject(f.getName())));
+                } else if(Post.class.equals(f.getType())) {
+                    f.set(s, getById(Post.class, (Integer)rs.getObject(f.getName())));
                 } else if(Date.class.equals(f.getType())) {
                     f.set(s, new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(f.getName())));
                 } else {
@@ -151,6 +156,8 @@ public class DerbyService<T extends Staff> {
                     f.setAccessible(true);
                     if(Person.class.equals(f.getType())){
                         f.set(s, getById(Person.class, (Integer)rs.getObject(f.getName())));
+                    } else if (Post.class.equals(f.getType())) {
+                        f.set(s, getById(Post.class, (Integer)rs.getObject(f.getName())));
                     } else if (Date.class.equals(f.getType())) {
                         f.set(s, new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(f.getName())));
                     } else {

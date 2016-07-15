@@ -4,6 +4,7 @@ package ru.vasya.service;
 import ru.vasya.model.staff.Department;
 import ru.vasya.model.staff.Organization;
 import ru.vasya.model.staff.Person;
+import ru.vasya.model.staff.Post;
 import ru.vasya.util.XMLSerializator;
 
 import javax.ejb.EJB;
@@ -23,7 +24,7 @@ public class PersonServiceImpl implements PersonService {
     private List<Person> persons;
 
     public PersonServiceImpl(){
-
+        xmlSerializator = XMLSerializator.getInstance();
     }
 
     public static PersonServiceImpl getInstance(){
@@ -56,8 +57,8 @@ public class PersonServiceImpl implements PersonService {
             p.setFirstName(randomWord(6));
             p.setLastName(randomWord(8));
             p.setMiddleName(randomWord(10));
-            p.setPost("Slave");
             p.setBirthday(new Date(new Random().nextLong()% 1892160000000L));
+            p.setPhotoURL("img/avatars/African_Male.png");
             result.add(p);
         }
         return result;
@@ -88,8 +89,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     private static String randomWord(int length){
-        String vowels = "aeyuio";
-        String consonants = "qwrtpsdfghjklzxcvbnm";
+        String vowels = "яыуаиеёоэю";
+        String consonants = "йфцчвскмпнртгшлбщдзхж";
         Random rand = new Random();
         String result = "" + (consonants+vowels).charAt(rand.nextInt(vowels.length()+consonants.length()));
         result = result.toUpperCase();

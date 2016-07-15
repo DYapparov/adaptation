@@ -17,24 +17,22 @@
 
     <h1>Новый сотрудник</h1>
 
-    <form id="edit_person_form" name="new_person_form" method="post" action="" accept-charset="UTF-8">
+    <form class="edit_person_form" name="new_person_form" method="post" action="" accept-charset="UTF-8">
         <table>
-            <tr><td>Фамилия:</td> <td><input type="text" name = "lastName" value="" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
-            <tr><td>Имя:</td> <td><input type="text" name = "firstName" value="" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
-            <tr><td>Отчество:</td> <td><input type="text" name = "middleName" value="" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
+            <tr><td>Фамилия*:</td> <td><input type="text" name = "lastName" value="" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
+            <tr><td>Имя*:</td> <td><input type="text" name = "firstName" value="" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
+            <tr><td>Отчество*:</td> <td><input type="text" name = "middleName" value="" required pattern="^[A-ZА-Я][a-zA-Zа-яА-Я]{1,29}"/></td></tr>
             <tr>
                 <td>Должность:</td>
                 <td>
                     <select name="post" size="1">
-                        <option selected disabled>Выбрать...</option>
-
                         <c:forEach items="${requestScope.posts}" var="post">
                             <!-- -NO MASTERS ANYMOARRRR1!!11!1!!!- -->
                             <c:set var="disabled" value=""/>
-                            <c:if test="${post.name eq 'Master'}">
+                            <c:if test="${post.name eq 'Мастер'}">
                                 <c:set var="disabled" value="disabled"/>
                             </c:if>
-                            <option ${disabled}>${post.name}</option>
+                            <option ${disabled} value="${post.id}">${post.name}</option>
                         </c:forEach>
                     </select>
                 </td>
