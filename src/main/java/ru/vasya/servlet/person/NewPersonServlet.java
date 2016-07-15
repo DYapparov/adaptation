@@ -3,9 +3,10 @@ package ru.vasya.servlet.person;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.vasya.dao.PersonDAO;
+import ru.vasya.dao.PostDAO;
 import ru.vasya.model.staff.Person;
 import ru.vasya.model.staff.Post;
-import ru.vasya.service.DerbyService;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -25,11 +26,14 @@ public class NewPersonServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(NewPersonServlet.class);
 
     @EJB
-    DerbyService ds;
+    PersonDAO personDAO;
+
+    @EJB
+    PostDAO postDAO;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("posts", ds.getAll(Post.class));
+        req.setAttribute("posts", postDAO.getAll(Post.class));
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/person/new_person.jsp");
         rd.forward(req, resp);
     }
@@ -66,7 +70,7 @@ public class NewPersonServlet extends HttpServlet {
             }
             p.setPhotoURL("img/avatars/African_Male.png");
             if(!isDuplicate(p)) {
-                ds.insertItem(p);
+                personDAO.create(p);
             } else {
                 resp.setHeader("error", "Such employee already exists");
                 resp.setStatus(520);
@@ -83,6 +87,6 @@ public class NewPersonServlet extends HttpServlet {
         values.put("lastName", item.getLastName());
         values.put("firstName", item.getFirstName());
         values.put("middleName", item.getMiddleName());
-        return ds.contains(item.getClass(), values);
+        return personDAO.getByValues(item.getClass(), values).size()>0;
     }
 }

@@ -5,8 +5,8 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import ru.vasya.dao.PersonDAO;
 import ru.vasya.model.staff.Person;
-import ru.vasya.service.DerbyService;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -25,7 +25,7 @@ import java.util.*;
 public class PhotoServlet extends HttpServlet {
 
     @EJB
-    DerbyService ds;
+    PersonDAO personDAO;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -75,9 +75,9 @@ public class PhotoServlet extends HttpServlet {
             e.printStackTrace();
         }
         if(isCorrectFormat){
-            Person p = (Person)ds.getById(Person.class, id);
+            Person p = (Person) personDAO.getByID(Person.class, id);
             p.setPhotoURL("img/avatars/" + fileName);
-            ds.updateItem(p);
+            personDAO.update(p);
             resp.sendRedirect("edit_person?id=" + id);
         }
     }

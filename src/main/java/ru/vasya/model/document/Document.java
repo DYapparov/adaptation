@@ -89,7 +89,7 @@ public abstract class Document implements Comparable, Storable {
     }
 
     public String getTable() {
-        // --------------------------------  to do название таблицы
-        return "";
+        // --------------------------------  TODO название таблицы
+        return getClass().getSimpleName();
     }
 }

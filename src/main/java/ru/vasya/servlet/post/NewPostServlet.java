@@ -3,8 +3,8 @@ package ru.vasya.servlet.post;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.vasya.dao.PostDAO;
 import ru.vasya.model.staff.Post;
-import ru.vasya.service.DerbyService;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -23,7 +23,7 @@ public class NewPostServlet extends HttpServlet{
     private static final Logger LOGGER = LoggerFactory.getLogger(NewPostServlet.class);
 
     @EJB
-    DerbyService ds;
+    PostDAO postDAO;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +32,7 @@ public class NewPostServlet extends HttpServlet{
         if(req.getParameter("id")!=null){
             int id = Integer.parseInt(req.getParameter("id"));
             mode = "Edit";
-            p = (Post)ds.getById(Post.class, id);
+            p = (Post) postDAO.getByID(Post.class, id);
         } else {
             mode = "New";
             p = new Post();
@@ -54,22 +54,22 @@ public class NewPostServlet extends HttpServlet{
 
         if ("Save".equals(action)){
             if (StringUtils.isAlpha(name) && !name.isEmpty()) {
-                p = (Post) ds.getById(Post.class, id);
+                p = (Post) postDAO.getByID(Post.class, id);
                 p.setName(name);
-                ds.updateItem(p);
+                postDAO.update(p);
                 resp.sendRedirect("posts");
                 return;
             }
         } else if("Delete".equals(action)) {
             p.setId(id);
-            ds.deleteItem(p);
+            postDAO.delete(p);
             resp.sendRedirect("posts");
             return;
         } else if ("Add".equals(action)){
             if (StringUtils.isAlpha(name) && !name.isEmpty()) {
                 p.setName(name);
                 if(!isDuplicate(p)) {
-                    ds.insertItem(p);
+                    postDAO.create(p);
                     resp.sendRedirect("posts");
                     return;
                 }
@@ -82,6 +82,6 @@ public class NewPostServlet extends HttpServlet{
     private boolean isDuplicate(Post item){
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("name", item.getName());
-        return ds.contains(item.getClass(), values);
+        return postDAO.getByValues(item.getClass(), values).size()>0;
     }
 }

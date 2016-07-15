@@ -1,8 +1,8 @@
 package ru.vasya.rest;
 
+import ru.vasya.dao.PersonDAO;
 import ru.vasya.model.document.Document;
 import ru.vasya.model.staff.Person;
-import ru.vasya.service.DerbyService;
 import ru.vasya.service.DocService;
 import ru.vasya.service.PersonService;
 import ru.vasya.util.JAXBDocumentCollection;
@@ -26,14 +26,13 @@ public class EmployeesController {
     DocService ds;
 
     @EJB
-    DerbyService<Person> dBs;
+    PersonDAO personDAO;
 
     @GET
     @Path("/employees")
     @Produces(MediaType.APPLICATION_JSON)
     public Set<Person> getEmployees(){
-
-        return dBs.getAll(Person.class);
+        return personDAO.getAll(Person.class);
     }
 
     @GET

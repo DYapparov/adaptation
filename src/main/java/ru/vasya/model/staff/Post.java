@@ -22,6 +22,11 @@ public class Post extends Staff implements Storable, Comparable {
     }
 
     @Override
+    public String toString() {
+        return getClass().getSimpleName() + ": " + getId() + ". " + getName();
+    }
+
+    @Override
     public int compareTo(Object o) {
         return getName().compareTo(((Post)o).getName());
     }

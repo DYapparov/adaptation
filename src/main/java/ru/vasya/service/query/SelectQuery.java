@@ -14,6 +14,7 @@ public class SelectQuery extends Query {
     private Collection<FieldToSelect> fields = new ArrayList<FieldToSelect>();
     private Table from;
     private Collection<FieldsPart> fieldsParts = new ArrayList<FieldsPart>();
+    private Class objectClass;
 
     public Collection<FieldToSelect> getFields() {
         return fields;
@@ -37,6 +38,14 @@ public class SelectQuery extends Query {
 
     public void setFieldsParts(Collection<FieldsPart> fieldsParts) {
         this.fieldsParts = fieldsParts;
+    }
+
+    public Class getObjectClass() {
+        return objectClass;
+    }
+
+    public void setObjectClass(Class objectClass) {
+        this.objectClass = objectClass;
     }
 
     public static Builder builder() {

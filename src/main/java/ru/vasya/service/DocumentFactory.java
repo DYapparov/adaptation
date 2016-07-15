@@ -3,6 +3,7 @@ package ru.vasya.service;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.vasya.dao.PersonDAO;
 import ru.vasya.model.document.Document;
 import ru.vasya.model.staff.Person;
 
@@ -16,19 +17,15 @@ public class DocumentFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentFactory.class);
 
     @EJB
-    DerbyService ds;
+    PersonDAO personDAO;
 
-    //private ArrayList<String> persons = new ArrayList<String>(Arrays.asList("First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"));
     private Random rand = new Random();
     private int counter = 0;
-    private List<Person> persons;
 
     private static DocumentFactory instance;
 
     public DocumentFactory(){
-        ds = new DerbyService();
-        persons = new ArrayList<Person>();
-        CollectionUtils.addAll(persons, ds.getAll(Person.class).toArray());
+        personDAO = new PersonDAO();
     }
 
     public static DocumentFactory getInstance(){
@@ -68,6 +65,8 @@ public class DocumentFactory {
         return result;
     }
     private Person getRandomPerson(){
+        List<Person> persons = new ArrayList<Person>();
+        CollectionUtils.addAll(persons, personDAO.getAll(Person.class).toArray());
         return persons.get(rand.nextInt(persons.size()));
     }
 

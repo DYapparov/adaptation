@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
 @XmlType
-public class Department extends Staff implements Comparable, Storable {
+public class Department extends Staff implements Comparable {
     private String fullName;
     private String shortName;
     private Person head;
@@ -56,10 +56,6 @@ public class Department extends Staff implements Comparable, Storable {
 
     public int compareTo(Object o) {
         return fullName.compareTo(((Department)o).fullName);
-    }
-
-    public String getTable() {
-        return this.getClass().getSimpleName();
     }
 
     @Override

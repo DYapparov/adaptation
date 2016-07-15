@@ -2,6 +2,7 @@ package ru.vasya.service.query;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import ru.vasya.model.document.Storable;
 import ru.vasya.model.staff.Person;
 import ru.vasya.model.staff.Post;
 import ru.vasya.service.query.parts.FieldToSelect;
@@ -43,10 +44,8 @@ public class QueryToSqlConverter {
 
     private static Object convertValue(Object value){
         Object result;
-        if (value instanceof Person){
-            result = ((Person)value).getId();
-        } else if (value instanceof Post){
-            result = ((Post)value).getId();
+        if (value instanceof Storable){
+            result = ((Storable)value).getId();
         } else if (value instanceof Date){
             result = "'" + new SimpleDateFormat("yyyy-MM-dd").format(value) + "'";
         } else if (value instanceof Number){
@@ -132,6 +131,8 @@ public class QueryToSqlConverter {
             }
 
             stringBuilder.append(StringUtils.join(whereParts, ", "));
+        } else if (query instanceof CustomQuery) {
+            stringBuilder.append(((CustomQuery) query).getQuery());
         } else {
             throw new Exception("Unknown operation type");
         }

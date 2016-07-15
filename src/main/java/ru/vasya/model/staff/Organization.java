@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @XmlRootElement
 @XmlType
-public class Organization extends Staff implements Comparable, Storable {
+public class Organization extends Staff implements Comparable {
     private String fullName;
     private String shortName;
     private Person head;
@@ -57,10 +57,6 @@ public class Organization extends Staff implements Comparable, Storable {
 
     public int compareTo(Object o) {
         return fullName.compareTo(((Organization)o).fullName);
-    }
-
-    public String getTable() {
-        return this.getClass().getSimpleName();
     }
 
     @Override

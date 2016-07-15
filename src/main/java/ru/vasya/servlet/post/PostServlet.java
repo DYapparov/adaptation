@@ -1,8 +1,7 @@
 package ru.vasya.servlet.post;
 
+import ru.vasya.dao.PostDAO;
 import ru.vasya.model.staff.Post;
-import ru.vasya.model.staff.Staff;
-import ru.vasya.service.DerbyService;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -19,13 +18,11 @@ import java.util.Set;
 public class PostServlet extends HttpServlet {
 
     @EJB
-    DerbyService ds;
+    PostDAO postDAO;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //ds.dropTable(Post.class);
-        //ds.createTable(Post.class);
-        Set<Staff> posts = ds.getAll(Post.class);
+        Set<Post> posts = postDAO.getAll(Post.class);
         req.setAttribute("posts", posts);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/post/posts.jsp");
         rd.forward(req, resp);

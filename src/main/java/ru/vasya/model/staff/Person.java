@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @XmlRootElement
 @XmlType
-public class Person extends Staff implements Comparable, Storable {
+public class Person extends Staff implements Comparable {
     private String lastName;
     private String firstName;
     private String middleName;
@@ -84,10 +84,6 @@ public class Person extends Staff implements Comparable, Storable {
             }
         }
         return result;
-    }
-
-    public String getTable() {
-        return this.getClass().getSimpleName();
     }
 
     @Override

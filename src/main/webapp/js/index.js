@@ -82,6 +82,17 @@ function loadDocuments() {
     };
 }
 
+function doGet(url, data, callback) {
+    var xmlHttp = getXmlHttp();
+    xmlHttp.set();
+    xmlHttp.set();
+    xmlHttp.onreadystatechange = function(state, response){
+        if (state == 200) {
+            callback(response);
+        }
+    }
+}
+
 function addTab(type, id) {
     var existingTab = document.getElementById(type + id + '_tab');
     var existingTabHeader = document.getElementById(type + id);
