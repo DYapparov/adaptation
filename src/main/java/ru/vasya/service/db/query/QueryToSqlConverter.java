@@ -1,13 +1,11 @@
-package ru.vasya.service.query;
+package ru.vasya.service.db.query;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import ru.vasya.model.document.Storable;
-import ru.vasya.model.staff.Person;
-import ru.vasya.model.staff.Post;
-import ru.vasya.service.query.parts.FieldToSelect;
-import ru.vasya.service.query.parts.FieldsPart;
-import ru.vasya.service.query.parts.Table;
+import ru.vasya.service.db.query.parts.FieldToSelect;
+import ru.vasya.service.db.query.parts.FieldsPart;
+import ru.vasya.service.db.query.parts.Table;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -4,23 +4,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vasya.model.document.Storable;
 import ru.vasya.model.staff.Post;
-import ru.vasya.service.DerbyService;
-import ru.vasya.service.query.*;
-import ru.vasya.service.query.parts.FieldToSelect;
-import ru.vasya.service.query.parts.FieldsPart;
-import ru.vasya.service.query.parts.LogicalOperation;
-import ru.vasya.service.query.parts.Table;
+import ru.vasya.service.db.DerbyService;
+import ru.vasya.service.db.query.*;
+import ru.vasya.service.db.query.parts.FieldToSelect;
+import ru.vasya.service.db.query.parts.FieldsPart;
+import ru.vasya.service.db.query.parts.LogicalOperation;
+import ru.vasya.service.db.query.parts.Table;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import java.lang.reflect.Field;
-import java.sql.ResultSet;
 import java.util.*;
 
 /**
  * Created by dyapparov on 15.07.2016.
  */
-public abstract class DAOimpl<T extends Storable> implements DAO<T>{
+public class DAOimpl<T extends Storable> implements DAO<T>{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DAOimpl.class);
 
@@ -83,6 +80,8 @@ public abstract class DAOimpl<T extends Storable> implements DAO<T>{
         SelectQuery.Builder builder = SelectQuery.builder();
         //Set table name
         builder.setTable(new Table(item.getTable(), item.getTable()));
+        //Set selected object class
+        builder.setType(item.getClass());
         //Set columns to select
         builder.addField(new FieldToSelect("id", "ID"));
         for (Field f: c.getDeclaredFields()){
@@ -92,7 +91,6 @@ public abstract class DAOimpl<T extends Storable> implements DAO<T>{
         builder.addWherePart(new FieldsPart(new FieldToSelect("id", "ID"), id, LogicalOperation.EQUALS));
         //Build final query
         SelectQuery query = builder.build();
-        query.setObjectClass(item.getClass());
 
         Set<T> items  = (Set<T>) ds.executeQuery(query);
         if(items.iterator().hasNext()){
@@ -115,6 +113,8 @@ public abstract class DAOimpl<T extends Storable> implements DAO<T>{
         SelectQuery.Builder builder = SelectQuery.builder();
         //Set table name
         builder.setTable(new Table(item.getTable(), item.getTable()));
+        //Set selected object class
+        builder.setType(item.getClass());
         //Set columns to select
         builder.addField(new FieldToSelect("id", "ID"));
         for (Field f: c.getDeclaredFields()){
@@ -126,7 +126,6 @@ public abstract class DAOimpl<T extends Storable> implements DAO<T>{
         }
         //Build final query
         SelectQuery query = builder.build();
-        query.setObjectClass(item.getClass());
 
         Set<T> items  = (Set<T>) ds.executeQuery(query);
         return items;
@@ -146,14 +145,16 @@ public abstract class DAOimpl<T extends Storable> implements DAO<T>{
         SelectQuery.Builder builder = SelectQuery.builder();
         //Set table name
         builder.setTable(new Table(item.getTable(), item.getTable()));
+        //Set selected object class
+        builder.setType(item.getClass());
         //Set columns to select
         builder.addField(new FieldToSelect("id", "ID"));
         for (Field f: c.getDeclaredFields()){
             builder.addField(new FieldToSelect(f.getName(), f.getName().toUpperCase()));
         }
+
         //Build final query
         SelectQuery query = builder.build();
-        query.setObjectClass(item.getClass());
         Set<T> items  = (Set<T>) ds.executeQuery(query);
         return items;
     }

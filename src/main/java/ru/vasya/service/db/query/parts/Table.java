@@ -1,16 +1,16 @@
-package ru.vasya.service.query.parts;
+package ru.vasya.service.db.query.parts;
 
 /**
  * Created by dyapparov on 30.06.2016.
  */
-public class FieldToSelect {
+public class Table {
     private String name;
     private String alias;
 
-    public FieldToSelect() {
+    public Table() {
     }
 
-    public FieldToSelect(String name, String alias) {
+    public Table(String name, String alias) {
         this.name = name;
         this.alias = alias;
     }

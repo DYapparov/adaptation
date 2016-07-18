@@ -1,10 +1,10 @@
-package ru.vasya.service.query;
+package ru.vasya.service.db.query;
 
 import org.junit.Test;
-import ru.vasya.service.query.parts.FieldToSelect;
-import ru.vasya.service.query.parts.FieldsPart;
-import ru.vasya.service.query.parts.LogicalOperation;
-import ru.vasya.service.query.parts.Table;
+import ru.vasya.service.db.query.parts.FieldToSelect;
+import ru.vasya.service.db.query.parts.FieldsPart;
+import ru.vasya.service.db.query.parts.LogicalOperation;
+import ru.vasya.service.db.query.parts.Table;
 
 
 public class InsertQueryTest {

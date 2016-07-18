@@ -1,4 +1,4 @@
-package ru.vasya.service;
+package ru.vasya.service.db;
 
 
 import org.slf4j.Logger;
@@ -6,23 +6,14 @@ import org.slf4j.LoggerFactory;
 import ru.vasya.dao.Mapper;
 import ru.vasya.db.DerbyConnection;
 import ru.vasya.model.document.Storable;
-import ru.vasya.model.staff.Person;
-import ru.vasya.model.staff.Post;
-import ru.vasya.model.staff.Staff;
-import ru.vasya.service.query.*;
-import ru.vasya.service.query.parts.FieldToSelect;
-import ru.vasya.service.query.parts.FieldsPart;
-import ru.vasya.service.query.parts.LogicalOperation;
-import ru.vasya.service.query.parts.Table;
+import ru.vasya.service.db.query.*;
 
-import javax.ejb.Stateless;
-import java.lang.reflect.Field;
+import javax.sql.RowSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -36,17 +27,26 @@ public class DerbyService {
         mapper = new Mapper();
     }
 
-    public TreeSet<Storable> executeQuery(SelectQuery query){
+    public Iterable executeQuery(SelectQuery query){
         Connection conn = DerbyConnection.getConnection();
         ResultSet rs = null;
-        String queryString= "";
-        TreeSet<Storable> items = new TreeSet<Storable>();
+        String queryString  = "";
+        Iterable items = null;
         try {
             queryString = QueryToSqlConverter.convert(query);
             PreparedStatement ps = conn.prepareStatement(queryString);
             rs = ps.executeQuery();
-            while (rs.next()){
-                items.add((Storable)mapper.writeObject(query.getObjectClass(), rs));
+            LOGGER.info("Executing query: " + queryString);//----------------------------------------------------
+            if(query.getType().equals(RowSet.class)){
+                items = new HashSet<Map<String, Object>>();
+                while (rs.next()){
+                    ((Set)items).add(mapper.writeMap(rs));
+                }
+            } else {
+                items = new TreeSet<Storable>();
+                while (rs.next()){
+                    ((Set)items).add(mapper.writeObject(query.getType(), rs));
+                }
             }
         } catch (SQLException e){
             LOGGER.error("Could not executeQuery " + queryString, e);
@@ -64,6 +64,7 @@ public class DerbyService {
         try {
             queryString = QueryToSqlConverter.convert(query);
             PreparedStatement ps = conn.prepareStatement(queryString);
+            LOGGER.info("Executing query: " + queryString);//----------------------------------------------------
             ps.execute();
         } catch (SQLException e){
             LOGGER.error("Could not executeQuery " + queryString, e);

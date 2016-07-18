@@ -3,11 +3,9 @@ package ru.vasya.dao;
 import org.junit.Test;
 import ru.vasya.model.staff.Person;
 import ru.vasya.model.staff.Post;
-import ru.vasya.service.DerbyService;
+import ru.vasya.service.db.DerbyService;
 import ru.vasya.service.PersonService;
 import ru.vasya.service.PersonServiceImpl;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by dyapparov on 15.07.2016.

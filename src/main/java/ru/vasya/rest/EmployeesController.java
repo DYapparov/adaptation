@@ -20,9 +20,6 @@ import java.util.*;
 public class EmployeesController {
 
     @EJB
-    PersonService ps;
-
-    @EJB
     DocService ds;
 
     @EJB

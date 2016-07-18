@@ -5,20 +5,24 @@ import org.slf4j.LoggerFactory;
 import ru.vasya.model.document.Storable;
 import ru.vasya.model.staff.Staff;
 
+import javax.sql.RowSet;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by dyapparov on 15.07.2016.
  */
 public class Mapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(Mapper.class);
+
+    public Mapper(){
+
+    }
 
     public Object writeObject(Class c, ResultSet rs){
 
@@ -30,7 +34,7 @@ public class Mapper {
                 for (Field f: c.getDeclaredFields()){
                     f.setAccessible(true);
                     if(Storable.class.isAssignableFrom(f.getType())){
-                        f.set(item, new PersonDAO().getByID(f.getType(), (Integer)rs.getObject(f.getName())));
+                        f.set(item, new DAOimpl<Storable>().getByID(f.getType(), (Integer)rs.getObject(f.getName())));
                     }  else if (Date.class.equals(f.getType())) {
                         f.set(item, new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(f.getName())));
                     } else {
@@ -50,4 +54,18 @@ public class Mapper {
         }
         return null;
     }
+
+    public Map<String, Object> writeMap(ResultSet rs){
+        Map<String, Object> result = new TreeMap<String, Object>();
+        try {
+            ResultSetMetaData metaData = rs.getMetaData();
+            for (int i = 1; i<metaData.getColumnCount()+1; i++){
+                result.put(metaData.getColumnName(i), rs.getObject(i));
+            }
+        } catch (SQLException e){
+            LOGGER.error("SQL exception ", e);
+        }
+        return result;
+    }
+
 }

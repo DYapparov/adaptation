@@ -1,4 +1,4 @@
-package ru.vasya.service.query.parts;
+package ru.vasya.service.db.query.parts;
 
 /**
  * Created by dyapparov on 30.06.2016.

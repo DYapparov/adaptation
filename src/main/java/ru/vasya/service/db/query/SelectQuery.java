@@ -1,8 +1,8 @@
-package ru.vasya.service.query;
+package ru.vasya.service.db.query;
 
-import ru.vasya.service.query.parts.FieldToSelect;
-import ru.vasya.service.query.parts.FieldsPart;
-import ru.vasya.service.query.parts.Table;
+import ru.vasya.service.db.query.parts.FieldToSelect;
+import ru.vasya.service.db.query.parts.FieldsPart;
+import ru.vasya.service.db.query.parts.Table;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +14,7 @@ public class SelectQuery extends Query {
     private Collection<FieldToSelect> fields = new ArrayList<FieldToSelect>();
     private Table from;
     private Collection<FieldsPart> fieldsParts = new ArrayList<FieldsPart>();
-    private Class objectClass;
+    private Class type;
 
     public Collection<FieldToSelect> getFields() {
         return fields;
@@ -40,12 +40,12 @@ public class SelectQuery extends Query {
         this.fieldsParts = fieldsParts;
     }
 
-    public Class getObjectClass() {
-        return objectClass;
+    public Class getType() {
+        return type;
     }
 
-    public void setObjectClass(Class objectClass) {
-        this.objectClass = objectClass;
+    public void setType(Class type) {
+        this.type = type;
     }
 
     public static Builder builder() {
@@ -65,6 +65,11 @@ public class SelectQuery extends Query {
 
         public Builder addWherePart(FieldsPart fieldsPart) {
             SelectQuery.this.fieldsParts.add(fieldsPart);
+            return this;
+        }
+
+        public Builder setType(Class c) {
+            SelectQuery.this.setType(c);
             return this;
         }
 

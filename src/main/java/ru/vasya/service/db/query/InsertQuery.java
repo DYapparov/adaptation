@@ -1,7 +1,7 @@
-package ru.vasya.service.query;
+package ru.vasya.service.db.query;
 
-import ru.vasya.service.query.parts.FieldsPart;
-import ru.vasya.service.query.parts.Table;
+import ru.vasya.service.db.query.parts.FieldsPart;
+import ru.vasya.service.db.query.parts.Table;
 
 import java.util.ArrayList;
 import java.util.Collection;
