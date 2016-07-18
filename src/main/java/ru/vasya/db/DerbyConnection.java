@@ -11,14 +11,25 @@ import java.util.Properties;
 public class DerbyConnection {
     private static final Logger LOGGER = LoggerFactory.getLogger(DerbyConnection.class);
 
+    static DBProperties properties;
+
     public static Connection getConnection(){
-        return getConnection("jdbc:derby:newdb", "true", "admin", "admin");
+        if(properties==null){
+            properties = DBProperties.loadProperties("db_config.xml");
+        }
+        return getConnection(properties.getUrl(), properties.getCreate(), properties.getUsername(), properties.getPassword(), properties.getDriver());
+
+    }
+    public static Connection getConnection(String propsPath){
+        properties = DBProperties.loadProperties("db_config.xml");
+        return getConnection(properties.getUrl(), properties.getCreate(), properties.getUsername(), properties.getPassword(), properties.getDriver());
+
     }
 
-    public static Connection getConnection(String url, String create, String username, String password){
+    public static Connection getConnection(String url, String create, String username, String password, String driver){
         Connection conn = null;
         try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+            Class.forName(driver);
             Properties prop = new Properties();
             prop.put("create", create);
             conn = DriverManager.getConnection(url, prop);

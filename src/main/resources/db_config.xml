@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dbProperties>
+    <url>jdbc:derby:newdb</url>
+    <username>admin</username>
+    <password>admin</password>
+    <create>true</create>
+    <driver>org.apache.derby.jdbc.EmbeddedDriver</driver>
+</dbProperties>

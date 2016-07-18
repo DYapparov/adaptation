@@ -1,11 +1,13 @@
 package ru.vasya.service;
 
 import org.junit.Test;
+import ru.vasya.db.DBProperties;
 import ru.vasya.model.staff.Person;
 import ru.vasya.service.db.DerbyService;
 import ru.vasya.service.db.query.SelectQuery;
 import ru.vasya.service.db.query.parts.FieldToSelect;
 import ru.vasya.service.db.query.parts.Table;
+import ru.vasya.util.XMLSerializator;
 
 import javax.sql.RowSet;
 import java.util.List;

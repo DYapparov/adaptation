@@ -14,6 +14,7 @@ import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 @Stateless
 public class XMLSerializator {
@@ -59,6 +60,17 @@ public class XMLSerializator {
             JAXBContext context = JAXBContext.newInstance(JAXBStaffList.class);
             Object intermediateResult = context.createUnmarshaller().unmarshal(inputStream);
             result = ((JAXBStaffList)intermediateResult).getItems();
+        } catch (JAXBException e){
+            LOGGER.error("Could not unmarshal file: " + inputStream, e);
+        }
+        return result;
+    }
+
+    public Object unmarshal(InputStream inputStream, Class clazz){
+        Object result = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(clazz);
+            result = context.createUnmarshaller().unmarshal(inputStream);
         } catch (JAXBException e){
             LOGGER.error("Could not unmarshal file: " + inputStream, e);
         }

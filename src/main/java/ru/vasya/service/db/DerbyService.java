@@ -28,15 +28,16 @@ public class DerbyService {
     }
 
     public Iterable executeQuery(SelectQuery query){
-        Connection conn = DerbyConnection.getConnection();
+        Connection conn = null;
         ResultSet rs = null;
         String queryString  = "";
         Iterable items = null;
         try {
+            conn = DerbyConnection.getConnection();
             queryString = QueryToSqlConverter.convert(query);
             PreparedStatement ps = conn.prepareStatement(queryString);
             rs = ps.executeQuery();
-            LOGGER.info("Executing query: " + queryString);//----------------------------------------------------
+            LOGGER.info("Executing query: " + queryString);
             if(query.getType().equals(RowSet.class)){
                 items = new HashSet<Map<String, Object>>();
                 while (rs.next()){
@@ -59,12 +60,13 @@ public class DerbyService {
     }
 
     public void execute(Query query){
-        Connection conn = DerbyConnection.getConnection();
+        Connection conn = null;
         String queryString= "";
         try {
+            conn = DerbyConnection.getConnection();
             queryString = QueryToSqlConverter.convert(query);
             PreparedStatement ps = conn.prepareStatement(queryString);
-            LOGGER.info("Executing query: " + queryString);//----------------------------------------------------
+            LOGGER.info("Executing query: " + queryString);
             ps.execute();
         } catch (SQLException e){
             LOGGER.error("Could not executeQuery " + queryString, e);

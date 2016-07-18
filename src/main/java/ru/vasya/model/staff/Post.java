@@ -13,6 +13,11 @@ public class Post extends Staff implements Storable, Comparable {
 
     }
 
+    public Post(int id, String name){
+        setId(id);
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

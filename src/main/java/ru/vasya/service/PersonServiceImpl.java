@@ -37,7 +37,7 @@ public class PersonServiceImpl implements PersonService {
     public List<Person> getPersonList(){
         if (persons == null) {
             //File personsFile = new File(PersonSevlet.class.getSimpleName() + ".xml");
-            InputStream inputPersonFile = this.getClass().getResourceAsStream("/" + Person.class.getSimpleName() + ".xml");
+            InputStream inputPersonFile = this.getClass().getClassLoader().getResourceAsStream(Person.class.getSimpleName() + ".xml");
             persons = xmlSerializator.unmarshal(inputPersonFile);
             try {
                 inputPersonFile.close();
@@ -59,6 +59,7 @@ public class PersonServiceImpl implements PersonService {
             p.setMiddleName(randomWord(10));
             p.setBirthday(new Date(new Random().nextLong()% 1892160000000L));
             p.setPhotoURL("img/avatars/African_Male.png");
+            p.setPost(new Post(13, "Positioned"));
             result.add(p);
         }
         return result;
