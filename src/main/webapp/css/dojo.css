@@ -1,0 +1,71 @@
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+#appLayout{
+    height: 100%;
+}
+
+#rightPanel{
+
+}
+
+#leftPanel{
+    width: 27.5%;
+}
+
+#topPanel{
+    height: 48%;
+}
+
+#botPanel{
+
+}
+
+#personsDiv,#docsDiv {
+    width: 100%;
+}
+
+.header{
+    height: 2em;
+}
+
+/* ---------------------------------------------------------PersonWidget----------------------------------------------*/
+
+.personWidget {
+    font-size: 16px;
+}
+
+.propertyRow {
+    height: 2em;
+    line-height: 2em;
+}
+
+.personInfo {
+    width: 70%;
+    padding: 1em;
+    margin: auto;
+}
+
+.avatar {
+    width: 8em;
+    float: right;
+}
+
+
+
+/* ---------------------------------------------------------TOP MENU----------------------------------------------*/
+
+.topMenu {
+    padding: 0.5em;
+    border-bottom: dashed 1px grey;
+}

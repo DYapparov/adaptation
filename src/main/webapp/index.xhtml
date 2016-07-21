@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Title</title>
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+</h:head>
+
+<body>
+    <div id="mainWrapper">
+        <div id="leftContainer">
+            <div id="topContainer">
+                <h2 onclick="addTab('personsTab', '')" class="listItem">Сотрудники</h2>
+                <div id="personsMenu">
+                </div>
+            </div>
+            <div id="botContainer">
+                <h2>Документы</h2>
+                <div id="documents"></div>
+            </div>
+        </div>
+        <div id="rightContainer">
+            <div id = "scrollButtons"><div id="scrollLeftBut">l</div><div id="scrollRightBut">r</div></div>
+            <div id="tabHeadersContainer">
+
+                <div id="tabHeadersScroll"><div id="tabHeaders"></div></div>
+            </div>
+            <div class="clear"></div>
+            <div id="tabContainer"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/index.js">
+    </script>
+</body>
+
+</html>

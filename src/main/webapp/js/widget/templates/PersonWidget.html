@@ -1,0 +1,33 @@
+<div class="${baseClass}">
+    <div class="topMenu">
+        <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="closeButtonNode">Закрыть</button>
+        <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="editButtonNode">Изменить</button>
+        <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="removeButtonNode">Удалить</button>
+        <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="photoButtonNode">Фото</button>
+    </div>
+    <div class="personInfo">
+        <h1>Информация о сотруднике</h1>
+        <img src="" data-dojo-attach-point="avatarNode" class="avatar">
+
+        <div class="propertyRow">Фамилия: </div>
+        <input type="text" data-dojo-attach-point="lastNameNode" value="${lastName}" required="true"
+               data-dojo-type="dijit/form/ValidationTextBox"
+               data-dojo-props="regExp:'^[a-zA-Zа-яА-ЯёЁ]{1,30}', invalidMessage:'Invalid Non-Space Text.'"/>
+        <div class="propertyRow">Имя: </div>
+        <input type="text" data-dojo-attach-point="firstNameNode" value="${firstName}" required="true"
+               data-dojo-type="dijit/form/ValidationTextBox"
+               data-dojo-props="regExp:'^[a-zA-Zа-яА-ЯёЁ]{1,30}', invalidMessage:'Invalid Non-Space Text.'"/>
+        <div class="propertyRow">Отчество: </div>
+        <input type="text" data-dojo-attach-point="middleNameNode" value="${middleName}" required="true"
+               data-dojo-type="dijit/form/ValidationTextBox"
+               data-dojo-props="regExp:'^[a-zA-Zа-яА-ЯёЁ]{1,30}', invalidMessage:'Invalid Non-Space Text.'"/>
+        <div class="propertyRow">Дата рождения: </div>
+        <input type="text" data-dojo-attach-point="birthdayNode" value="${birthday}"
+               data-dojo-type="dijit/form/DateTextBox"/>
+        <div class="propertyRow">Должность: </div>
+        <input type="text" data-dojo-attach-point="postNode" value="${post.name}"
+               data-dojo-type="dijit/form/ValidationTextBox"/>
+        <input type="text" data-dojo-attach-point="idNode" value="${id}"
+               data-dojo-type="dijit/form/ValidationTextBox" style="display:none"/>
+    </div>
+</div>

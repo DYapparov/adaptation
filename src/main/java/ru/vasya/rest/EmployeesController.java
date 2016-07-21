@@ -44,4 +44,11 @@ public class EmployeesController {
         }
         return null;
     }
+
+    @GET
+    @Path("/employees/employee/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Person getPerson(@PathParam("id") int id){
+        return personDAO.getByID(Person.class, id);
+    }
 }

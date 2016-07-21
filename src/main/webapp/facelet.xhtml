@@ -5,9 +5,7 @@
   Date: 18.07.2016
   Time: 11:47
 -->
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -15,11 +13,61 @@
 
 <h:head>
     <title>Title</title>
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
 </h:head>
 
 <h:body>
-    <h:outputText value="Today is "/><br/>
-    #{some.increment()}
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <h:form styleClass="topMenu">
+        <h:outputLabel styleClass="topButton">New<f:ajax event="click" onevent="addTab('new_person', '')"/></h:outputLabel>
+
+        <h:outputLabel onclick="" styleClass="topButton">Edit</h:outputLabel>
+        <h:outputLabel onclick="" styleClass="topButton">Delete</h:outputLabel>
+    </h:form>
+    <h1>Список сотрудников</h1>
+    <h:form id="personsForm">
+        <h:dataTable
+                id="personsTable"
+                styleClass="personsTable"
+                value="#{PersonsBean.getAll()}" var="person"
+                rowClasses="row1 selectable, row0 selectable"
+                headerClass="tableHeader"
+                binding="#{PersonsBean.personsTable}">
+            <h:column>
+                <f:facet name="header">Lastname</f:facet>
+                <h:outputText value="#{person.lastName}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Firstname</f:facet>
+                <h:outputText value="#{person.firstName}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Middlename</f:facet>
+                <h:outputText value="#{person.middleName}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Post</f:facet>
+                <h:outputText value="#{person.post.name}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Birthday</f:facet>
+                <h:outputText value="#{person.birthday}">
+                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <h:commandButton value="View">
+                    <f:ajax listener="#{PersonsBean.click}" event="click" render="output"/>
+                </h:commandButton>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Result</f:facet>
+                <h:outputText id="output" value="#{PersonsBean.getData()}"/>
+            </h:column>
+        </h:dataTable>
+    </h:form>
 </h:body>
 
 </html>

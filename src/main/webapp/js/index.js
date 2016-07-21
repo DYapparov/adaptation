@@ -111,6 +111,7 @@ function addTab(type, id) {
         link = 'new_person';
         header = 'Создать';
     } else {
+        //link = 'faces/facelet.xhtml';
         link = 'persons';
         header = 'Сотрудники';
     }

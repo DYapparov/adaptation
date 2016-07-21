@@ -178,8 +178,18 @@ h2 {
     background-color: lightskyblue;
 }
 
-#personsTable{
-    width: 100%;
+.row0 {
+    background-color: transparent;
+}
+
+#personsTable {
+    width: 80%;
+    margin: auto;
+}
+
+.personsTable {
+    width: 80%;
+    margin: auto;
 }
 
 #personsWrap {
