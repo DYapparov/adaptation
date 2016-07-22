@@ -1,27 +1,37 @@
 <div class="${baseClass}">
+    <script type="dojo/require">at: "dojox/mvc/at"</script>
+
     <div class="personInfo">
         <h1>Информация о сотруднике</h1>
         <img src="" data-dojo-attach-point="avatarNode" class="avatar">
 
         <div class="propertyRow">Фамилия: </div>
-        <input type="text" data-dojo-attach-point="lastNameNode" value="${lastName}" required="true"
-               data-dojo-type="dijit/form/ValidationTextBox"
-               data-dojo-props="regExp:'^[a-zA-Zа-яА-ЯёЁ]{1,30}', invalidMessage:'Invalid Non-Space Text.'"/>
+        <input type="text" name="lastName" required="true"
+               data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="lastNameNode"
+               data-dojo-props="value: at(this.model, 'lastName'), regExp:'^[a-zA-Zа-яА-ЯёЁ]{1,30}', invalidMessage:'Некорректное значение'"/>
+
         <div class="propertyRow">Имя: </div>
-        <input type="text" data-dojo-attach-point="firstNameNode" value="${firstName}" required="true"
-               data-dojo-type="dijit/form/ValidationTextBox"
-               data-dojo-props="regExp:'^[a-zA-Zа-яА-ЯёЁ]{1,30}', invalidMessage:'Invalid Non-Space Text.'"/>
+        <input type="text" name="firstName" required="true"
+               data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="firstNameNode"
+               data-dojo-props="value: at(this.model, 'firstName'), regExp:'^[a-zA-Zа-яА-ЯёЁ]{1,30}', invalidMessage:'Некорректное значение'"/>
+
         <div class="propertyRow">Отчество: </div>
-        <input type="text" data-dojo-attach-point="middleNameNode" value="${middleName}" required="true"
-               data-dojo-type="dijit/form/ValidationTextBox"
-               data-dojo-props="regExp:'^[a-zA-Zа-яА-ЯёЁ]{1,30}', invalidMessage:'Invalid Non-Space Text.'"/>
+        <input type="text" name="middleName" required="true"
+               data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="middleNameNode"
+               data-dojo-props="value: at(this.model, 'middleName'), regExp:'^[a-zA-Zа-яА-ЯёЁ]{1,30}', invalidMessage:'Некорректное значение'"/>
+
         <div class="propertyRow">Дата рождения: </div>
-        <input type="text" data-dojo-attach-point="birthdayNode" value="${birthday}"
-               data-dojo-type="dijit/form/DateTextBox"/>
+        <input type="text" name="birthday"
+               data-dojo-type="dijit/form/DateTextBox" data-dojo-attach-point="birthdayNode"
+               data-dojo-props="value: at(this.model, 'birthday')"/>
+
         <div class="propertyRow">Должность: </div>
-        <input type="text" data-dojo-attach-point="postNode" value="${post.name}"
-               data-dojo-type="dijit/form/ValidationTextBox"/>
-        <input type="text" data-dojo-attach-point="idNode" value="${id}"
-               data-dojo-type="dijit/form/ValidationTextBox" style="display:none"/>
+        <input type="text" name="post"
+               data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="postNode"
+               data-dojo-props="value: at(this.model.post, 'name')"/>
+
+        <input type="text" name="id" style="display:none"
+               data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="idNode"
+               data-dojo-props="value: at(this.model, 'id')"/>
     </div>
 </div>

@@ -1,18 +1,23 @@
 package ru.vasya.rest;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ru.vasya.dao.PersonDAO;
 import ru.vasya.model.document.Document;
 import ru.vasya.model.staff.Person;
 import ru.vasya.service.DocService;
-import ru.vasya.service.PersonService;
 import ru.vasya.util.JAXBDocumentCollection;
 
 import javax.ejb.EJB;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.*;
 import java.util.*;
 
 
@@ -50,5 +55,54 @@ public class EmployeesController {
     @Produces(MediaType.APPLICATION_JSON)
     public Person getPerson(@PathParam("id") int id){
         return personDAO.getByID(Person.class, id);
+    }
+
+    @POST
+    @Path("/employees/employee/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void savePerson(Person p){
+        personDAO.update(p);
+    }
+
+    @POST
+    @Path("/employees/employee/update/photo/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response savePhoto(@PathParam("id") int id, @Context HttpServletRequest req){
+        String fileName = null;
+        boolean isCorrectFormat = false;
+        String contextRoot = req.getServletContext().getRealPath("/");
+
+        if(!ServletFileUpload.isMultipartContent(req)){
+            return Response.status(520).build();
+        }
+
+        FileItemFactory itemFactory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(itemFactory);
+        try {
+            List<FileItem> items = upload.parseRequest(req);
+            for (FileItem item: items){
+                if (item.getFieldName().equals("uploadedfiles[]")){
+                    if(!"image/png".equals(item.getContentType())){
+                        return Response.status(520).build();
+                    }
+                    File uploadDir = new File(contextRoot + "img/avatars");
+                    File file = File.createTempFile("avatar_", ".png", uploadDir);
+                    item.write(file);
+                    fileName = file.getName();
+                    isCorrectFormat = true;
+                }
+            }
+        } catch (FileUploadException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        if(isCorrectFormat){
+            Person p = (Person) personDAO.getByID(Person.class, id);
+            p.setPhotoURL("img/avatars/" + fileName);
+            personDAO.update(p);
+        }
+        return Response.ok().build();
     }
 }

@@ -37,7 +37,7 @@ public class DerbyService {
             queryString = QueryToSqlConverter.convert(query);
             PreparedStatement ps = conn.prepareStatement(queryString);
             rs = ps.executeQuery();
-            LOGGER.info("Executing query: " + queryString);
+            //LOGGER.info("Executing query: " + queryString);
             if(query.getType().equals(RowSet.class)){
                 items = new HashSet<Map<String, Object>>();
                 while (rs.next()){
