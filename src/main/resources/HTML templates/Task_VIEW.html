@@ -1,0 +1,44 @@
+<div class="${baseClass}">
+    <script type="dojo/require">at: "dojox/mvc/at"</script>
+    <div class="documentInfo">
+        <h1>Документ:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'docName')"></span>
+        </h1>
+        <div class="propertyRow">Регистрационный номер :
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'registrationNumber')"></span>, от
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'registerDate')"></span>
+        </div>
+        <div class="propertyRow">Автор:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'lastName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'firstName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'middleName')"></span>,&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author.post, 'name')"></span>
+        </div>
+        <!-- ----------------------------------------------------------------------------------------------- -->
+        <div class="propertyRow">Дата получения:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'deliveryDate')"></span>
+        </div>
+        <div class="propertyRow">Дата завершения:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'finishDate')"></span>
+        </div>
+        <div class="propertyRow">Исполнитель:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.performer, 'lastName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.performer, 'firstName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.performer, 'middleName')"></span>,&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.performer.post, 'name')"></span>
+        </div>
+        <div class="propertyRow">Контрольность:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'controlTag')"></span>
+        </div>
+        <div class="propertyRow">Контролирующий:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.controller, 'lastName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.controller, 'firstName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.controller, 'middleName')"></span>,&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.controller.post, 'name')"></span>
+        </div>
+        <!-- ----------------------------------------------------------------------------------------------- -->
+        <div class="propertyRow">Текст:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'text')"></span>
+        </div>
+    </div>
+</div>

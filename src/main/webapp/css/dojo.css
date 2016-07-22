@@ -46,12 +46,16 @@ h1 {
 }
 
 .propertyRow {
-    height: 2em;
     line-height: 2em;
 }
 
-.personInfo {
+.personInfo{
     width: 70%;
+    padding: 1em;
+    margin: auto;
+}
+
+.documentInfo {
     padding: 1em;
     margin: auto;
 }
@@ -62,8 +66,7 @@ h1 {
 }
 
 
-
-/* ---------------------------------------------------------TOP MENU----------------------------------------------*/
+    /* ---------------------------------------------------------TOP MENU----------------------------------------------*/
 
 .topMenu {
     padding: 0.5em;

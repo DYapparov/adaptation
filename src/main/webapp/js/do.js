@@ -1,25 +1,20 @@
 
-
 require([
-    "http://localhost:8080/Adaptation/js/widget/PersonWidget.js",
-    "http://localhost:8080/Adaptation/js/PersonTab.js",
-    "http://localhost:8080/Adaptation/js/DocumentTab.js",
-    //"http://localhost:8080/Adaptation/js/Persons.js",
+    "http://localhost:8080/Adaptation/js/TabFactory.js",
+    "http://localhost:8080/Adaptation/js/Persons.js",
     "dijit/registry",
     "dijit/Menu",
     "dijit/MenuItem",
     "dojo/request",
-    "dijit/layout/ContentPane",
+    "dojo/parser",
     "dojo/domReady!"
-], function(PersonWidget, PersonTab, DocumentTab, /*Persons,*/ registry, Menu, MenuItem, request, ContentPane){
-
-    //
-    //fill Persons menu
-    //
+], function(TabFactory, Persons, registry, Menu, MenuItem, request, parser){
+    parser.parse();
+    /////////////////////////////////fill Persons menu////////////////////////////////////
 
     var personsMenu = new Menu({
         onItemClick: function (item, event) {
-            PersonTab.addPersonTab(item.params);
+            TabFactory.addTab(item.id);
         }
     }, "personsDiv");
     request.get("http://localhost:8080/Adaptation/rest/ecm/employees", {
@@ -28,21 +23,18 @@ require([
         for(var i = 0; i<data.length; i++){
             var person = data[i];
             personsMenu.addChild(new MenuItem({
-                id: "personItem_" + person.id,
-                label: person.lastName + " " + person.firstName + " " + person.middleName,
-                params: person.id
+                id: "personItem/" + person.id,
+                label: person.lastName + " " + person.firstName + " " + person.middleName
             }));
         }
         personsMenu.startup();
     }, function(error){alert(error);});
 
-    //
-    //fill Documents menu
-    //
+    ///////////////////////////////fill Documents menu///////////////////////////////
 
     var docsMenu = new Menu({
         onItemClick: function (item, event) {
-            DocumentTab.addDocumentTab(item.params);
+            TabFactory.addTab(item.id);
         }
     }, "docsDiv");
 
@@ -54,16 +46,27 @@ require([
         for(var i = 0; i<docs.length; i++){
             doc = docs[i];
             docsMenu.addChild(new MenuItem({
-                id: "docItem" + doc.children[2].textContent || doc[2].innerText,
-                label: doc.children[1].textContent || doc[1].innerText,
-                params: doc.children[2].textContent || doc[2].innerText
+                id: "docItem/" + doc.children[2].textContent || doc[2].innerText,
+                label: doc.children[1].textContent || doc[1].innerText
             }));
         }
         docsMenu.startup();
     }, function(error){alert(error);});
+    Persons.add();
 
-    //
-    //draw Persons tab
-    //
-    //Persons.add();
+    /* so sad------
+    request.get("http://localhost:8080/Adaptation/rest/documents/all", {
+        handleAs: "json"
+    }).then(function(data){
+        for(var i = 0; i<data.length; i++){
+            var doc = data[i];
+            docsMenu.addChild(new MenuItem({
+                id: "docItem/" + doc.id,
+                label: doc.docName
+            }));
+        }
+
+        docsMenu.startup();
+    }, function(error){alert(error);});
+    */
 });

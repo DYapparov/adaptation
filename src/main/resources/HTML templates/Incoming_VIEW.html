@@ -1,0 +1,41 @@
+<div class="${baseClass}">
+    <script type="dojo/require">at: "dojox/mvc/at"</script>
+    <div class="documentInfo">
+        <h1>Документ:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'docName')"></span>
+        </h1>
+        <div class="propertyRow">Регистрационный номер:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'registrationNumber')"></span>, от
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'registerDate')"></span>
+        </div>
+        <div class="propertyRow">Автор:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'lastName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'firstName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'middleName')"></span>,&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author.post, 'name')"></span>
+        </div>
+        <!-- ----------------------------------------------------------------------------------------------- -->
+        <div class="propertyRow">От:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.origination, 'lastName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.origination, 'firstName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.origination, 'middleName')"></span>,&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.origination.post, 'name')"></span>
+        </div>
+        <div class="propertyRow">Кому:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.destination, 'lastName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.destination, 'firstName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.destination, 'middleName')"></span>,&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.destination.post, 'name')"></span>
+        </div>
+        <div class="propertyRow">Исходящий №:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'outgoingNumber')"></span>
+        </div>
+        <div class="propertyRow">Исходящая дата:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'outgoingDate')"></span>
+        </div>
+        <!-- ----------------------------------------------------------------------------------------------- -->
+        <div class="propertyRow">Текст:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'text')"></span>
+        </div>
+    </div>
+</div>

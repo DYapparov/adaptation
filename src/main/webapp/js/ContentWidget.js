@@ -10,37 +10,50 @@ define([
     "dojo/dom-style",
     "dojo/mouse",
     "dojo/on",
+    "dijit/form/ValidationTextBox",
+    "dijit/form/DateTextBox",
+    "dijit/form/Button",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
-    "dojo/text!./templates/PersonWidget.html"
-    ], function (Stateful, at, Output, registry, declare, baseFx, lang, domStyle, mouse, on, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template) {
+    "dijit/_WidgetsInTemplateMixin"
+], function (Stateful, at, Output, registry, declare, baseFx, lang, domStyle, mouse, on, ValidationTextBox, DateTextBox, Button, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-        
+
         model: null,
+        templateString: null,
 
-        templateString: template,
-
-        baseClass: "personWidget",
+        baseClass: "tabContent",
 
         mouseAnim: null,
-
         baseBackgroundColor: "#fff",
         mouseBackgroundColor: "#def",
-        constructor: function(args){
+
+        constructor: function(model, template){
             declare.safeMixin(this);
-            this.model = new Stateful(args);
+            this.model = new Stateful(model);
+            this.templateString = template;
         },
         postCreate: function () {
-            this.inherited(arguments);
-
             var domNode = this.domNode;
-
+            // Run any parent postCreate processes - can be done at any point
+            this.inherited(arguments);
             domStyle.set(domNode, "backgroundColor", this.baseBackgroundColor);
             this.own(
                 on(domNode, mouse.enter, lang.hitch(this, "_changeBackground", this.mouseBackgroundColor)),
                 on(domNode, mouse.leave, lang.hitch(this, "_changeBackground", this.baseBackgroundColor))
             );
+        },
+        _setPhotoURLAttr: function (value) {
+            this._set("photoURL", value);
+            this.avatarNode.src = value;
+        },
+        validate: function () {
+            var result = undefined;
+            var validated = true;
+            if(this.lastNameNode.validate()&&this.firstNameNode.validate()&&this.middleNameNode.validate()){
+                result = this.model;
+            }
+            return result;
         },
         _changeBackground: function(newColor) {
             if (this.mouseAnim) {
@@ -56,10 +69,6 @@ define([
                     this.mouseAnim = null;
                 })
             }).play();
-        },
-        _setPhotoURLAttr: function (value) {
-            this._set("photoURL", value);
-            this.avatarNode.src = value;
         }
     });
 });

@@ -6,7 +6,7 @@ define([
     "dojox/data/JsonRestStore",
 
     "gridx/Grid",
-    "gridx/core/model/cache/Sync",
+    "gridx/core/model/cache/Async",
     "gridx/modules/HiddenColumns",
     "gridx/modules/extendedSelect/Row",
     "gridx/modules/SingleSort",
@@ -27,10 +27,20 @@ define([
                 target: "http://localhost:8080/Adaptation/rest/ecm/employees/"
             });
 
+            var columns = [
+                {field: 'id', name: 'ID'},
+                {field: 'lastName', name: 'Lastname'},
+                {field: 'firstName', name: 'Firstname'},
+                {field: 'middleName', name: 'MiddleName'},
+                {field: 'post', name: 'Post', value: 'post.name'},
+                {field: 'birthday', name: 'Birthday'}
+            ];
+
             var grid = new Grid({
                 id: "personsGrid",
                 cacheClass: Cache,
                 store: store,
+                structure: columns,
                 selectRowTriggerOnCell: true,
                 modules: [HiddenColumns, SelectRow, SingleSort, Filter, FilterBar]
             });
@@ -38,7 +48,7 @@ define([
             grid.on("rowClick", function(evt){
 
             });
-            grid.startup();
+            //grid.startup();
             tabContainer.addChild(tab);
         }
     }

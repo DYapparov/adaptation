@@ -1,0 +1,32 @@
+<div class="${baseClass}">
+    <script type="dojo/require">at: "dojox/mvc/at"</script>
+    <div class="documentInfo">
+        <h1>Документ:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'docName')"></span>
+        </h1>
+        <div class="propertyRow">Регистрационный номер :
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'registrationNumber')"></span>, от
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'registerDate')"></span>
+        </div>
+        <div class="propertyRow">Автор:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'lastName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'firstName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'middleName')"></span>,&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author.post, 'name')"></span>
+        </div>
+        <!-- ----------------------------------------------------------------------------------------------- -->
+        <div class="propertyRow">Получатель:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.destination, 'lastName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.destination, 'firstName')"></span>&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.destination, 'middleName')"></span>,&nbsp
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.destination.post, 'name')"></span>
+        </div>
+        <div class="propertyRow">Способ доставки:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'deliveryMethod')"></span>
+        </div>
+        <!-- ----------------------------------------------------------------------------------------------- -->
+        <div class="propertyRow">Текст:
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'text')"></span>
+        </div>
+    </div>
+</div>

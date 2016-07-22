@@ -11,14 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-
-/**
- * Created by dyapparov on 11.07.2016.
- */
+import java.util.*;
 
 @Path("/documents")
 public class DocumentsController {
@@ -29,13 +22,25 @@ public class DocumentsController {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_XML)
-    public JAXBDocumentCollection getDocuments(){
+    public JAXBDocumentCollection getDocumentsXML(){
         Map<Person, TreeSet<Document>> docs = ds.getDocuments();
         List<Document> result = new ArrayList<Document>();
         for(Person p : docs.keySet()){
             result.addAll(docs.get(p));
         }
         return new JAXBDocumentCollection(result);
+    }
+
+    @GET
+    @Path("/alljson")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Set<Document> getDocumentsJSON(){
+        Map<Person, TreeSet<Document>> docs = ds.getDocuments();
+        Set<Document> result = new TreeSet<Document>();
+        for(Person p : docs.keySet()){
+            result.addAll(docs.get(p));
+        }
+        return result;
     }
 
     @GET
