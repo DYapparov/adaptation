@@ -8,6 +8,23 @@
     <link rel="stylesheet" href="js/dojo-release-1.11.2/dijit/themes/claro/document.css" media="screen">
     <link rel="stylesheet" href="js/dojo-release-1.11.2/gridx/resources/claro/Gridx.css" media="screen">
 
+    <script>
+        var dojoConfig = {
+            parseOnLoad: true,
+            async: true,
+            packages: [{
+                name: "app",
+                location: "/Adaptation/js/app"
+            }]
+        }
+    </script>
+    <script src="js/dojo-release-1.11.2/dojo/dojo.js"></script>
+    <script src="js/app/do.js" rel="script" type="text/javascript"></script>
+    <script>
+        require(["dojo/parser", "dijit/layout/BorderContainer", "dijit/layout/TabContainer",
+            "dijit/layout/ContentPane"]);
+    </script>
+
 </head>
 <body class="claro">
     <div id ="appLayout"
@@ -26,7 +43,7 @@
             <div id="topPanel"
                  data-dojo-type="dijit/layout/ContentPane"
                  data-dojo-props="region: 'top', splitter: true">
-                <h1>Сотрудники</h1>
+                <h1 id="employeesMenuHeader">Сотрудники</h1>
                 <div id="personsDiv">
 
                 </div>
@@ -41,16 +58,5 @@
             </div>
         </div>
     </div>
-
-
-
-    <script src="js/dojo-release-1.11.2/dojo/dojo.js"
-            data-dojo-config="async: 1"></script>
-
-    <script src="js/do.js" rel="script" type="text/javascript"></script>
-    <script>
-        require(["dojo/parser", "dijit/layout/BorderContainer", "dijit/layout/TabContainer",
-            "dijit/layout/ContentPane"]);
-    </script>
 </body>
 </html>

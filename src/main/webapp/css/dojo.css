@@ -20,7 +20,7 @@ h1 {
 }
 
 #leftPanel{
-    width: 27.5%;
+    width: 25em;
 }
 
 #topPanel{
@@ -31,12 +31,23 @@ h1 {
 
 }
 
-#personsDiv,#docsDiv {
+#personsDiv, #docsDiv {
     width: 100%;
+}
+
+.docsMenu, .personsMenu {
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .header{
     height: 2em;
+}
+
+#employeesMenuHeader:hover {
+    cursor: pointer;
+    cursor: hand;
 }
 
 /* ---------------------------------------------------------PersonWidget----------------------------------------------*/

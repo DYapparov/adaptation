@@ -1,5 +1,5 @@
 <div class="${baseClass}">
-    <script type="dojo/require">at: "dojox/mvc/at"</script>
+    <script type="dojo/require">at: "dojox/mvc/at", locale: "dojo/date/locale", stamp: "dojo/date/stamp"</script>
     <div class="personInfo">
         <h1>Информация о сотруднике</h1>
         <img src="" data-dojo-attach-point="avatarNode" class="avatar">
@@ -13,7 +13,15 @@
             <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'middleName')"></span>
         </div>
         <div class="propertyRow">Дата рождения:
-            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'birthday')"></span>
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'birthday').transform({
+                    format: function(value){
+                        var birthday = stamp.fromISOString(value);
+                        return locale.format(birthday, {selector:'date', datePattern:'dd-MM-yyyy'});
+                    },
+                    parse: function(value){
+                      return value;
+                    }
+                  })"></span>
         </div>
         <div class="propertyRow">Должность:
             <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.post, 'name')"></span>

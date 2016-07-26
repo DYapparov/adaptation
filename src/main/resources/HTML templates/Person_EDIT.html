@@ -22,16 +22,16 @@
 
         <div class="propertyRow">Дата рождения: </div>
         <input type="text" name="birthday"
-               data-dojo-type="dijit/form/DateTextBox" data-dojo-attach-point="birthdayNode"
+               data-dojo-type="dijit/form/DateTextBox"
                data-dojo-props="value: at(this.model, 'birthday')"/>
 
         <div class="propertyRow">Должность: </div>
-        <input type="text" name="post"
-               data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="postNode"
-               data-dojo-props="value: at(this.model.post, 'name')"/>
+        <select name="post" data-dojo-type="dijit/form/Select" data-dojo-props="value: at(this.model.post, 'id')">
+            ###REPLACE_FOR_OPTIONS###
+        </select>
 
         <input type="text" name="id" style="display:none"
-               data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="idNode"
+               data-dojo-type="dijit/form/TextBox"
                data-dojo-props="value: at(this.model, 'id')"/>
     </div>
 </div>

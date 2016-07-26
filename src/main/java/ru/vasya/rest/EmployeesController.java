@@ -6,10 +6,15 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ru.vasya.dao.PersonDAO;
+import ru.vasya.dao.PostDAO;
 import ru.vasya.model.document.Document;
 import ru.vasya.model.staff.Person;
+import ru.vasya.model.staff.Post;
+import ru.vasya.rest.response.PersonResponseObject;
+import ru.vasya.rest.response.PersonsResponseObject;
 import ru.vasya.service.DocService;
 import ru.vasya.util.JAXBDocumentCollection;
+import ru.vasya.util.TemplateLoader;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -30,11 +35,24 @@ public class EmployeesController {
     @EJB
     PersonDAO personDAO;
 
+    @EJB
+    PostDAO postDAO;
+
     @GET
     @Path("/employees")
     @Produces(MediaType.APPLICATION_JSON)
     public Set<Person> getEmployees(){
         return personDAO.getAll(Person.class);
+    }
+
+    @GET
+    @Path("/employees/tab/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public PersonsResponseObject getAllPersonsTabParams() {
+        Set<Person> model = personDAO.getAll(Person.class);
+        String template = TemplateLoader.getTemplate("All_persons_VIEW");
+        PersonsResponseObject resp = new PersonsResponseObject(model, template, "TODO", "ENUM?");
+        return resp;
     }
 
     @GET
@@ -53,15 +71,38 @@ public class EmployeesController {
     @GET
     @Path("/employees/employee/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Person getPerson(@PathParam("id") int id){
-        return personDAO.getByID(Person.class, id);
+    public PersonResponseObject getPersonTabParams(@PathParam("id") int id){
+        Person model = personDAO.getByID(Person.class, id);
+        String template = TemplateLoader.getTemplate("Person_VIEW");
+        PersonResponseObject resp = new PersonResponseObject(model, template, "TODO", "ENUM?");
+        return resp;
+    }
+
+    @GET
+    @Path("/employees/employee/edit/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public PersonResponseObject getEditPersonTabParams(@PathParam("id") int id){
+        Person model = personDAO.getByID(Person.class, id);
+        String template = TemplateLoader.getTemplate("Person_EDIT");
+        Set<Post> posts = postDAO.getAll(Post.class);
+        StringBuilder postOptions = new StringBuilder();
+        for(Post p : posts){
+            postOptions.append("<option value='").append(p.getId()).append("'>").append(p.getName()).append("</option>");
+        }
+        template = template.replace("###REPLACE_FOR_OPTIONS###", postOptions.toString());
+        PersonResponseObject resp = new PersonResponseObject(model, template, "TODO", "ENUM?");
+        return resp;
     }
 
     @POST
-    @Path("/employees/employee/update")
+    @Path("/employees/employee/update/")
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public void savePerson(Person p){
+    public PersonResponseObject savePerson(Person p){
         personDAO.update(p);
+        p = personDAO.getByID(Person.class, p.getId());
+        String template = TemplateLoader.getTemplate("Person_VIEW");
+        return new PersonResponseObject(p, template, "TODO", "ENUM?");
     }
 
     @POST

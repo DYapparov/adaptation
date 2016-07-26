@@ -4,19 +4,17 @@ define([
     "dojox/mvc/at",
     "dojox/mvc/Output",
     "dijit/registry",
+    "dojo/parser",
     "dojo/_base/declare",
     "dojo/_base/fx",
     "dojo/_base/lang",
     "dojo/dom-style",
     "dojo/mouse",
     "dojo/on",
-    "dijit/form/ValidationTextBox",
-    "dijit/form/DateTextBox",
-    "dijit/form/Button",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin"
-], function (Stateful, at, Output, registry, declare, baseFx, lang, domStyle, mouse, on, ValidationTextBox, DateTextBox, Button, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin) {
+], function (Stateful, at, Output, registry, parser, declare, baseFx, lang, domStyle, mouse, on, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
         model: null,
@@ -42,6 +40,9 @@ define([
                 on(domNode, mouse.enter, lang.hitch(this, "_changeBackground", this.mouseBackgroundColor)),
                 on(domNode, mouse.leave, lang.hitch(this, "_changeBackground", this.baseBackgroundColor))
             );
+            this.model.watch(function(){
+                console.log(this);
+            });
         },
         _setPhotoURLAttr: function (value) {
             this._set("photoURL", value);
@@ -49,7 +50,6 @@ define([
         },
         validate: function () {
             var result = undefined;
-            var validated = true;
             if(this.lastNameNode.validate()&&this.firstNameNode.validate()&&this.middleNameNode.validate()){
                 result = this.model;
             }

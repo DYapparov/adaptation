@@ -1,12 +1,20 @@
 <div class="${baseClass}">
-    <script type="dojo/require">at: "dojox/mvc/at"</script>
+    <script type="dojo/require">at: "dojox/mvc/at", locale: "dojo/date/locale", stamp: "dojo/date/stamp"</script>
     <div class="documentInfo">
         <h1>Документ:
             <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'docName')"></span>
         </h1>
         <div class="propertyRow">Регистрационный номер :
             <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'registrationNumber')"></span>, от
-            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'registerDate')"></span>
+            <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model, 'registerDate').transform({
+                    format: function(value){
+                        var birthday = stamp.fromISOString(value);
+                        return locale.format(birthday, {selector:'date', datePattern:'dd-MM-yyyy'});
+                    },
+                    parse: function(value){
+                      return value;
+                    }
+                  })"></span>
         </div>
         <div class="propertyRow">Автор:
             <span data-dojo-type="dojox/mvc/Output" data-dojo-props="value: at(this.model.author, 'lastName')"></span>&nbsp
