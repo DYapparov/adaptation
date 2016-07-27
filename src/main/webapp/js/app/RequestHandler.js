@@ -1,20 +1,20 @@
-/**
- * Created by dyapparov on 26.07.2016.
- */
-require([
+
+define([
     "dojo/_base/declare",
     "dojo/request",
+    "dijit/registry",
     "dojo/_base/lang",
     "dijit/layout/ContentPane",
-    "js/CommonForm"
+    "app/CommonForm"
 ], function(
     declare,
     request,
+    registry,
     lang,
     ContentPane,
     CommonForm
 ){
-    return declare("js.RequestHandler", [], {
+    return declare("app.RequestHandler", [], {
         request: function(url, params){
             request.get(url, params).then(lang.hitch(this, function(response){
                 this._processResponse(response);
@@ -23,25 +23,31 @@ require([
         
         _processResponse: function(response){
             var container = null;
-            if (response.target = "NEW_TAB") {
+            var form = null;
+            if (response.target == "NEW_TAB") {
                 container = this._createContainer("TAB", { title: response.tabTitle });
-            } else if (response.target = "NEW_DIALOG") {
+                form = new CommonForm(response);
+            } else if (response.target == "NEW_DIALOG") {
                 //
+                form = new CommonForm(response);
+            } else {
+
             }
-            var form = new CommonForm(response);
             container.set('content', form);
         },
         
-        _createContainer: function(container, params){
-            var parent = this.tabContainer;
-            if (container == "TAB") {
+        _createContainer: function(containerType, params){
+            var parent = registry.byId('tabContainer');
+            // var parent = this.tabContainerNode;
+            if (containerType == "TAB") {
                 var tab = new ContentPane({
-                    title: params.title
+                    title: params.title,
+                    closable: true
                 });
-                params.addChild(tab);
+                parent.addChild(tab);
                 return tab;
-            } else {
-                //
+            } else if (containerType == "MENU") {
+                
             }
         }
     });

@@ -14,12 +14,12 @@ public class TemplateLoader {
     }
 
     public static String getTemplate(String name){
-        InputStream in = TemplateLoader.class.getClassLoader().getResourceAsStream("HTML templates/" + name + ".html");
+        InputStream in = TemplateLoader.class.getClassLoader().getResourceAsStream("HTML templates/" + name);
         String result = null;
         try {
              result = IOUtils.toString(in, "UTF-8");
         } catch (IOException e) {
-            LOGGER.error("Failed to load template file: " + name + ".html", e);
+            LOGGER.error("Failed to load template file: " + name, e);
         }
         return result;
     }

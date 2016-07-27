@@ -5,9 +5,9 @@ import ru.vasya.model.document.Incoming;
 import ru.vasya.model.document.Outgoing;
 import ru.vasya.model.document.Task;
 import ru.vasya.model.staff.Person;
-import ru.vasya.rest.response.IncomingResponseObject;
-import ru.vasya.rest.response.OutgoingResponseObject;
-import ru.vasya.rest.response.TaskResponseObject;
+import ru.vasya.rest.response.document.IncomingResponseObject;
+import ru.vasya.rest.response.document.OutgoingResponseObject;
+import ru.vasya.rest.response.document.TaskResponseObject;
 import ru.vasya.service.DocService;
 import ru.vasya.util.JAXBDocumentCollection;
 import ru.vasya.util.TemplateLoader;
@@ -40,13 +40,49 @@ public class DocumentsController {
     }
 
     @GET
-    @Path("/alljson")
+    @Path("/incomings")
     @Produces(MediaType.APPLICATION_JSON)
-    public Set<Document> getDocumentsJSON(){
+    public Set<Incoming> getIncomingsJSON(){
         Map<Person, TreeSet<Document>> docs = ds.getDocuments();
-        Set<Document> result = new TreeSet<Document>();
+        Set<Incoming> result = new TreeSet<Incoming>();
         for(Person p : docs.keySet()){
-            result.addAll(docs.get(p));
+            for(Document d : docs.get(p)){
+                if (d instanceof Incoming){
+                    result.add((Incoming)d);
+                }
+            }
+        }
+        return result;
+    }
+
+    @GET
+    @Path("/outgoings")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Set<Outgoing> getOutgoingsJSON(){
+        Map<Person, TreeSet<Document>> docs = ds.getDocuments();
+        Set<Outgoing> result = new TreeSet<Outgoing>();
+        for(Person p : docs.keySet()){
+            for(Document d : docs.get(p)){
+                if (d instanceof Outgoing){
+                    result.add((Outgoing)d);
+                }
+            }
+        }
+        return result;
+    }
+
+    @GET
+    @Path("/tasks")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Set<Task> getTasksJSON(){
+        Map<Person, TreeSet<Document>> docs = ds.getDocuments();
+        Set<Task> result = new TreeSet<Task>();
+        for(Person p : docs.keySet()){
+            for(Document d : docs.get(p)){
+                if (d instanceof Task){
+                    result.add((Task)d);
+                }
+            }
         }
         return result;
     }
@@ -65,16 +101,16 @@ public class DocumentsController {
             }
         }
         if(document instanceof Task){
-            String template = TemplateLoader.getTemplate("Task_VIEW");
-            TaskResponseObject resp = new TaskResponseObject((Task)document, template, "TODO", "ENUM?");
+            String template = TemplateLoader.getTemplate("Task_VIEW.html");
+            TaskResponseObject resp = new TaskResponseObject((Task)document, template, "Поручение №" + document.getRegistrationNumber(), "NEW_TAB", "documents/document/");
             return Response.ok().entity(resp).build();
         } else if(document instanceof Outgoing){
-            String template = TemplateLoader.getTemplate("Outgoing_VIEW");
-            OutgoingResponseObject resp = new OutgoingResponseObject((Outgoing)document, template, "TODO", "ENUM?");
+            String template = TemplateLoader.getTemplate("Outgoing_VIEW.html");
+            OutgoingResponseObject resp = new OutgoingResponseObject((Outgoing)document, template, "Исходящее №" + document.getRegistrationNumber(), "NEW_TAB", "documents/document/");
             return Response.ok().entity(resp).build();
         } else if(document instanceof Incoming){
-            String template = TemplateLoader.getTemplate("Incoming_VIEW");
-            IncomingResponseObject resp = new IncomingResponseObject((Incoming)document, template, "TODO", "ENUM?");
+            String template = TemplateLoader.getTemplate("Incoming_VIEW.html");
+            IncomingResponseObject resp = new IncomingResponseObject((Incoming)document, template, "Входящее №" + document.getRegistrationNumber(), "NEW_TAB", "documents/document/");
             return Response.ok().entity(resp).build();
         }
         return null;

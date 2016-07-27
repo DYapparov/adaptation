@@ -1,5 +1,11 @@
 <div class="${baseClass}">
     <script type="dojo/require">at: "dojox/mvc/at", locale: "dojo/date/locale", stamp: "dojo/date/stamp"</script>
+    <div class="topMenu">
+        <button data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: sendEvent" data-dojo-props="eventType: 'qqqq'">
+            Test
+        </button>
+
+    </div>
     <div class="personInfo">
         <h1>Информация о сотруднике</h1>
         <img src="" data-dojo-attach-point="avatarNode" class="avatar">

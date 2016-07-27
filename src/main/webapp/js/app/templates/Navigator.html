@@ -1,0 +1,29 @@
+<div>
+    <div class="${baseClass}" data-dojo-attach-point="navigatorNode"
+         data-dojo-type="dijit/layout/BorderContainer"
+         data-dojo-props="design: 'headline'">
+        <div id="tabContainer" data-dojo-attach-point="tabContainerNode" class=""
+             data-dojo-type="dijit/layout/TabContainer"
+             data-dojo-props="region: 'center', tabPosition: 'top'">
+        </div>
+
+        <div id="edgePanel" class="leftPanel"
+             data-dojo-type="dijit/layout/BorderContainer"
+             data-dojo-props="region: 'left', splitter: true">
+            <div class="topPanel"
+                 data-dojo-type="dijit/layout/ContentPane"
+                 data-dojo-props="region: 'top', splitter: true">
+                <div data-dojo-attach-point="employeesMenuNode">
+
+                </div>
+            </div>
+            <div class="botPanel"
+                 data-dojo-type="dijit/layout/ContentPane"
+                 data-dojo-props="region: 'center'">
+                <div data-dojo-attach-point="docsMenuNode">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

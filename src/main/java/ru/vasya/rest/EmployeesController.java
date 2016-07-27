@@ -10,8 +10,9 @@ import ru.vasya.dao.PostDAO;
 import ru.vasya.model.document.Document;
 import ru.vasya.model.staff.Person;
 import ru.vasya.model.staff.Post;
-import ru.vasya.rest.response.PersonResponseObject;
-import ru.vasya.rest.response.PersonsResponseObject;
+import ru.vasya.rest.response.person.PersonResponseObject;
+import ru.vasya.rest.response.person.PersonsResponseObject;
+import ru.vasya.rest.response.gridx.GridxColumn;
 import ru.vasya.service.DocService;
 import ru.vasya.util.JAXBDocumentCollection;
 import ru.vasya.util.TemplateLoader;
@@ -46,16 +47,6 @@ public class EmployeesController {
     }
 
     @GET
-    @Path("/employees/tab/")
-    @Produces(MediaType.APPLICATION_JSON)
-    public PersonsResponseObject getAllPersonsTabParams() {
-        Set<Person> model = personDAO.getAll(Person.class);
-        String template = TemplateLoader.getTemplate("All_persons_VIEW");
-        PersonsResponseObject resp = new PersonsResponseObject(model, template, "TODO", "ENUM?");
-        return resp;
-    }
-
-    @GET
     @Path("/employees/{id}")
     @Produces(MediaType.APPLICATION_XML)
     public JAXBDocumentCollection getPersonDocs(@PathParam("id") int id){
@@ -73,8 +64,8 @@ public class EmployeesController {
     @Produces(MediaType.APPLICATION_JSON)
     public PersonResponseObject getPersonTabParams(@PathParam("id") int id){
         Person model = personDAO.getByID(Person.class, id);
-        String template = TemplateLoader.getTemplate("Person_VIEW");
-        PersonResponseObject resp = new PersonResponseObject(model, template, "TODO", "ENUM?");
+        String template = TemplateLoader.getTemplate("Person_VIEW.html");
+        PersonResponseObject resp = new PersonResponseObject(model, template, "Сотрудник " + model.getId(), "NEW_TAB", "ecm/employees/employee/");
         return resp;
     }
 
@@ -83,14 +74,14 @@ public class EmployeesController {
     @Produces(MediaType.APPLICATION_JSON)
     public PersonResponseObject getEditPersonTabParams(@PathParam("id") int id){
         Person model = personDAO.getByID(Person.class, id);
-        String template = TemplateLoader.getTemplate("Person_EDIT");
+        String template = TemplateLoader.getTemplate("Person_EDIT.html");
         Set<Post> posts = postDAO.getAll(Post.class);
         StringBuilder postOptions = new StringBuilder();
         for(Post p : posts){
             postOptions.append("<option value='").append(p.getId()).append("'>").append(p.getName()).append("</option>");
         }
         template = template.replace("###REPLACE_FOR_OPTIONS###", postOptions.toString());
-        PersonResponseObject resp = new PersonResponseObject(model, template, "TODO", "ENUM?");
+        PersonResponseObject resp = new PersonResponseObject(model, template, "Сотрудник " + model.getId(), "THIS_TAB", "ecm/employees/employee/");
         return resp;
     }
 
@@ -101,8 +92,8 @@ public class EmployeesController {
     public PersonResponseObject savePerson(Person p){
         personDAO.update(p);
         p = personDAO.getByID(Person.class, p.getId());
-        String template = TemplateLoader.getTemplate("Person_VIEW");
-        return new PersonResponseObject(p, template, "TODO", "ENUM?");
+        String template = TemplateLoader.getTemplate("Person_VIEW.html");
+        return new PersonResponseObject(p, template, "Сотрудник " + p.getId(), "THIS_TAB", "ecm/employees/employee/");
     }
 
     @POST
